@@ -5,7 +5,6 @@
 %\usepackage[latin1]{inputenc}     %  OR 8 bits latin1
 \usepackage{parskip}            % no indentation on paragraphs
 \usepackage{url}                % URLs
-\usepackage{lipsum}             % loren dummy text
 
 %% margins
 \RequirePackage[outer=25mm,inner=30mm,vmargin=16mm,includehead,includefoot,headheight=15pt]{geometry}
@@ -14,7 +13,7 @@
 \usepackage{fancyhdr}           % page headers
 \pagestyle{fancy}
 \lhead{}\chead{}\rhead{PD 2022/2023 Sem 1}
-%\lfoot{}\cfoot{}\rfoot{Page \thepage}
+% \lfoot{}\cfoot{}\rfoot{Page \thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
 
@@ -29,15 +28,16 @@
 
 \begin{document}
 
-\titles{Title}{\dummy{My title}}
-\titles{Author}{\dummy{My Name}}
-\titles{Supervision}{\dummy{My Supervisors Names}}
-\titles{Date}{\today}
+\titles{Title}{Generative Models for Audio Synthesis}
+\titles{Author}{Márcio Duarte}
+\titles{Supervision}{Luís Paulo Reis}
+\titles{Date}{November 24, 2022}
+\titles{Institution}{Faculdade de Engenharia da Universidade do Porto}
 
 \input{src/abstract}
 
-\input{src/keywords}
-\input{src/acm}
+\titles{Keywords}{Audio, Deep Learning, Generative Model, Machine Learning, Sound Synthesis}
+\titles{ACM Classification}{\\Computing methodologies / Machine learning / Machine learning approaches / Neural networks \\ Applied computing / Arts and humanities / Sound and music computing}
 
 \nocite{*}  % to include references that were not cited
 
