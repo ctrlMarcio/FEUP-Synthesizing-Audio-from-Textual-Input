@@ -1,4 +1,6 @@
-numpy
+numpy==1.24.3
 pandas
 pydub
 youtube-dl
+tensorflow  
+torch
