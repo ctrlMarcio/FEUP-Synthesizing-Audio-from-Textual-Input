@@ -1,13 +1,16 @@
 import torch
 import torch.nn.functional as F
+import torch.nn as nn
 
 
-class Clap():
+class Clap(nn.Module):
     def __init__(self,
                  audio_feature_dim,
                  text_feature_dim,
                  shared_embedding_dim
                  ):
+        super().__init__()
+        
         # Initialize the weights that will connect the input audio and text
         # features to the shared embedding space.
         self._audio_projection = torch.nn.Linear(
