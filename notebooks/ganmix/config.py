@@ -9,6 +9,7 @@ CLOTHO = {
 }
 WORKING_DIR = "/home/admin/FEUP-Synthesizing-Audio-from-Textual-Input/data/working"
 SPECTROGRAM_DIR = WORKING_DIR + "/spectrograms"
+STATS_DIR = WORKING_DIR + "/stats"
 
 # MODELS
 VAE_MODEL = "cvssp/audioldm"
@@ -42,9 +43,10 @@ LEARNING_RATE_DISCRIMINATOR = 0.02
 # Beta1 hyperparameter for Adam optimizers
 BETA1 = 0.5
 
-# Checkpoint
-CHECKPOINT_INTERVAL = 10000
-CHECKPOINT_PATH = "checkpoint.pth"
+CHECKPOINT = {
+    "EPOCH_INTERVAL": 1,
+    "DIR": WORKING_DIR + "/checkpoints",
+}
 
 # Display
 OUTPUT_STATS_INTERVAL = 25

@@ -3,36 +3,77 @@ from torch import nn
 import time
 import config
 import utils
+import os
 
 
-def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epochs=5):
-    # Set the initial parameters
-    print('Initializing the parameters...')
+def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epochs=5, load_checkpoint=True):
+    # this variable will hold if the program should start the variables from
+    # scratch or load the latest checkpoint
+    initialize_variables = not load_checkpoint
+
+    # check if the checkpoint dir exists
+    if os.path.exists(config.CHECKPOINT["DIR"]):
+        if load_checkpoint:
+            latest_checkpoint = max(
+                [int(file.split('_')[2].split('.')[0]) for file in os.listdir(config.CHECKPOINT["DIR"]) if file.startswith("checkpoint_epoch_")], default=None)
+            if latest_checkpoint is not None:
+                checkpoint_filename = _get_checkpoint_filename(
+                    latest_checkpoint)
+                checkpoint = torch.load(checkpoint_filename)
+                netG.load_state_dict(checkpoint['netG_state_dict'])
+                netD.load_state_dict(checkpoint['netD_state_dict'])
+                optimizerG.load_state_dict(checkpoint['optimizerG_state_dict'])
+                optimizerD.load_state_dict(checkpoint['optimizerD_state_dict'])
+                epoch = checkpoint['epoch']
+                G_losses = checkpoint['G_losses']
+                D_losses = checkpoint['D_losses']
+                start_time = checkpoint['start_time']
+                print(
+                    f"Loaded checkpoint from epoch {epoch} ({checkpoint_filename})")
+            else:
+                initialize_variables = True
+        else:
+            # delete the checkpoints
+            for file in os.listdir(config.CHECKPOINT["DIR"]):
+                os.remove(os.path.join(config.CHECKPOINT["DIR"], file))
+    else:
+        # create the checkpoint dir
+        os.makedirs(config.CHECKPOINT["DIR"])
+        initialize_variables = True
     
-    # epochs
-    epoch = 0
+    if initialize_variables:
+        # initialize the variables
+        print('Initializing the variables...')
 
-    # losses for displaying purposes
-    G_losses = []
-    D_losses = []
+        # epochs
+        epoch = 0
 
-    # initialize the networks
-    netG.apply(_weights_init)
-    netD.apply(_weights_init)
+        # losses for displaying purposes
+        G_losses = []
+        D_losses = []
+
+        # initialize the networks
+        netG.apply(_weights_init)
+        netD.apply(_weights_init)
+
+        # start time
+        start_time = time.time()
 
     # save the dataloader len for displaying purposes
     dataloader_len = len(dataloader)
 
+    # initialize the file that will log the training stats
+    stats_file_path = config.STATS_DIR + f"/training_stats_{start_time}.txt"
+
     # Training loop
     print("Starting Training Loop...")
-    start_time = time.time()
 
     # For each epoch
     for epoch in range(epoch, num_epochs):
         print("\n" + "="*30)
         print(f"Epoch [{epoch+1}/{num_epochs}]")
         epoch_start_time = time.time()
-        
+
         # For each batch in the dataloader
         for i, data in enumerate(dataloader, 0):
             ############################
@@ -43,7 +84,8 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
             # Format batch
             real = data[0].to(config.DEVICE)
             b_size = real.size(0)
-            label = torch.full((b_size,), config.REAL_LABEL, dtype=torch.float, device=config.DEVICE)
+            label = torch.full((b_size,), config.REAL_LABEL,
+                               dtype=torch.float, device=config.DEVICE)
             # Forward pass real batch through D
             embeddings = vae.encode(real)
             embeddings = embeddings.latent_dist.mode()
@@ -58,7 +100,8 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
 
             # Train with all-fake batch
             # Generate batch of latent vectors
-            noise = torch.randn(b_size, config.GENERATOR_INPUT_SIZE, 1, 1, device=config.DEVICE)
+            noise = torch.randn(
+                b_size, config.GENERATOR_INPUT_SIZE, 1, 1, device=config.DEVICE)
             # Generate fake latent features batch with G
             fake = netG(noise)
             label.fill_(config.FAKE_LABEL)
@@ -97,7 +140,8 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
             D_losses.append(errD.item())
 
             # Print informative and pretty information about the current training progress
-            _output_stats(i, epoch, num_epochs, errD, errG, D_x, D_G_z1, D_G_z2, real, fake, dataloader_len, start_time)
+            _output_stats(i, epoch, num_epochs, errD, errG, D_x,
+                          D_G_z1, D_G_z2, real, fake, dataloader_len, start_time, stats_file_path)
 
             # Check how the generator is doing by saving G's output on fixed_noise
             if (epoch % config.OUTPUT_SPECTROGRAM_INTERVAL == 0) or ((epoch == num_epochs-1) and (i == dataloader_len-1)):
@@ -106,9 +150,30 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
                     fake = fake.detach().cpu()
 
         epoch_elapsed_time = time.time() - epoch_start_time
-        print(f"\nTime elapsed for epoch {epoch+1}: {utils.format_time(epoch_elapsed_time)}")
+        print(
+            f"\nTime elapsed for epoch {epoch+1}: {utils.format_time(epoch_elapsed_time)}")
+
+        # Save the checkpoint at the specified epoch interval
+        if epoch % config.CHECKPOINT["EPOCH_INTERVAL"] == 0:
+            checkpoint_filename = _get_checkpoint_filename(epoch)
+            torch.save({
+                'epoch': epoch,
+                'netG_state_dict': netG.state_dict(),
+                'netD_state_dict': netD.state_dict(),
+                'optimizerG_state_dict': optimizerG.state_dict(),
+                'optimizerD_state_dict': optimizerD.state_dict(),
+                'G_losses': G_losses,
+                'D_losses': D_losses,
+                'start_time': start_time
+            }, checkpoint_filename)
+            print(
+                f"Checkpoint saved at epoch {epoch} to {checkpoint_filename}")
 
     print("\nTraining finished!")
+
+
+def _get_checkpoint_filename(epoch):
+    return os.path.join(config.CHECKPOINT["DIR"], f"checkpoint_epoch_{epoch}.pth")
 
 
 def _weights_init(m):
@@ -120,7 +185,7 @@ def _weights_init(m):
         nn.init.constant_(m.bias.data, 0)
 
 
-def _output_stats(i, epoch, num_epochs, errD, errG, D_x, D_G_z1, D_G_z2, real_cpu, fake, dataloader_len, start_time):
+def _output_stats(i, epoch, num_epochs, errD, errG, D_x, D_G_z1, D_G_z2, real_cpu, fake, dataloader_len, start_time, stats_file_path):
     if i > 0:
         # Output training stats
         elapsed_time = time.time() - start_time
@@ -129,11 +194,30 @@ def _output_stats(i, epoch, num_epochs, errD, errG, D_x, D_G_z1, D_G_z2, real_cp
         remaining_time_total = avg_time_per_batch * \
             (dataloader_len * (num_epochs - epoch) - i)
         print('[%d/%d][%d/%d]\tLoss_D: %.4f\tLoss_G: %.4f\tD(x): %.4f\tD(G(z)): %.4f / %.4f\tElapsed time: %s\tTime left (epoch): %s\tTime left (total): %s'
-                % (epoch, num_epochs, i, dataloader_len,
-                    errD.item(), errG.item(), D_x, D_G_z1, D_G_z2,
-                    utils.format_time(elapsed_time), utils.format_time(remaining_time_epoch), utils.format_time(remaining_time_total)))
+              % (epoch, num_epochs, i, dataloader_len,
+                 errD.item(), errG.item(), D_x, D_G_z1, D_G_z2,
+                 utils.format_time(elapsed_time), utils.format_time(remaining_time_epoch), utils.format_time(remaining_time_total)))
+
+    # Output to file
+    _write_stats_to_file(stats_file_path, epoch, num_epochs, i, dataloader_len, errD, errG, D_x, D_G_z1, D_G_z2, real_cpu, fake, start_time)
 
     if i % config.OUTPUT_SPECTROGRAM_INTERVAL == 0:
         # Generate a spectrogram and display it
         utils.show_spectrogram(real_cpu.detach().cpu()[0, 0, :, :], "Real")
         utils.show_spectrogram(fake.detach().cpu()[0, 0, :, :], "Generated")
+
+
+def _write_stats_to_file(file_path, epoch, num_epochs, i, dataloader_len, errD, errG, D_x, D_G_z1, D_G_z2, real_cpu, fake, start_time):
+    # Create the directory if it doesn't exist
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+    with open(file_path, 'a') as file:
+        if i > 0:
+            elapsed_time = time.time() - start_time
+            avg_time_per_batch = elapsed_time / (i + epoch * dataloader_len)
+            remaining_time_epoch = avg_time_per_batch * (dataloader_len - i)
+            remaining_time_total = avg_time_per_batch * (dataloader_len * (num_epochs - epoch) - i)
+            file.write('[%d/%d][%d/%d]\tLoss_D: %.4f\tLoss_G: %.4f\tD(x): %.4f\tD(G(z)): %.4f / %.4f\tElapsed time: %s\tTime left (epoch): %s\tTime left (total): %s\n'
+                      % (epoch, num_epochs, i, dataloader_len,
+                         errD.item(), errG.item(), D_x, D_G_z1, D_G_z2,
+                         utils.format_time(elapsed_time), utils.format_time(remaining_time_epoch), utils.format_time(remaining_time_total)))
