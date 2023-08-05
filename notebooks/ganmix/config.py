@@ -38,14 +38,15 @@ FIXED_NOISE = torch.randn(1, GENERATOR_INPUT_SIZE, 1, 1, device=DEVICE)
 FEATURE_MAPS_GENERATOR = 64
 CHANNELS_LATENT = 8
 # Learning rates
-LEARNING_RATE_GENERATOR = 0.0001
-LEARNING_RATE_DISCRIMINATOR = 0.02
+LEARNING_RATE_GENERATOR = 1e-3
+LEARNING_RATE_DISCRIMINATOR = 1e-5
 # Beta1 hyperparameter for Adam optimizers
 BETA1 = 0.5
 
 CHECKPOINT = {
     "EPOCH_INTERVAL": 1,
     "DIR": WORKING_DIR + "/checkpoints",
+    "BASE_NAME": "ganmix_cp",
 }
 
 # Display

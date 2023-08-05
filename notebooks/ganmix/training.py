@@ -14,12 +14,15 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
 
     # check if the checkpoint dir exists
     if os.path.exists(config.CHECKPOINT["DIR"]):
+        print("Checkpoint directory exists.")
         if load_checkpoint:
+            print("Loading checkpoint...")
             latest_checkpoint = max(
-                [int(file.split('_')[2].split('.')[0]) for file in os.listdir(config.CHECKPOINT["DIR"]) if file.startswith("checkpoint_epoch_")], default=None)
+                [int(file.split('_')[2].split('.')[0]) for file in os.listdir(config.CHECKPOINT["DIR"]) if file.startswith(config.CHECKPOINT["BASE_NAME"])], default=None)
             if latest_checkpoint is not None:
                 checkpoint_filename = _get_checkpoint_filename(
                     latest_checkpoint)
+                print(f"Latest checkpoint found: {checkpoint_filename}")
                 checkpoint = torch.load(checkpoint_filename)
                 netG.load_state_dict(checkpoint['netG_state_dict'])
                 netD.load_state_dict(checkpoint['netD_state_dict'])
@@ -29,15 +32,17 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
                 G_losses = checkpoint['G_losses']
                 D_losses = checkpoint['D_losses']
                 start_time = checkpoint['start_time']
-                print(
-                    f"Loaded checkpoint from epoch {epoch} ({checkpoint_filename})")
+                print(f"Loaded checkpoint from epoch {epoch} ({checkpoint_filename})")
             else:
+                print("No checkpoint found.")
                 initialize_variables = True
         else:
+            print("Deleting existing checkpoints...")
             # delete the checkpoints
             for file in os.listdir(config.CHECKPOINT["DIR"]):
                 os.remove(os.path.join(config.CHECKPOINT["DIR"], file))
     else:
+        print("Creating checkpoint directory...")
         # create the checkpoint dir
         os.makedirs(config.CHECKPOINT["DIR"])
         initialize_variables = True
@@ -70,7 +75,7 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
     print("Starting Training Loop...")
 
     # Create CSV file and write header
-    with open(stats_file_path, 'w', newline='') as csvfile:
+    with open(stats_file_path, 'a', newline='') as csvfile:
         csv_writer = csv.writer(csvfile)
         csv_writer.writerow([
             'Iteration', 'Epoch', 'Loss_D', 'Loss_G', 'D(x)', 'D(G(z))',
@@ -184,7 +189,7 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
 
 
 def _get_checkpoint_filename(epoch):
-    return os.path.join(config.CHECKPOINT["DIR"], f"checkpoint_epoch_{epoch}.pth")
+    return os.path.join(config.CHECKPOINT["DIR"], f"{config.CHECKPOINT['BASE_NAME']}_{epoch}.pth")
 
 
 def _weights_init(m):
