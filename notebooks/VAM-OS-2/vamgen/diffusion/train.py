@@ -1,9 +1,6 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import torchvision.transforms as transforms
-from torch.utils.data import DataLoader
-from torchvision.datasets import CIFAR10  # Change this to your dataset
 from torch.utils.data import random_split
 from tqdm import tqdm
 
@@ -12,22 +9,9 @@ from vamgen.diffusion.model import DiffusionModel
 # Define the diffusion model function for training
 
 
-def train_diffusion_model(num_epochs=50, batch_size=32, learning_rate=0.001, max_timestep=100):
+def train_diffusion_model(dataloader, num_epochs=50, learning_rate=0.001, max_timestep=100):
     # Check if GPU is available and use it for computation if available
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-    # Load your dataset and perform data transformations (if needed)
-    transform = transforms.Compose([
-        transforms.ToTensor(),
-        # Add more transformations as needed (e.g., normalization, resizing, etc.)
-    ])
-
-    dataset = CIFAR10(root="./data", train=True,
-                      download=True, transform=transform)
-
-    # Create DataLoader to efficiently load and batch the data
-    dataloader = DataLoader(dataset, batch_size=batch_size,
-                            shuffle=True, num_workers=4)
 
     # Initialize the U-Net and diffusion model
     diffusion_model = DiffusionModel(diffusion_steps=100, depth=5).to(device)

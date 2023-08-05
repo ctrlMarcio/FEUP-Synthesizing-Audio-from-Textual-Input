@@ -2,13 +2,20 @@ import torch
 import torch.nn.functional as F
 import torch.nn as nn
 
-
 class Clap(nn.Module):
     def __init__(self,
                  audio_feature_dim,
                  text_feature_dim,
                  shared_embedding_dim
                  ):
+        """
+        Initializes the CLAP model.
+
+        Parameters:
+            audio_feature_dim (int): The dimension of the audio feature space.
+            text_feature_dim (int): The dimension of the text feature space.
+            shared_embedding_dim (int): The dimension of the shared embedding space.
+        """
         super().__init__()
         
         # Initialize the weights that will connect the input audio and text
@@ -23,6 +30,15 @@ class Clap(nn.Module):
         self._learned_temperature = torch.nn.Parameter(torch.tensor([1.0]))
 
     def encode_audio(self, audio_features):
+        """
+        Encodes audio features into the shared embedding space.
+
+        Parameters:
+            audio_features (torch.Tensor): Input audio features.
+
+        Returns:
+            torch.Tensor: Encoded audio embeddings.
+        """
         # Project the audio features into the shared embedding space and
         # normalize the resulting embedding vectors.
         audio_embeddings = F.normalize(
@@ -30,6 +46,15 @@ class Clap(nn.Module):
         return audio_embeddings
 
     def encode_text(self, text_features):
+        """
+        Encodes text features into the shared embedding space.
+
+        Parameters:
+            text_features (torch.Tensor): Input text features.
+
+        Returns:
+            torch.Tensor: Encoded text embeddings.
+        """
         # Project the text features into the shared embedding space and
         # normalize the resulting embedding vectors.
         text_embeddings = F.normalize(
@@ -37,6 +62,16 @@ class Clap(nn.Module):
         return text_embeddings
 
     def forward(self, audio_features, text_features):
+        """
+        Computes the symmetric cross-entropy loss between audio and text embeddings.
+
+        Parameters:
+            audio_features (torch.Tensor): Input audio features.
+            text_features (torch.Tensor): Input text features.
+
+        Returns:
+            torch.Tensor: Loss value.
+        """
         # Encode the audio and text features into their respective embedding
         # spaces.
         audio_embeddings = self.encode_audio(audio_features)

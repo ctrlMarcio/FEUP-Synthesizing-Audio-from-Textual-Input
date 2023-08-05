@@ -30,3 +30,13 @@ translated into an audio file through a state of the art vocoder.
 > (they also have models to upsample the generated images)
 > the prior can be both autoregressive or diffusion (VamGen uses diffusion)
 > with diffusion, the image embeddings vector is modelled using a a Gaussian diffusion model conditioned on the caption y.
+
+## File Structure
+
+The VamGen project directory (`vamgen`) is organized as follows:
+
+- [`hardcore.py`](./vamgen/hardcore.py): This file contains functions intended for internal testing purposes and is not meant for production use.
+
+- [`main.py`](./vamgen/miain.py): This file serves as the main entry point for utilizing the VamGen model. It contains the well-structured and production-ready code that can be called from external applications.
+
+- [`diffusion`](./vamgen/diffusion): This subfolder holds all components and resources related to the diffusion process in VamGen. The diffusion process is responsible for transforming latent features into audio latent features.
