@@ -32,7 +32,8 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
                 G_losses = checkpoint['G_losses']
                 D_losses = checkpoint['D_losses']
                 start_time = checkpoint['start_time']
-                print(f"Loaded checkpoint from epoch {epoch} ({checkpoint_filename})")
+                print(
+                    f"Loaded checkpoint from epoch {epoch} ({checkpoint_filename})")
             else:
                 print("No checkpoint found.")
                 initialize_variables = True
@@ -78,7 +79,7 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
     with open(stats_file_path, 'a', newline='') as csvfile:
         csv_writer = csv.writer(csvfile)
         csv_writer.writerow([
-            'Iteration', 'Epoch', 'Loss_D', 'Loss_G', 'D(x)', 'D(G(z))',
+            'Iteration', 'Epoch', 'Loss_D', 'Loss_G', 'D(x)', 'D(G(z1))', 'D(G(z2))',
             'Elapsed Time', 'Time Left (Epoch)', 'Time Left (Total)'
         ])
 
