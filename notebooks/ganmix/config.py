@@ -21,9 +21,10 @@ MAX_INPUT_SIZE = 65_536
 
 # TRAINING
 DEVICE = "cuda"
-BATCH_SIZE = 4
+BATCH_SIZE = 16
 REAL_LABEL = 1
 FAKE_LABEL = 0
+NUM_EPOCHS = 50
 
 # GAN
 # Size of z latent vector (i.e. size of generator input)
@@ -37,9 +38,11 @@ FIXED_NOISE = torch.randn(1, GENERATOR_INPUT_SIZE, 1, 1, device=DEVICE)
 # Size of feature maps in generator
 FEATURE_MAPS_GENERATOR = 64
 CHANNELS_LATENT = 8
+
 # Learning rates
-LEARNING_RATE_GENERATOR = 1e-3
+LEARNING_RATE_GENERATOR = 1e-4
 LEARNING_RATE_DISCRIMINATOR = 1e-5
+
 # Beta1 hyperparameter for Adam optimizers
 BETA1 = 0.5
 

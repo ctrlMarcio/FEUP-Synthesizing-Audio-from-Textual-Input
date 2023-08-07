@@ -5,9 +5,11 @@ import config
 import utils
 import os
 import csv
+import torch.optim.lr_scheduler as lr_scheduler
+from torch.cuda.amp import autocast, GradScaler
 
 
-def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epochs=5, load_checkpoint=True):
+def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epochs=config.NUM_EPOCHS, load_checkpoint=True):
     # this variable will hold if the program should start the variables from
     # scratch or load the latest checkpoint
     initialize_variables = not load_checkpoint
@@ -72,6 +74,9 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
     # initialize the file that will log the training stats
     stats_file_path = config.STATS_DIR + f"/training_stats_{start_time}.csv"
 
+    # to handle gradient scaling (mixed precision training)
+    scaler = GradScaler()
+
     # Training loop
     print("Starting Training Loop...")
 
@@ -91,78 +96,94 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
 
             # For each batch in the dataloader
             for i, data in enumerate(dataloader, 0):
-                ############################
-                # (1) Update D network: maximize log(D(x)) + log(1 - D(G(z)))
-                ###########################
-                # Train with all-real batch
-                netD.zero_grad()
-                # Format batch
-                real = data[0].to(config.DEVICE)
-                b_size = real.size(0)
-                label = torch.full((b_size,), config.REAL_LABEL,
-                                   dtype=torch.float, device=config.DEVICE)
-                # Forward pass real batch through D
-                embeddings = vae.encode(real)
-                embeddings = embeddings.latent_dist.mode()
-                output = netD(embeddings)
-                output = output.view(-1)
-
-                # Calculate loss on all-real batch
-                errD_real = criterion(output, label)
-                # Calculate gradients for D in backward pass
-                errD_real.backward()
-                D_x = output.mean().item()
-
-                # Train with all-fake batch
-                # Generate batch of latent vectors
-                noise = torch.randn(
-                    b_size, config.GENERATOR_INPUT_SIZE, 1, 1, device=config.DEVICE)
-                # Generate fake latent features batch with G
-                fake = netG(noise)
-                label.fill_(config.FAKE_LABEL)
-                label = label.float()
-                # Classify all fake batch with D
-                output = netD(fake.detach()).view(-1)
-                # Calculate D's loss on the all-fake batch
-                errD_fake = criterion(output, label)
-                # Calculate the gradients for this batch, accumulated (summed) with previous gradients
-                errD_fake.backward()
-                D_G_z1 = output.mean().item()
-
-                # Compute error of D as sum over the fake and the real batches
-                errD = errD_real + errD_fake
-                # Update D
-                optimizerD.step()
-
-                ############################
-                # (2) Update G network: maximize log(D(G(z)))
-                ###########################
-                netG.zero_grad()
-                # fake labels are real for generator cost
-                label.fill_(config.REAL_LABEL)
-                # Since we just updated D, perform another forward pass of all-fake batch through D
-                output = netD(fake).view(-1)
-                # Calculate G's loss based on this output
-                errG = criterion(output, label)
-                # Calculate gradients for G
-                errG.backward()
-                D_G_z2 = output.mean().item()
-                # Update G
-                optimizerG.step()
-
-                # Save Losses for plotting later
-                G_losses.append(errG.item())
-                D_losses.append(errD.item())
-
-                # Print informative and pretty information about the current training progress
-                _output_stats(csv_writer, i, epoch, num_epochs, errD, errG, D_x,
-                              D_G_z1, D_G_z2, real, fake, dataloader_len, start_time)
-
-                # Check how the generator is doing by saving G's output on fixed_noise
-                if (epoch % config.OUTPUT_SPECTROGRAM_INTERVAL == 0) or ((epoch == num_epochs-1) and (i == dataloader_len-1)):
+                with autocast():
+                    ############################
+                    # (1) Update D network: maximize log(D(x)) + log(1 - D(G(z)))
+                    ###########################
+                    # Train with all-real batch
+                    netD.zero_grad()
+                    # Format batch
+                    real = data[0].to(config.DEVICE)
+                    b_size = real.size(0)
+                    label = torch.full((b_size,), config.REAL_LABEL,
+                                    dtype=torch.float, device=config.DEVICE)
+                    
                     with torch.no_grad():
-                        fake = netG(config.FIXED_NOISE)
-                        fake = fake.detach().cpu()
+                        # Forward pass real batch through D
+                        embeddings = vae.encode(real)
+                        # TODO HERE
+                        embeddings = embeddings.latent_dist.mode()
+                        embeddings = torch.nan_to_num(embeddings, nan=0)
+                        output = netD(embeddings)
+                        output = output.view(-1)
+
+                    # Calculate loss on all-real batch
+                    errD_real = criterion(output, label.detach())
+                    errD_real.requires_grad = True
+                    # Calculate gradients for D in backward pass
+                    D_x = output.mean().item()
+
+                    # Train with all-fake batch
+                    # Generate batch of latent vectors
+                    noise = torch.randn(
+                        b_size, config.GENERATOR_INPUT_SIZE, 1, 1, device=config.DEVICE)
+                    # Generate fake latent features batch with G
+                    fake = netG(noise)
+                    label.fill_(config.FAKE_LABEL)
+                    label = label.float()
+                    # Classify all fake batch with D
+                    output = netD(fake.detach()).view(-1)
+                    # Calculate D's loss on the all-fake batch
+                    errD_fake = criterion(output, label)
+                    # Calculate the gradients for this batch, accumulated (summed) with previous gradients
+                    D_G_z1 = output.mean().item()
+                    errD = errD_real + errD_fake
+
+                scaler.scale(errD).backward()
+                scaler.step(optimizerD)
+                #scaler.update()
+
+                with autocast():
+                    ############################
+                    # (2) Update G network: maximize log(D(G(z)))
+                    ###########################
+                    netG.zero_grad()
+                    # fake labels are real for generator cost
+                    label.fill_(config.REAL_LABEL)
+
+                    
+                    #with torch.no_grad():
+                    # Since we just updated D, perform another forward pass of all-fake batch through D
+                    output = netD(fake).view(-1)
+
+                    # Calculate G's loss based on this output
+                    errG = criterion(output, label)
+                    #errG.requires_grad = True
+
+                # Calculate gradients for G
+                scaler.scale(errG).backward()
+                scaler.step(optimizerG)
+                #scaler.update()
+
+                with autocast():
+                    D_G_z2 = output.mean().item()
+
+                    # Save Losses for plotting later
+                    G_losses.append(errG.item())
+                    D_losses.append(errD.item())
+
+                    # Print informative and pretty information about the current training progress
+                    _output_stats(csv_writer, i, epoch, num_epochs, errD, errG, D_x,
+                                D_G_z1, D_G_z2, real, fake, dataloader_len, start_time)
+
+                    # Check how the generator is doing by saving G's output on fixed_noise
+                    if (epoch % config.OUTPUT_SPECTROGRAM_INTERVAL == 0) or ((epoch == num_epochs-1) and (i == dataloader_len-1)):
+                        with torch.no_grad():
+                            fake = netG(config.FIXED_NOISE)
+                            fake = fake.detach().cpu()
+
+                # Update scaler for next iteration
+                scaler.update()
 
             epoch_elapsed_time = time.time() - epoch_start_time
             print(
