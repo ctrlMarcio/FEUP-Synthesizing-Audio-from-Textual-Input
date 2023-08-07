@@ -10,6 +10,7 @@ CLOTHO = {
 WORKING_DIR = "/home/admin/FEUP-Synthesizing-Audio-from-Textual-Input/data/working"
 SPECTROGRAM_DIR = WORKING_DIR + "/spectrograms"
 STATS_DIR = WORKING_DIR + "/stats"
+SPECTROGRAM_PLOT_DIR = WORKING_DIR + "/spectrogram_plots"
 
 # MODELS
 VAE_MODEL = "cvssp/audioldm"
@@ -41,7 +42,7 @@ CHANNELS_LATENT = 8
 
 # Learning rates
 LEARNING_RATE_GENERATOR = 1e-4
-LEARNING_RATE_DISCRIMINATOR = 1e-5
+LEARNING_RATE_DISCRIMINATOR = 1e-4
 
 # Beta1 hyperparameter for Adam optimizers
 BETA1 = 0.5
@@ -54,4 +55,4 @@ CHECKPOINT = {
 
 # Display
 OUTPUT_STATS_INTERVAL = 25
-OUTPUT_SPECTROGRAM_INTERVAL = 25
+OUTPUT_SPECTROGRAM_INTERVAL = 1

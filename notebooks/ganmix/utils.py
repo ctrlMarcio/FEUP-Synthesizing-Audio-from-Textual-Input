@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import torch
+import config
+import numpy as np
 
 
 def format_time(seconds):
@@ -26,6 +28,22 @@ def show_spectrogram(spectrogram, title=None):
         plt.title(title)
 
     plt.show()
+
+def save_spectrogram(spectrogram, title=None):
+    # Display the spectrogram using matplotlib
+    plt.imshow(spectrogram, cmap='hot', origin='lower')
+    plt.xlabel('Time')
+    
+    plt.ylabel('Frequency')
+    plt.colorbar()
+
+    if title:
+        plt.title(title)
+
+    # save the figure to config.SPECTROGRAM_PLOT_DIR
+    plt.savefig(config.SPECTROGRAM_PLOT_DIR + "/" + title + ".png")
+    plt.close()
+
 
 
 def random_trim(waveform, sample_rate, duration):

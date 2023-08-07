@@ -44,9 +44,10 @@ class ClothoDataset(Dataset):
         # select a random caption
         caption = captions[torch.randint(0, len(captions), (1,)).item()]
 
-        # create the spectrogram
+        # create mel spectrogram
         spectrogram = torchaudio.transforms.Spectrogram(
-            n_fft=1024, hop_length=512)(waveform)  # TODO: these are constants
+            n_fft=1024, hop_length=512, center=True)(waveform)  # TODO: these are constants
+        
         
         #print(spectrogram.shape)
 

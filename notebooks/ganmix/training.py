@@ -84,8 +84,7 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
     with open(stats_file_path, 'a', newline='') as csvfile:
         csv_writer = csv.writer(csvfile)
         csv_writer.writerow([
-            'Iteration', 'Epoch', 'Loss_D', 'Loss_G', 'D(x)', 'D(G(z1))', 'D(G(z2))',
-            'Elapsed Time', 'Time Left (Epoch)', 'Time Left (Total)'
+            'Epoch', 'Loss_D', 'Loss_G'
         ])
 
         # For each epoch
@@ -93,6 +92,9 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
             print("\n" + "="*30)
             print(f"Epoch [{epoch+1}/{num_epochs}]")
             epoch_start_time = time.time()
+
+            epoch_D_losses = []
+            epoch_G_losses = []
 
             # For each batch in the dataloader
             for i, data in enumerate(dataloader, 0):
@@ -111,7 +113,6 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
                     with torch.no_grad():
                         # Forward pass real batch through D
                         embeddings = vae.encode(real)
-                        # TODO HERE
                         embeddings = embeddings.latent_dist.mode()
                         embeddings = torch.nan_to_num(embeddings, nan=0)
                         output = netD(embeddings)
@@ -171,6 +172,8 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
                     # Save Losses for plotting later
                     G_losses.append(errG.item())
                     D_losses.append(errD.item())
+                    epoch_D_losses.append(errD.item())
+                    epoch_G_losses.append(errG.item())
 
                     # Print informative and pretty information about the current training progress
                     _output_stats(csv_writer, i, epoch, num_epochs, errD, errG, D_x,
@@ -189,6 +192,13 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
             print(
                 f"\nTime elapsed for epoch {epoch+1}: {utils.format_time(epoch_elapsed_time)}")
 
+            # save a spectrogram of the generated audio
+            if (epoch % config.OUTPUT_SPECTROGRAM_INTERVAL == 0) or ((epoch == num_epochs-1) and (i == dataloader_len-1)):
+                # save the real and the fake to compare them
+                # choose a random spectrogram
+                utils.save_spectrogram(real.detach()[0][0].cpu(), f"{start_time}_{epoch}_real")
+                utils.save_spectrogram(fake.detach()[0][0].cpu(), f"{start_time}_{epoch}_fake")            
+
             # Save the checkpoint at the specified epoch interval
             if epoch % config.CHECKPOINT["EPOCH_INTERVAL"] == 0:
                 checkpoint_filename = _get_checkpoint_filename(epoch)
@@ -206,6 +216,15 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
                 csvfile.flush()
                 print(
                     f"Checkpoint saved at epoch {epoch} to {checkpoint_filename}")
+
+            # Save the info on the csv file at the end of each epoch
+            avg_loss_D = sum(epoch_D_losses) / len(epoch_D_losses)
+            avg_loss_G = sum(epoch_G_losses) / len(epoch_G_losses)
+            # 'Epoch', 'Loss_D', 'Loss_G'
+            csv_writer.writerow([
+                epoch + 1, avg_loss_D, avg_loss_G
+            ])
+
 
     print("\nTraining finished!")
 
@@ -232,24 +251,6 @@ def _output_stats(csv_writer, i, epoch, num_epochs, errD, errG, D_x, D_G_z1, D_G
         remaining_time_total = avg_time_per_batch * \
             (dataloader_len * (num_epochs - epoch) - i)
         print('[%d/%d][%d/%d]\tLoss_D: %.4f\tLoss_G: %.4f\tD(x): %.4f\tD(G(z)): %.4f / %.4f\tElapsed time: %s\tTime left (epoch): %s\tTime left (total): %s'
-              % (epoch, num_epochs, i, dataloader_len,
+              % (epoch + 1, num_epochs, i, dataloader_len,
                  errD.item(), errG.item(), D_x, D_G_z1, D_G_z2,
                  utils.format_time(elapsed_time), utils.format_time(remaining_time_epoch), utils.format_time(remaining_time_total)))
-
-        # Output to CSV file
-        elapsed_time = time.time() - start_time
-        avg_time_per_batch = elapsed_time / (i + epoch * dataloader_len)
-        remaining_time_epoch = avg_time_per_batch * (dataloader_len - i)
-        remaining_time_total = avg_time_per_batch * \
-            (dataloader_len * (num_epochs - epoch) - i)
-        csv_writer.writerow([
-            epoch * dataloader_len + i, epoch +
-            1, errD.item(), errG.item(), D_x, D_G_z1, D_G_z2,
-            utils.format_time(elapsed_time), utils.format_time(
-                remaining_time_epoch), utils.format_time(remaining_time_total)
-        ])
-
-    if i % config.OUTPUT_SPECTROGRAM_INTERVAL == 0:
-        # Generate a spectrogram and display it
-        utils.show_spectrogram(real_cpu.detach().cpu()[0, 0, :, :], "Real")
-        utils.show_spectrogram(fake.detach().cpu()[0, 0, :, :], "Generated")
