@@ -47,8 +47,12 @@ def main():
     criterion = BCEWithLogitsLoss()
 
     # Setup Adam optimizers for both G and D
-    optimizerD = optim.Adam(netD.parameters(), lr=config.LEARNING_RATE_DISCRIMINATOR, betas=(config.BETA1, 0.999))
-    optimizerG = optim.Adam(netG.parameters(), lr=config.LEARNING_RATE_GENERATOR, betas=(config.BETA1, 0.999))
+    #optimizerD = optim.Adam(netD.parameters(), lr=config.LEARNING_RATE_DISCRIMINATOR, betas=(config.BETA1, 0.999))
+    #optimizerG = optim.Adam(netG.parameters(), lr=config.LEARNING_RATE_GENERATOR, betas=(config.BETA1, 0.999))
+
+    # Create RMSProp optimizers for discriminator and generator
+    optimizerD = optim.RMSprop(netD.parameters(), lr=config.LEARNING_RATE_DISCRIMINATOR, alpha=0.99)
+    optimizerG = optim.RMSprop(netG.parameters(), lr=config.LEARNING_RATE_GENERATOR, alpha=0.99)
     
     # Ask user whether to load checkpoint or start from scratch
     load_checkpoint = input("Do you want to load a checkpoint? (y/n): ").strip().lower() == 'y'
