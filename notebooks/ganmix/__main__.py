@@ -54,7 +54,7 @@ def main():
     load_checkpoint = input("Do you want to load a checkpoint? (y/n): ").strip().lower() == 'y'
     
     # train the model
-    training.fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, load_checkpoint=load_checkpoint)
+    training.fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, load_checkpoint=load_checkpoint, num_epochs=999999999)
 
 if __name__ == "__main__":
     # Call the main function to start the application
