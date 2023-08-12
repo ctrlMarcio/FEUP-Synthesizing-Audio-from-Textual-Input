@@ -159,7 +159,11 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
 
                     # Calculate G's loss based on this output
                     errG = criterion(output, label)
-                    #errG.requires_grad = True
+                    # Calculate Elastic Net regularization
+                    en_loss_G = netG.elastic_net_regularization()
+
+                    # Total G loss includes the elastic net
+                    errG = errG + en_loss_G
 
                 # Calculate gradients for G
                 scaler.scale(errG).backward()
