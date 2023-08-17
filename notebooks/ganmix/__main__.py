@@ -32,8 +32,8 @@ def main():
 
     vae = models.VAE()
 
-    netG = models.Generator(vae, num_workers)
-    netD = models.Discriminator(num_workers)
+    netG = models.Generator(num_workers)
+    netD = models.Discriminator(num_workers, conv_per_layer=3, channel_multiplier=1)
 
     netG = netG.to(config.DEVICE)
     netD = netD.to(config.DEVICE)
