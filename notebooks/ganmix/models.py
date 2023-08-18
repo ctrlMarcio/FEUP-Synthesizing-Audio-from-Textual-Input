@@ -7,7 +7,7 @@ import config
 
 
 class Generator(nn.Module):
-    def __init__(self, ngpu, nz=config.GENERATOR_INPUT_SIZE, ngf=config.FEATURE_MAPS_GENERATOR, l1_lambda=0.01, l2_lambda=0.01, latent_channels=config.CHANNELS_LATENT, channel_multiplier=1, dropout_prob=0.5, gaussian_noise=config.GAUSSIAN_NOISE):
+    def __init__(self, ngpu, nz=config.GENERATOR_INPUT_SIZE, ngf=config.FEATURE_MAPS_GENERATOR, l1_lambda=0.01, l2_lambda=0.01, latent_channels=config.CHANNELS_LATENT, channel_multiplier=1, dropout_prob=0.5, gaussian_noise=config.GAUSSIAN_NOISE, conv_per_layer=2):
         super(Generator, self).__init__()
 
         # Initialize the Generator with the provided parameters
@@ -20,6 +20,7 @@ class Generator(nn.Module):
         self.dropout_prob = dropout_prob
         self.latent_channels = latent_channels
         self.gaussian_noise = gaussian_noise
+        self.conv_per_layer = conv_per_layer
 
         # Build the network layers using the private method _build_network
         self.main = self._build_network()
@@ -66,6 +67,10 @@ class Generator(nn.Module):
         ]:
             layers.append(nn.ConvTranspose2d(
                 in_channels, out_channels, kernel_size=kernel_size, stride=stride, padding=padding, bias=False))
+            # add convolutional layers
+            for _ in range(self.conv_per_layer):
+                layers.append(nn.Conv2d(out_channels, out_channels, kernel_size=3,
+                                        stride=1, padding=1, bias=False))
             layers.append(nn.BatchNorm2d(out_channels))
             layers.append(nn.LeakyReLU(True))
             layers.append(nn.Dropout(self.dropout_prob))
@@ -100,12 +105,12 @@ class Discriminator(nn.Module):
         input = self.features(input)
 
         return input
-   
+
     def _create_block(self, in_channels, out_channels):
         layers = []
 
         layers.append(nn.Conv2d(in_channels, out_channels, kernel_size=3,
-            stride=2, padding=1, bias=False))
+                                stride=2, padding=1, bias=False))
         for _ in range(self.conv_per_layer - 1):
             layers.append(nn.Conv2d(out_channels, out_channels, kernel_size=3,
                                     stride=1, padding=1, bias=False))
@@ -116,9 +121,12 @@ class Discriminator(nn.Module):
 
     def _build_network(self):
         return nn.Sequential(
-            self._create_block(self.channels_data, self.ndf * self.channel_multiplier),
-            self._create_block(self.ndf * self.channel_multiplier, self.ndf * 2 * self.channel_multiplier),
-            self._create_block(self.ndf * 2 * self.channel_multiplier, self.ndf * 4 * self.channel_multiplier),
+            self._create_block(self.channels_data,
+                               self.ndf * self.channel_multiplier),
+            self._create_block(self.ndf * self.channel_multiplier,
+                               self.ndf * 2 * self.channel_multiplier),
+            self._create_block(self.ndf * 2 * self.channel_multiplier,
+                               self.ndf * 4 * self.channel_multiplier),
             nn.Conv2d(self.ndf * 4 * self.channel_multiplier, 1, kernel_size=3,
                       stride=2, padding=1, bias=False),
             nn.Sigmoid(),
