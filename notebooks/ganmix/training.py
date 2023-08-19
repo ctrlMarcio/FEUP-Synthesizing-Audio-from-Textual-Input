@@ -151,8 +151,7 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
                     netG.zero_grad()
                     # fake labels are real for generator cost
                     label.fill_(config.REAL_LABEL)
-
-                    
+ 
                     #with torch.no_grad():
                     # Since we just updated D, perform another forward pass of all-fake batch through D
                     output = netD(fake).view(-1)
@@ -168,7 +167,6 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
                 # Calculate gradients for G
                 scaler.scale(errG).backward()
                 scaler.step(optimizerG)
-                #scaler.update()
 
                 with autocast():
                     D_G_z2 = output.mean().item()
@@ -183,11 +181,6 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
                     _output_stats(csv_writer, i, epoch, num_epochs, errD, errG, D_x,
                                 D_G_z1, D_G_z2, real, fake, dataloader_len, start_time)
 
-                    # Check how the generator is doing by saving G's output on fixed_noise
-                    if (epoch % config.OUTPUT_SPECTROGRAM_INTERVAL == 0) or ((epoch == num_epochs-1) and (i == dataloader_len-1)):
-                        with torch.no_grad():
-                            fake = netG(config.FIXED_NOISE)
-                            fake = fake.detach().cpu()
 
                 # Update scaler for next iteration
                 scaler.update()
@@ -198,10 +191,14 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
 
             # save a spectrogram of the generated audio
             if (epoch % config.OUTPUT_SPECTROGRAM_INTERVAL == 0) or ((epoch == num_epochs-1) and (i == dataloader_len-1)):
+                with torch.no_grad():
+                    fake = netG(config.FIXED_NOISE)
+                    # pass the fake spectrogram through the VAE decoder
+                    fake = vae.decode(fake)
                 # save the real and the fake to compare them
                 # choose a random spectrogram
                 utils.save_spectrogram(real.detach()[0][0].cpu(), f"{start_time}_{epoch}_real")
-                utils.save_spectrogram(fake.detach()[0][0].cpu(), f"{start_time}_{epoch}_fake")            
+                utils.save_spectrogram(fake.sample.cpu()[0, 0, :, :], f"{start_time}_{epoch}_fake")            
 
             # Save the checkpoint at the specified epoch interval
             if epoch % config.CHECKPOINT["EPOCH_INTERVAL"] == 0:
