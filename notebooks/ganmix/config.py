@@ -27,7 +27,7 @@ REAL_LABEL = 1
 FAKE_LABEL = 0
 NUM_EPOCHS = 50
 CLAMP = 0.01
-GAUSSIAN_NOISE = 0.1
+GAUSSIAN_NOISE = 1
 
 # GAN
 # Size of z latent vector (i.e. size of generator input)

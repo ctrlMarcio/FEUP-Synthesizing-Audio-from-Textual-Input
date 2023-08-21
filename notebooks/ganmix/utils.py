@@ -44,6 +44,16 @@ def save_spectrogram(spectrogram, title=None):
     plt.savefig(config.SPECTROGRAM_PLOT_DIR + "/" + title + ".png")
     plt.close()
 
+def save_histogram(data, title=None):
+    # Display the spectrogram using matplotlib
+    plt.hist(data, bins=100)
+
+    if title:
+        plt.title(title)
+
+    # save the figure to config.SPECTROGRAM_PLOT_DIR
+    plt.savefig(config.SPECTROGRAM_PLOT_DIR + "/" + title + ".png")
+    plt.close()
 
 
 def random_trim(waveform, sample_rate, duration):

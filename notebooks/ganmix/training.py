@@ -6,6 +6,7 @@ import utils
 import os
 import csv
 import torch.optim.lr_scheduler as lr_scheduler
+import matplotlib.pyplot as plt
 from torch.cuda.amp import autocast, GradScaler
 
 
@@ -79,6 +80,11 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
 
     # Training loop
     print("Starting Training Loop...")
+
+    # print the encodings of a generated sample just to check if its correct
+    fake = netG(config.FIXED_NOISE)
+    #fake = fake.cpu().detach()
+    utils.save_histogram(fake.flatten().cpu().detach().numpy(), "_test1")
 
     # Create CSV file and write header
     with open(stats_file_path, 'a', newline='') as csvfile:
@@ -192,13 +198,18 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
             # save a spectrogram of the generated audio
             if (epoch % config.OUTPUT_SPECTROGRAM_INTERVAL == 0) or ((epoch == num_epochs-1) and (i == dataloader_len-1)):
                 with torch.no_grad():
-                    fake = netG(config.FIXED_NOISE)
+                    fake_encodings = netG(config.FIXED_NOISE)
                     # pass the fake spectrogram through the VAE decoder
-                    fake = vae.decode(fake)
+                    fake_spectrogram = vae.decode(fake_encodings)
                 # save the real and the fake to compare them
                 # choose a random spectrogram
-                utils.save_spectrogram(real.detach()[0][0].cpu(), f"{start_time}_{epoch}_real")
-                utils.save_spectrogram(fake.sample.cpu()[0, 0, :, :], f"{start_time}_{epoch}_fake")            
+                # save histograms of the real and fake encodings
+                utils.save_histogram(embeddings.flatten().cpu().detach().numpy(), f"{start_time}_{epoch}_real_encodings")
+                utils.save_histogram(fake_encodings.flatten().cpu().detach().numpy(), f"{start_time}_{epoch}_fake_encodings")
+                # utils.save_spectrogram(embeddings.detach()[0][0].cpu(), f"{start_time}_{epoch}_real_encodings")
+                utils.save_spectrogram(real.detach()[0][0].cpu(), f"{start_time}_{epoch}_real_spectrogram")
+                # utils.save_spectrogram(fake_encodings.cpu()[0, 0, :, :], f"{start_time}_{epoch}_fake_encodings")
+                utils.save_spectrogram(fake_spectrogram.sample.cpu()[0, 0, :, :], f"{start_time}_{epoch}_fake_spectrogram")
 
             # Save the checkpoint at the specified epoch interval
             if epoch % config.CHECKPOINT["EPOCH_INTERVAL"] == 0:

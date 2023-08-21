@@ -5,6 +5,11 @@ from torchsummary import summary
 
 import config
 
+class GANMix():
+    def __init__(self, vae, generator, discriminator):
+        self.vae = vae
+        self.generator = generator
+        self.discriminator = discriminator
 
 class Generator(nn.Module):
     def __init__(self, ngpu, nz=config.GENERATOR_INPUT_SIZE, ngf=config.FEATURE_MAPS_GENERATOR, l1_lambda=0.01, l2_lambda=0.01, latent_channels=config.CHANNELS_LATENT, channel_multiplier=1, dropout_prob=0.5, gaussian_noise=config.GAUSSIAN_NOISE, conv_per_layer=2):
@@ -76,7 +81,9 @@ class Generator(nn.Module):
             layers.append(nn.Dropout(self.dropout_prob))
             in_channels = out_channels
 
-        layers.append(nn.Tanh())
+        #layers.append(nn.Tanh())
+        # add linear activation
+        
 
         return nn.Sequential(*layers)
 
