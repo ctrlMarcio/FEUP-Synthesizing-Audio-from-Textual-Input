@@ -81,11 +81,6 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
     # Training loop
     print("Starting Training Loop...")
 
-    # print the encodings of a generated sample just to check if its correct
-    fake = netG(config.FIXED_NOISE)
-    #fake = fake.cpu().detach()
-    utils.save_histogram(fake.flatten().cpu().detach().numpy(), "_test1")
-
     # Create CSV file and write header
     with open(stats_file_path, 'a', newline='') as csvfile:
         csv_writer = csv.writer(csvfile)

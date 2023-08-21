@@ -2,14 +2,62 @@ import torch
 from torch import nn
 from diffusers import AutoencoderKL
 from torchsummary import summary
+from torch.nn import BCEWithLogitsLoss
+import torch.optim as optim
 
 import config
 
+
 class GANMix():
-    def __init__(self, vae, generator, discriminator):
+    def __init__(self, vae, generator, discriminator, generator_optimizer, discriminator_optimizer, criterion, num_workers=1):
+        # models
         self.vae = vae
         self.generator = generator
         self.discriminator = discriminator
+
+        # optimizers
+        self.generator_optimizer = generator_optimizer
+        self.discriminator_optimizer = discriminator_optimizer
+
+        # criterion
+        self.criterion = criterion
+
+        # workers
+        self.num_workers = num_workers
+
+    # factory initialize models
+
+    @classmethod
+    def build(cls):
+        # Get the number of available GPUs
+        num_workers = torch.cuda.device_count()
+
+        vae = VAE()
+
+        netG = Generator(num_workers, channel_multiplier=3)
+        netD = Discriminator(num_workers, conv_per_layer=2,
+                             channel_multiplier=3)
+
+        netG = netG.to(config.DEVICE)
+        netD = netD.to(config.DEVICE)
+
+        # Handle multi-GPU if desired
+        if num_workers > 1:
+            netG = nn.DataParallel(netG, list(range(num_workers)))
+            netD = nn.DataParallel(netD, list(range(num_workers)))
+
+        # initialize criterion
+        criterion = BCEWithLogitsLoss()
+
+        # Setup Adam optimizers for both G and D
+        optimizerD = optim.Adam(netD.parameters(
+        ), lr=config.LEARNING_RATE_DISCRIMINATOR, betas=(config.BETA1, 0.999))
+        optimizerG = optim.Adam(netG.parameters(
+        ), lr=config.LEARNING_RATE_GENERATOR, betas=(config.BETA1, 0.999))
+
+        # Return the GANMix object
+        return cls(vae, netG, netD, optimizerG, optimizerD, criterion, num_workers)
+
 
 class Generator(nn.Module):
     def __init__(self, ngpu, nz=config.GENERATOR_INPUT_SIZE, ngf=config.FEATURE_MAPS_GENERATOR, l1_lambda=0.01, l2_lambda=0.01, latent_channels=config.CHANNELS_LATENT, channel_multiplier=1, dropout_prob=0.5, gaussian_noise=config.GAUSSIAN_NOISE, conv_per_layer=2):
@@ -81,9 +129,8 @@ class Generator(nn.Module):
             layers.append(nn.Dropout(self.dropout_prob))
             in_channels = out_channels
 
-        #layers.append(nn.Tanh())
+        # layers.append(nn.Tanh())
         # add linear activation
-        
 
         return nn.Sequential(*layers)
 

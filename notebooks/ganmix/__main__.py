@@ -8,8 +8,12 @@ import dataset
 import training
 import models
 import config
+import train_rewrite
 
 def main():
+    train_rewrite.main()
+
+def _main():
     """
     The main function that initiates the application by calling 'init.boot()'.
 
@@ -31,8 +35,7 @@ def main():
     dataloader = dataset.get_dataloader(num_workers=num_workers)
 
     vae = models.VAE()
-
-
+    
     netG = models.Generator(num_workers, channel_multiplier=3)
     netD = models.Discriminator(num_workers, conv_per_layer=2, channel_multiplier=3)
 
