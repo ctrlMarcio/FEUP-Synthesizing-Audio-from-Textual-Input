@@ -1,0 +1,39 @@
+2023-08-23 07:55:13.467380: I tensorflow/core/util/port.cc:110] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2023-08-23 07:55:13.509448: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-08-23 07:55:14.213569: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+
+  0%|          | 0/181 [00:00<?, ?it/s]
+  1%|          | 1/181 [00:07<21:25,  7.14s/it]
+  1%|          | 2/181 [00:12<17:18,  5.80s/it]
+  2%|▏         | 3/181 [00:17<16:18,  5.50s/it]
+  2%|▏         | 4/181 [00:22<15:48,  5.36s/it]
+  3%|▎         | 5/181 [00:27<15:26,  5.26s/it]  3%|▎         | 6/181 [00:32<15:17,  5.24s/it]  3%|▎         | 6/181 [00:33<16:25,  5.63s/it]
+Traceback (most recent call last):
+  File "__main__.py", line 74, in <module>
+    main()
+  File "__main__.py", line 14, in main
+    train_rewrite.main()
+  File "/home/admin/FEUP-Synthesizing-Audio-from-Textual-Input/notebooks/ganmix/train_rewrite.py", line 172, in main
+    run_train()
+  File "/home/admin/FEUP-Synthesizing-Audio-from-Textual-Input/notebooks/ganmix/train_rewrite.py", line 163, in run_train
+    loss_discriminator = _train_discriminator(data, ganmix, settings)
+  File "/home/admin/FEUP-Synthesizing-Audio-from-Textual-Input/notebooks/ganmix/train_rewrite.py", line 59, in _train_discriminator
+    real_embeddings = _embed_samples(ganmix.vae, real_data)
+  File "/home/admin/FEUP-Synthesizing-Audio-from-Textual-Input/notebooks/ganmix/train_rewrite.py", line 42, in _embed_samples
+    embeddings = vae.encode(samples)
+  File "/home/admin/.local/lib/python3.8/site-packages/diffusers/utils/accelerate_utils.py", line 46, in wrapper
+    return method(self, *args, **kwargs)
+  File "/home/admin/.local/lib/python3.8/site-packages/diffusers/models/autoencoder_kl.py", line 242, in encode
+    h = self.encoder(x)
+  File "/home/admin/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/admin/.local/lib/python3.8/site-packages/diffusers/models/vae.py", line 145, in forward
+    sample = self.conv_norm_out(sample)
+  File "/home/admin/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/admin/.local/lib/python3.8/site-packages/torch/nn/modules/normalization.py", line 273, in forward
+    return F.group_norm(
+  File "/home/admin/.local/lib/python3.8/site-packages/torch/nn/functional.py", line 2530, in group_norm
+    return torch.group_norm(input, num_groups, weight, bias, eps, torch.backends.cudnn.enabled)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 428.00 MiB (GPU 0; 47.45 GiB total capacity; 37.78 GiB already allocated; 116.00 MiB free; 39.62 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF

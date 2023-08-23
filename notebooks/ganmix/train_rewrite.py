@@ -2,6 +2,7 @@ from tqdm import tqdm
 from torch.cuda.amp import autocast, GradScaler
 import torch
 import time
+import csv
 
 import models
 import init
@@ -20,6 +21,8 @@ class Settings():
         # To handle gradient scaling (mixed precision training)
         self.scaler = GradScaler()
 
+        # For file writing
+        self.stats_file_path = config.STATS_DIR + f"/training_stats_{self.start_time}.csv"
 
 def _init():
     # call the ganmix factory
@@ -110,6 +113,9 @@ def _train_generator(ganmix, settings):
         # Compute generator loss based on how well the fake samples fooled the discriminator
         loss_generator = ganmix.criterion(prediction_fake, fake_label)
 
+        # Compute elastic net loss
+        loss_generator += ganmix.generator.elastic_net_regularization()
+
     # Backpropagate and update generator's weights
     settings.scaler.scale(loss_generator).backward()
     settings.scaler.step(ganmix.generator_optimizer)
@@ -117,7 +123,15 @@ def _train_generator(ganmix, settings):
 
     return loss_generator
 
-def _output_epoch_results(start_time, epoch, generator, vae):
+def _output_epoch_results(start_time, epoch, generator, vae, loss_discriminator_list, loss_generator_list, csv_writer):
+    # store info in the file and display it
+    avg_loss_discriminator = sum(loss_discriminator_list) / len(loss_discriminator_list)
+    avg_loss_generator = sum(loss_generator_list) / len(loss_generator_list)
+    csv_writer.writerow([
+        epoch, avg_loss_discriminator, avg_loss_generator
+    ])
+    print(f"Epoch: {epoch} | Loss D: {avg_loss_discriminator} | Loss G: {avg_loss_generator}")
+
     # save a spectrogram of the generated audio
     with torch.no_grad():
         fake_encodings = generator(config.FIXED_NOISE)
@@ -134,12 +148,25 @@ def run_train():
     settings = Settings(ganmix.num_workers)
 
     # training loop
-    for epoch in range(config.NUM_EPOCHS):
-        for data, quote in tqdm(settings.dataloader):
-            _train_discriminator(data, ganmix, settings)
-            _train_generator(ganmix, settings)
+    with open(settings.stats_file_path, 'a', newline='') as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerow([
+            'Epoch', 'Loss_D', 'Loss_G'
+        ])
 
-        _output_epoch_results(settings.start_time, epoch, ganmix.generator, ganmix.vae)
+        for epoch in range(config.NUM_EPOCHS):
+            # Store the losses in lists to calculate the full
+            loss_discriminator_list = []
+            loss_generator_list = []
+
+            for data, quote in tqdm(settings.dataloader):
+                loss_discriminator = _train_discriminator(data, ganmix, settings)
+                loss_discriminator_list.append(loss_discriminator.item())
+
+                loss_generator = _train_generator(ganmix, settings)
+                loss_generator_list.append(loss_generator.item())
+
+            _output_epoch_results(settings.start_time, epoch, ganmix.generator, ganmix.vae, loss_discriminator_list, loss_generator_list, csv_writer)
 
 def main():
     run_train()
