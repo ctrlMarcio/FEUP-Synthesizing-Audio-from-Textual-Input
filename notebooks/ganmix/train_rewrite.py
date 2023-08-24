@@ -114,7 +114,7 @@ def _train_generator(ganmix, settings):
         loss_generator = ganmix.criterion(prediction_fake, fake_label)
 
         # Compute elastic net loss
-        loss_generator += ganmix.generator.elastic_net_regularization()
+        # loss_generator += ganmix.generator.elastic_net_regularization()
 
     # Backpropagate and update generator's weights
     settings.scaler.scale(loss_generator).backward()
@@ -123,13 +123,14 @@ def _train_generator(ganmix, settings):
 
     return loss_generator
 
-def _output_epoch_results(start_time, epoch, generator, vae, loss_discriminator_list, loss_generator_list, csv_writer):
+def _output_epoch_results(start_time, epoch, generator, vae, loss_discriminator_list, loss_generator_list, csv_writer, csvfile):
     # store info in the file and display it
     avg_loss_discriminator = sum(loss_discriminator_list) / len(loss_discriminator_list)
     avg_loss_generator = sum(loss_generator_list) / len(loss_generator_list)
     csv_writer.writerow([
         epoch, avg_loss_discriminator, avg_loss_generator
     ])
+    csvfile.flush()
     print(f"Epoch: {epoch} | Loss D: {avg_loss_discriminator} | Loss G: {avg_loss_generator}")
 
     # save a spectrogram of the generated audio
@@ -153,6 +154,7 @@ def run_train():
         csv_writer.writerow([
             'Epoch', 'Loss_D', 'Loss_G'
         ])
+        csvfile.flush()
 
         for epoch in range(config.NUM_EPOCHS):
             # Store the losses in lists to calculate the full
@@ -166,7 +168,7 @@ def run_train():
                 loss_generator = _train_generator(ganmix, settings)
                 loss_generator_list.append(loss_generator.item())
 
-            _output_epoch_results(settings.start_time, epoch, ganmix.generator, ganmix.vae, loss_discriminator_list, loss_generator_list, csv_writer)
+            _output_epoch_results(settings.start_time, epoch, ganmix.generator, ganmix.vae, loss_discriminator_list, loss_generator_list, csv_writer, csvfile)
 
 def main():
     run_train()
