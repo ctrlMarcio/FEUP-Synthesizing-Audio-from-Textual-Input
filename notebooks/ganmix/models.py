@@ -34,7 +34,7 @@ class GANMix():
 
         vae = VAE()
 
-        netG = Generator(num_workers, conv_per_layer=2, channel_multiplier=3)
+        netG = Generator(num_workers, conv_per_layer=2, channel_multiplier=3, l1_lambda=0.0001, l2_lambda=0.0001)
         netD = Discriminator(num_workers, conv_per_layer=3, channel_multiplier=4)
 
         netG = netG.to(config.DEVICE)

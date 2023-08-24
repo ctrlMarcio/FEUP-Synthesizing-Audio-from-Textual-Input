@@ -71,9 +71,9 @@ def _train_discriminator(data, ganmix, settings):
         # this means that the generator will not be trained in this step
         prediction_fake = ganmix.discriminator(fake_embeddings.detach())
 
-        # Define labels for real and fake samples (real: 1, fake: 0)
+        # Define labels for real and fake samples (real: 1, fake: -1)
         real_label = torch.ones(batch_size, 1, device=config.DEVICE)
-        fake_label = torch.zeros(batch_size, 1, device=config.DEVICE)
+        fake_label = -torch.ones(batch_size, 1, device=config.DEVICE)
 
         # Compute discriminator loss for real and fake samples
         loss_real = ganmix.criterion(prediction_real, real_label)
