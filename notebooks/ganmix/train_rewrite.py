@@ -4,7 +4,8 @@ import torch
 import time
 import csv
 
-import models
+# import models
+import linear_models as models
 import init
 import config
 import dataset
@@ -34,7 +35,7 @@ def _gen_fake_samples(generator, num_samples):
     # This function is used to generate samples for the discriminator training.
     # The generated samples are returned as a tensor.
     
-    noise = torch.randn(num_samples, config.GENERATOR_INPUT_SIZE, 1, 1, device=config.DEVICE)
+    noise = torch.randn(num_samples, config.GENERATOR_INPUT_SIZE, device=config.DEVICE)
     fake_samples = generator(noise)
     return fake_samples
 
@@ -135,12 +136,14 @@ def _output_epoch_results(start_time, epoch, generator, vae, loss_discriminator_
 
     # save a spectrogram of the generated audio
     with torch.no_grad():
-        fake_encodings = generator(config.FIXED_NOISE)
+        noise = torch.randn(1, config.GENERATOR_INPUT_SIZE, device=config.DEVICE)
+        fake_encodings = generator(noise)
         # pass the fake spectrogram through the VAE decoder
         fake_spectrogram = vae.decode(fake_encodings)
+        spectrogram_representation = fake_spectrogram.sample.cpu()[0, 0, :, :]
 
     utils.save_histogram(fake_encodings.flatten().cpu().detach().numpy(), f"{start_time}_{epoch}_fake_encodings")
-    utils.save_spectrogram(fake_spectrogram.sample.cpu()[0, 0, :, :], f"{start_time}_{epoch}_fake_spectrogram")
+    utils.save_spectrogram(spectrogram_representation, f"{start_time}_{epoch}_fake_spectrogram")
 
 
 def run_train():

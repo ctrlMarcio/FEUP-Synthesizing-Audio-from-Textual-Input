@@ -81,9 +81,6 @@ class Generator(nn.Module):
         # Move the input data to the appropriate device (CPU/GPU)
         input = input.to(config.DEVICE)
 
-        # Add Gaussian noise to the input data
-        input = input + torch.randn_like(input) * self.gaussian_noise
-
         # Perform the forward pass through the main network
         x = self.main(input)
 

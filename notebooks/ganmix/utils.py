@@ -30,6 +30,10 @@ def show_spectrogram(spectrogram, title=None):
     plt.show()
 
 def save_spectrogram(spectrogram, title=None):
+    save_spectrogram_plot(spectrogram, title)
+    save_spectrogram_data(spectrogram, title)
+
+def save_spectrogram_plot(spectrogram, title=None):
     # Display the spectrogram using matplotlib
     plt.imshow(spectrogram, cmap='hot', origin='lower')
     plt.xlabel('Time')
@@ -43,6 +47,10 @@ def save_spectrogram(spectrogram, title=None):
     # save the figure to config.SPECTROGRAM_PLOT_DIR
     plt.savefig(config.SPECTROGRAM_PLOT_DIR + "/" + title + ".png")
     plt.close()
+
+def save_spectrogram_data(spectrogram, title=None):
+    # save the spectrogram data to config.SPECTROGRAM_DIR
+    np.save(config.SPECTROGRAM_DIR + "/" + title + ".npy", spectrogram)
 
 def save_histogram(data, title=None):
     # Display the spectrogram using matplotlib
