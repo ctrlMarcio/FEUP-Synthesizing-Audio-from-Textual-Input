@@ -88,6 +88,9 @@ def _train_discriminator(data, ganmix, settings):
     settings.scaler.step(ganmix.discriminator_optimizer)
     settings.scaler.update()
 
+    # Update the scheduler
+    ganmix.discriminator_scheduler.step()
+
     return loss_discriminator
 
 def _train_generator(ganmix, settings):
@@ -121,6 +124,9 @@ def _train_generator(ganmix, settings):
     settings.scaler.scale(loss_generator).backward()
     settings.scaler.step(ganmix.generator_optimizer)
     settings.scaler.update()
+
+    # Update the scheduler
+    ganmix.generator_scheduler.step()
 
     return loss_generator
 

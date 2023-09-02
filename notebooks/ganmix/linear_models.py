@@ -18,6 +18,9 @@ class GANMix():
         self.generator_optimizer = generator_optimizer
         self.discriminator_optimizer = discriminator_optimizer
 
+        self.generator_scheduler = optim.lr_scheduler.StepLR(self.generator_optimizer, step_size=10, gamma=0.1)
+        self.discriminator_scheduler = optim.lr_scheduler.StepLR(self.discriminator_optimizer, step_size=10, gamma=0.1)
+
         # criterion
         self.criterion = criterion
 
@@ -120,5 +123,7 @@ class Discriminator(nn.Module):
             nn.Linear(np.prod(self.input_shape), self.hidden_size),
             nn.LeakyReLU(0.2),
             nn.Linear(self.hidden_size, 1),
+            # tanh activation function
+            nn.Tanh()
         )
         return network 
