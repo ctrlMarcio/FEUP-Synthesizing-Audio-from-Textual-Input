@@ -1,0 +1,78 @@
+\subsubsection{Audio Generation with GAN} \label{sec:sol-gan}
+
+This section presents the methodology and results of applying a \ac{GAN} model to generate audio samples from raw sound waves without spectrograms.
+
+A \ac{GAN} model, as explained in Section \ref{sec:gan}, consists of two neural networks: the generator and the discriminator. The generator creates new data samples that mimic the input data distribution while the discriminator evaluates how realistic the created data samples are. The goal is to train the generator to create samples that are indistinguishable from the real data, according to the discriminator.
+
+However, training \ac{GAN} models poses significant computational cost and time challenges. This is because a \ac{GAN} model involves two neural networks that must be trained simultaneously. The generator creates new data samples, and the discriminator evaluates their realism. Therefore, each network has to wait for the output of the other network to update its parameters. This process can be time-consuming, especially for larger datasets or more complex architectures. Moreover, since \ac{GAN} models are computationally intensive, they require powerful \acp{GPU} and can take days or weeks to train.
+
+In this section, raw sound waves were used as input data instead of spectrograms. This was done to eliminate the need for a vocoder (see Section~\ref{sec:vocoders}). The audio input size of the Audio MNIST dataset varied, so the first step was to pad the audio samples with zeros to a fixed size that could accommodate all samples. This was achieved by applying the same preprocessing techniques applied in Section~\ref{sec:classification-model}.
+
+A normalization process was applied to the audio data to confine the audio signal values within a well-defined range, mitigating the potential occurrence of gradient explosion. This facilitates the convergence of the learning process for the model.
+
+The TensorFlow framework was utilized to implement the \ac{GAN} model.
+
+The generator network architecture consists of a series of layered operations that include dense, reshape, and transposed convolutional transformations. The layers are comprehensively depicted in Annex~\ref{ann:GAN}.
+
+The input layer takes a noise vector ($z$) of size 100 as input and passes it through a dense layer with 256 units. Then, six transposed convolution layers are applied with a kernel of 25 and stride set to 4. The number of filters goes from 32 to 1, generating an output with only one channel. Each transposed convolution layer is followed by a ReLU activation function (see Section~\ref{sec:activation}), except for the last one, which uses a tanh activation function to bound the last values between -1 and 1, emulating a normalized raw sound. The output of the last layer is a $16384 \times 1$ vector, which represents the generated audio sample ($G(z)$).
+
+The generator network can be formally defined as follows:
+
+\begin{equation}
+\begin{split}
+G(z) &= \text{tanh}(\text{Conv1DTranspose}_6(\text{ReLU}(\text{Conv1DTranspose}_5 (\cdots \\
+&\quad \text{ReLU}(\text{Conv1DTranspose}_1(\text{Reshape}(\text{Dense}(z))))))))
+\end{split}
+\end{equation}
+
+where $\text{Dense}$, $\text{Reshape}$, $\text{Conv1DTranspose}$, $\text{ReLU}$, and $\text{tanh}$ denote the corresponding operations with their parameters omitted for brevity.
+
+The discriminator network is composed of several layers of convolution and dense operations. These can also be seen in Annex~\ref{ann:GAN}
+
+The input layer takes either a real audio sample ($x$) or a fake audio sample ($G(z)$) of size $16384 \times 1$ as input. Its architecture mirrors that of the generator. It passes through six convolution layers with a kernel of 25 and a stride of 4, starting from one filter until 32. Each convolution layer is followed by a leaky ReLU activation function with an alpha parameter of 0.2 to avoid the dying ReLU problem (see Section~\ref{sec:activation}). The output of the last layer is flattened into a 32-dimensional vector. Then, a dense layer with one unit is applied to produce a scalar value, which represents the probability ($D(x)$ or $D(G(z))$) of the input being real.
+
+The discriminator network can be formally defined as follows:
+
+\begin{equation}
+D(x) = \text{Dense}(\text{Flatten}(\text{Conv1D}_6(\text{LeakyReLU}(\text{Conv1D}_5(\cdots \text{LeakyReLU}(\text{Conv1D}_1(x)))))))
+\end{equation}
+
+where $\text{Conv1D}$, $\text{Flatten}$, $\text{Dense}$, and $\text{LeakyReLU}$ denote the corresponding operations with their parameters omitted for brevity.
+
+The training process alternates between updating the parameters of the generator and the discriminator using gradient descent. Both networks use the \ac{BCE} loss function, which is a variation of the cross-entropy loss function explained in Section~\ref{sec:cross-entropy}. Cross-entropy measures how accurately the networks predict the input labels. \Ac{BCE} is designed for discriminating between two categories — real and fake samples, in this case. The generator aims to reduce \ac{BCE} loss by encouraging the discriminator to assign high scores to fake samples. On the other hand, the discriminator aims to minimize \ac{BCE} by producing low output values for fake samples and high output values for real samples. The interaction between generator and discriminator, which is guided by binary cross-entropy, helps in the training and enhancement of the generative model.
+
+The training algorithm can be summarized as presented in Algorithm~\ref{alg:gan}.
+
+\begin{algorithm}
+\caption{\ac{GAN} Training Algorithm}
+\label{alg:gan}
+\begin{algorithmic}[1]
+\State Initialize generator ($G$) and discriminator ($D$) parameters randomly
+\State Set number of epochs ($E$) and batch size ($B$)
+\For{$e = 1, \dots, E$}
+\State Shuffle the real audio samples ($X$)
+\For{$b = 1, \dots, \frac{|X|}{B}$}
+\State Sample a batch of noise vectors ($Z$) from a normal distribution
+\State Generate a batch of fake audio samples ($G(Z)$) using $G$
+\State Compute the discriminator outputs for real ($D(X)$) and fake ($D(G(Z))$) samples using $D$
+\State Compute the generator loss ($L_G$) using BCE and $D(G(Z))$
+\State Compute the discriminator loss ($L_D$) using BCE and $D(X)$ and $D(G(Z))$
+\State Update $G$ parameters by descending the gradients of $L_G$
+\State Update $D$ parameters by descending the gradients of $L_D$
+\EndFor
+\State Generate and save a sample audio using $G$
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+%%
+
+The implementation code for this architecture is presented in Appendix \ref{ann:GAN}.
+
+The \ac{GAN} model was trained on a small dataset of audio samples for 20 epochs. This was done to reduce training time since it was developed on a personal computer. Despite limited training time, results were promising. Generated audio samples were based on random noise but resembled real ones in terms of wave amplitude.
+
+These results demonstrated that it was possible to generate realistic audio samples using raw sound waves as input data.
+
+However, developing this model was challenging. The author used TensorFlow but faced difficulties with code complexity and memory usage. This led to frustration as the model needed scaling up.
+
+To overcome this challenge, the author had to learn PyTorch, known for simplicity and flexibility, as seen in section \ref{sec:pytorch}. From now on, assume every implementation was done in PyTorch.

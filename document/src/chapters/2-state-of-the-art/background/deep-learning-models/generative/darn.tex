@@ -1,0 +1,20 @@
+\paragraph{Deep Autoregressive Network (DARN)} \label{sec:darn}
+
+First introduced in 2013, \acf{DARN} is an architecture for generative models that are used to generate data by using an \acf{AR} approach \cite{gregor_deep_2014}.
+
+\Ac{AR} models generate data by predicting the following sample in a sequence based on the previous samples. In the case of \acp{DARN}, the model has multiple hidden layers to do so. The idea behind it is to model the data's complex, high-dimensional probability distribution by breaking it down into a series of simple, conditionally independent distributions. This is done by learning a deep neural network that maps inputs to outputs through a series of hidden layers. This allows the network to build up a complex representation of the data distribution over time, capturing complex patterns in the data and ultimately making more precise predictions.
+
+By applying the chain rule of probability, \ac{AR} models can create a feasible density model that breaks down the probability distribution over $n$ time steps \cite{huzaifah_deep_2021}, as shown in equation
+
+\begin{equation} \label{eq:chain-rule}
+    p(X) = \prod_{i=1}^n p(x_i|x_1, ..., x_{i-1})
+\end{equation}
+
+This method implies that data has a standard sequential order—the present term in the sequence $(x_i)$ depends only on a recent window of preceding terms. Future terms are not taken into account. This is, ultimately, they assume that a data point only depends on previous ones and learn to predict the following sample is given only what has come just prior. The rationale behind this technique is similar to the one that \acp{RNN} employ. In fact, an \ac{RNN} can be seen as an \ac{AR} model that reduces the previous terms to a hidden state rather than giving them directly as input to a layer \cite{huzaifah_deep_2021}. Besides, \ac{AR} models are more straightforward and faster to train. Indeed, an \ac{AR} model is a feedforward model (see Section \ref{sec:feedforward} )which predicts future values from past values. One can imagine a model similar to a feedforward neural network that is not fully connected but with only some connections regarding past inputs. This can be seen in Figure \ref{fig:darn}.
+
+\begin{figure}[ht]
+    \centering
+    \ctikzfig{figures/2-sota/darn}
+    \caption[Deep autoregressive network]{\textbf{\Acf{DARN}} --- The input of each neuron in a given layer is conditioned by the output of the 2 previous neurons in the previous output.}
+    \label{fig:darn}
+\end{figure}

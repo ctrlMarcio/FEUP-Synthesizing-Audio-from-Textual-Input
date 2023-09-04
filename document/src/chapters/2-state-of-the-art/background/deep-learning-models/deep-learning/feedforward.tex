@@ -1,0 +1,33 @@
+\paragraph{Feedforward Neural Network (1957)} \label{sec:feedforward}
+
+To understand \textit{feedforward neural networks} (or any neural network), it is essential to understand both Hebbian learning and the perceptron.
+
+In 1949, inspired by the observation that neurons that fire together wire together, the psychologist Donald Hebb \cite{hebb_organization_1949} developed a rule for adjusting the strength of connections between neurons in any neural network. The rule goes by the name of Hebbian learning and states that if two neurons are activated simultaneously, their connection should be strengthened. The idea behind Hebbian learning is that learning occurs as a result of changes in the strengths of synaptic connections between neurons in the brain rather than solely due to changes in the activity of individual neurons.
+
+The perceptron is a simple model first published in 1958 by F. Rosenblatt \cite{rosenblatt_perceptron_1958}. It consists of a single neuron with a binary threshold --- also known as bias --- and is used for binary classification tasks. A set of weights transforms the input to the perceptron. The output is determined by checking if the input is enough to trigger the bias and then applying a function to the weighted sum of inputs as shown in Figure \ref{fig:perceptron}. The output of the perceptron can be mathematically expressed as in the equation \ref{eq:perceptron-ouput}.
+
+\begin{equation} \label{eq:perceptron-ouput}
+    y = h(\sum_{x=1}^N (I_x \times W_x) - b)
+\end{equation}
+
+$y$ is the output, $N$ is the number of inputs, $I_n$ is the input number $n$, $W_n$ is the weight related to $I_n$, $b$ is the bias, and $h$ is an activation function, usually.
+
+The perceptron is trained using an algorithm that adjusts the weights based on the error between the actual and predicted outputs. The exciting part is that Hebbian learning can be applied to perceptrons, which was one of the bases of the future backpropagation. The perceptron can only classify linear separated sets, as shown in \textit{Perceptrons} \cite{marvin_minsky_perceptrons_1969}, hence the need for more complex structures.
+
+\begin{figure}[ht]
+    \centering
+    \ctikzfig{figures/2-sota/perceptron}
+    \caption[Perceptron]{\textbf{Perceptron} --- The perceptron receives multiple inputs associated with a weight. It also holds a given bias. Its output is the application of a given function (\textit{e.g.} step function) to the weighted average of the inputs minus the bias.}
+    \label{fig:perceptron}
+\end{figure}
+
+A feedforward neural network is no more than a set of layers of perceptron-like neurons. In a feedforward neural network, information moves in only one direction --- forward. Hebbian learning no longer applies to these networks, so more complex algorithms, such as backpropagation, are required. These networks are universal approximators \cite{cybenko_approximation_1989} if they have at least one hidden layer, meaning they can approach any function given the proper configuration. They can also learn different tasks than classification, such as regression. The first functional networks, called multi-layer perceptrons, were invented in the 1980s. An example structure of a feedforward neural network can be seen in Figure \ref{fig:feed_forward_neural_network}.
+
+\begin{figure}[!ht]
+    \centering
+    \ctikzfig{figures/2-sota/feed-forward-neural-network}
+    \caption[Feedforward Neural Network]{\textbf{Feedforward neural network} --- The size of the input is constant. The flow of information goes through nonlinear functions on hidden layers. Both weights between nodes on different layers and the nodes' bias are trained with backpropagation.}
+    \label{fig:feed_forward_neural_network}
+\end{figure}
+
+To a certain extent, since the perceptron is the most basic feedforward neural network (consisting of only one neuron), these networks do not necessarily equate to deep learning (\ac{DL}). Smaller networks have existed and been utilized for decades. Nevertheless, the foundation for most \ac{DL} architectures comes from this, making it essential to recognize.

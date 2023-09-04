@@ -1,0 +1,20 @@
+\paragraph{Normalizing Flow Models} \label{sec:flow-model}
+
+Normalizing flow models provide a flexible and robust framework for generative modeling and were first introduced in 2015 \cite{rezende_variational_2016}.
+
+The main idea is to use the change of variables in the probability distributions technique to convert simple distributions into more complicated ones. This technique requires applying a transformation to a distribution that changes it into another, more intricate, distribution. The entire idea begins with a simple distribution (for instance, Gaussian) for a set of hidden variables $z$. The goal is to change this distribution into a complex one that corresponds to an output $X$. A single transformation is provided by a smooth and reversible function $f$ that can relate $z$ and $X$, such that $X = f (z)$ and $z = f^{- 1}(X)$. Considering the complexity of $X$, one of these transformations might not produce a sufficiently complex distribution. Hence, multiple reversible transformations are combined sequentially, forming a ``flow''. Neural network layers determine each mapping function in the flow \cite{huzaifah_deep_2021}. Figure \ref{fig:normalizing-flows} illustrates this process.
+
+\begin{figure}[ht]
+    \centering
+    \ctikzfig{figures/2-sota/normalizing-flows}
+    \caption[Normalizing flows network]{\textbf{Normalizing flows network} --- This illustration was based on \cite{weng_flow-based_2018} and shows the application of multiple invertible functions $f_k$ composed one after the other in order to build the complex output $z_K = x$ from a simple Gaussian distribution.}
+    \label{fig:normalizing-flows}
+\end{figure}
+
+Accurately, let $z_0$ be a multivariate random variable with a distribution $p_0(z_0)$ where $p_0$ is, for example, a Gaussian distribution. Then, for $i = 1, ..., K$ where $K$ is the number of flow operations, let $z_i = f_i(z_{i - 1})$ be a sequence of random multivariate variables. $f_i^{-1}$ should exist for training to occur. The final output $z_K$ models the target distribution.
+
+Normalizing flow models are flexible, meaning they can model various distributions by stacking multiple normalizing flows to form a deep network. This allows it to capture complex relationships between variables in the data.
+
+These models have been proven effective for the generative modeling of high-dimensional data.
+
+In the generative scene, these models are distinguished from the previously mentioned ones because they can speed up the generations and modeling processes \cite{huzaifah_deep_2021}.

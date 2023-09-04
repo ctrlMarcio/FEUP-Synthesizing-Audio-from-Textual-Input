@@ -1,0 +1,55 @@
+\section{Context} \label{sec:context}
+
+According to the University of York \cite{university_of_york_what_nodate}, ``Computer Science is the study of computation and information''. In practice, engineers and computer scientists typically create programs that machines execute. Traditionally, these programs consist of a sequence of instructions for the computer to follow.
+
+Currently, processing and analyzing vast datasets is imperative for most endeavors. Computer science enables the possibility of these commodities, ranging from running hospitals to creating songs for streaming platforms.
+
+Currently, most endeavors require processing and analyzing vast datasets. These commodities are only possible with computer science, from running hospitals to creating the songs one listens to on a streaming platform.
+
+This amount of data has given rise to a new type of application. They do not need to have these instructions wired in. Instead, algorithms learn these from data. To this end, we call this \acf{ML}.
+
+Since computers were invented, the scientific community has wondered whether they can learn~\cite{mitchell_machine_1997}. \ac{ML} is a field devoted to understanding and building methods that let machines ``learn'' – that is, methods that leverage data to improve computer performance on some set of tasks~\cite{alpaydin_introduction_2020}. Modern \ac{AI} was born in 1958 when F. Rosenblatt \cite{rosenblatt_perceptron_1958}, in an attempt to understand the capability of higher organisms for perceptual recognition, generalization, recall, and eventually thinking, proposed three fundamental questions:
+
+\begin{enumerate}
+	\item ``How is information about the physical world sensed, or detected, by the biological system?''
+	\item ``In what form is information stored, or remembered?''
+	\item ``How does information contained in storage, or in memory, influence recognition and behavior?''
+\end{enumerate}
+
+With this, Rosenblatt theorized a mathematical system called the perceptron (explained in Section \ref{sec:feedforward} that, by following the supposed behavior of neurons in one's nervous system, was the central piece of a hypothetical system capable of answering these questions.
+
+Then, during the 1960s, much work was put into convergence algorithms for the perceptron and models based on it. Both deterministic and stochastic methods were proposed \cite{fradkov_early_2020}. However, in 1969, Minksy and Papert \cite{marvin_minsky_perceptrons_1969} published a book demonstrating the limitations of perceptrons. Namely, the authors showed that perceptrons could only represent linear functions, and simple non-linear functions such as \ac{XOR} were impossible. As a result, the study of \ac{AI} was mainly halted until the 1980s. This period is usually called \textit{the first winter of \ac{AI}} \cite{fradkov_early_2020}.
+
+During the 1980s, studies of learning under multilayer neural networks went underway \cite{fradkov_early_2020}. In 1986, Rumelhart et al. \cite{rumelhart_learning_1986} described a new learning procedure for networks of neurons. The procedure adjusts the weights of the network's connections to minimize a measure of the difference between the expected and the actual output, an error function. This method is still used nowadays and is called \textit{backpropagation}.
+
+Fradkov et al.~\cite{fradkov_early_2020} argue that an intensive advertisement of the success of backpropagation and other computational advances produced great hope for future successes. However, real successes were not happening, and investments in \ac{ML} decreased again in the early 1990s. This period is called \textit{the second winter of \ac{AI}}~\cite{martinez_artificial_2019}.
+
+The turn of the millennium saw a new rise in \ac{ML} technologies; this time, it was, until now, for good. According to Fradkov et al.~\cite{fradkov_early_2020}, this was due to three trends that emerged:
+
+\begin{enumerate}
+	\item The appearance of big data. Dealing with huge amounts of data is an interest not only to a small portion of scientists but to the whole market.
+	\item Reduced cost of parallel computing with both software (with, for instance, Google's MapReduce \cite{dean_mapreduce_2004}) and hardware (with an investment in specialized hardware for \ac{ML} from companies such as NVidia).
+	\item A newfound interest by scientists in new, more complex, \ac{ML} algorithms, denominated \textit{\acfp{DNN}}.
+\end{enumerate}
+
+The critical idea of this new \ac{ML} is that it can infer plausible models to explain the observed data. A machine can use such models to make predictions about future data and make rational decisions based on these predictions \cite{ghahramani_probabilistic_2015}. It involves training a model on a large dataset to learn patterns and relationships in the data and then make predictions or decisions based on those patterns. For instance, a computer program can learn from medical records which treatments are most effective against new diseases, or houses can learn from experience to optimize energy costs based on the particular usage patterns of their occupants.
+
+In traditional \ac{ML}, the features input into the models were usually hand-picked by humans, which leads to errors. New models learn intermediate representations— a vector of features — from data. The model itself usually performs this feature extraction with more layers~\cite{goodfellow_deep_2016}. Hence, \acf{DL}. \Ac{DL} algorithms consist of multiple layers of interconnected nodes and are trained to learn complex patterns and relationships in the data. \Ac{DL} algorithms can automatically learn and extract features from data. They are particularly well-suited for tasks such as image and audio processing.
+
+The use of \ac{DL} in everyday applications increased during the 2010s. Nowadays, \ac{DL} is relied upon for various computer-made tasks including text translation, recommender systems, fake news detection, spam filtering, image captioning, and even self-driving cars~\cite{dean_golden_2022}.  Generative models are a key tool for creating new data.
+
+Generative models, which are a type of \ac{DL} model, can create synthetic data that is similar to a given training dataset. Generative models can produce new data that conforms to the distribution learned from the training data. In contrast to common learning objectives such as classification or regression tasks, which focus on labeling inputs or estimating mappings, generative models aim to replicate and capture hidden statistics in observed data~\cite{huzaifah_deep_2021}.
+
+The scientific community turned its heads to generative models a few years ago. These models allow a variety of new applications and products. For instance, DALL-E~\cite{ramesh_zero-shot_2021} and DALL-E 2~\cite{ramesh_hierarchical_2022} allow the generation of images given any textual input (see Sections \ref{sec:dall-e} and~\ref{sec:dall-e-2}. GPT-3 is an extensive language model \cite{brown_language_2020} that powers applications such as ChatGPT, capable of generating text. Modern text-to-speech (as seen in Section~\ref{sec:tts} applications also rely on these technologies.
+
+Because of the relevance and effectiveness of these new generative technologies, \ac{DL} has achieved mainstream status, and the general public is aware of the capabilities of these algorithms. Given the rise of \ac{AI} in the 2010s with predictions and classifications, it is plausible that the 2020s will be a decade of generative applications. Automating manual work to enhance human creativity has never been more feasible. Generative applications span diverse domains such as images, text, and audio. However, even in the context of a well-defined frame of reference and optimal individual categorization, it's important to recognize that models inevitably involve reduction to averages. This raises concerns about undesirable convergence and oversimplification of media~\cite{forero_j_are_2023}.
+
+For the purpose of this thesis, audio is broadly classified into three main categories: music, speech, and soundscapes. Music consists of organized tones and rhythms created by humans or other living entities~\cite{oxford_english_dictionary_music_2023}. Speech encompasses all vocalizations produced by humans, which are used for communication and expression~\cite{holden_origin_2004}. Soundscapes refer to an acoustic environment that is experienced and understood by individuals in context, including natural and human-made sounds~~\cite{international_organization_for_standardization_iso_2014, schafer_tuning_1977}. These three categories encompass most of the sounds people encounter.
+
+There are two types of soundscapes: those found in the physical world and capable of being recorded, and those that can be artificially created through methods like mathematical equations. When it comes to the latter, one can imagine sounds such as white or brown noise - which are simply repetitive mathematical patterns that can be generated with ease through computation. To the best of the author's knowledge, all remaining sounds were either recorded or generated through sampling or other creative techniques, such as capturing the behavior of vibrations~\cite{trautmann_classical_2003}.
+
+Using neural networks, deep generative models can produce audio from parameters. These models learn hidden data patterns to create new samples that match the training data's distribution \cite{huzaifah_deep_2021}.
+
+Despite significant advances in generative technologies, research on audio synthesis has fallen behind. Although image generation has achieved impressive levels of realism and text generation is capable of passing medical exams~\cite{strong_chatbot_2023}, differentiating when a \ac{DL} process generates a specific sound is still relatively easy. Most of the sound-related research is focused on \ac{TTS} applications, which still need further improvement. Recent developments suggest a changing landscape.
+
+In 2023, companies have significantly increased their investments in advancing the audio synthesis capabilities for music, voice, and soundscapes. The renewed focus aims to close the gap between state-of-the-art image generation models and general sound synthesis tools. The objective is to develop advanced algorithms capable of creating highly realistic audio outputs in various domains.

@@ -1,0 +1,16 @@
+\paragraph{Autoencoder (AE)} \label{sec:autoencoders}
+
+\Acp{AE} are a type of neural network architecture used for unsupervised learning. Their origin is difficult to precise as the literature is vast and multiple representations of this kind of network started popping up at the end of the 1980s with different names.
+
+The primary goal of \acp{AE} is to learn an efficient representation of the input data by encoding it into a lower dimensional space, known as the bottleneck layer, and then decoding it back to the original dimensions. \Acp{AE} try to learn the identity function. The network learns to minimize the reconstruction error between the input and the reconstructed output.
+
+The architecture of an \ac{AE} typically consists of the encoder and the decoder. The encoder maps the input to the bottleneck layer, while the decoder maps the bottleneck layer back to the original dimensions. These layers can be seen in figure \ref{fig:autoencoder}. The bottleneck layer acts as a bottleneck that restricts the amount of information that can be passed through, forcing the network to learn the most important features of the input data. For instance, if the size of the bottleneck layer were the same as the input and the output, the network would not learn the essential features, as a simple pass-through would suffice.
+
+A simple use case for \acp{AE} is embeddings, for instance, word embeddings. If given multiple sentences, a model learns to transform a word in itself, passing it through a bottleneck layer; in the future, only the values in the bottleneck (the embedding) and the decoder are required to get the original word. Since, ideally, these embeddings are more feature rich than the word itself, these representations are beneficial for \ac{NLP} tasks.
+
+\begin{figure}[ht]
+    \centering
+    \ctikzfig{figures/2-sota/autoencoder}
+    \caption[Autoencoder]{\textbf{\Acf{AE}} --- This \ac{AE} receives an input of size five and tries to learn a way to transform it into itself by passing through a bottleneck of size three. In the initial part, from the input to the bottleneck, an encoder is present, while the second part displays a decoder.}
+    \label{fig:autoencoder}
+\end{figure}

@@ -1,0 +1,35 @@
+\subsubsection{Data Embedding} \label{sec:text-embedding}
+
+Data embedding is the technique of converting data into numerical representations that capture its essential features and characteristics. For sound generation, both audio and text embedding is important.
+
+Data embedding is essential for generative models. This happens for two reasons.
+
+First, it allows the models to work on smaller and lighter representations. This is, for instance, taking an audio sample with 5 seconds sampled at 16 kHz, representing 80 000 entries. Encoding that into meaningful features might reduce this number to a few thousand or even hundreds of entries. This allows for faster training.
+
+Second, these representations are meaningful in ways where the raw input is not. For instance, take text embedding. The idea is that words such as ``pretty'' and ``beautiful'' have similar representations, helping the model generalize. If the model were to check the words, letter by letter, it would have a hard time realizing that some words, like these, have a relation between them.
+
+So, text and audio embedding is essential for the task. However, audio embedding possesses several challenges, such as dealing with high-dimensional and sequential data, preserving temporal and spectral information, and ensuring robustness and interpretability. To handle this, both feature and learning-based methods can be applied.
+
+Feature-based embedding methods extract predefined features from the raw audio data, such as spectral, temporal, or perceptual features. These features are then input to generative models or further processed to obtain lower-dimensional embeddings. One such example would be the application of the \ac{STFT} to build a spectrogram (see Section \ref{sec:sound}). Feature-based embedding methods have the benefit of being simple and interpretable, but they may also lose some information or introduce noise during the feature extraction process.
+
+Using neural networks or other machine learning techniques, learning-based embedding methods learn embeddings directly from the raw audio data. These methods can automatically discover relevant features from the data without relying on predefined criteria. Learning-based embedding methods have the advantage of being flexible and adaptive, but they may also require more computational resources or suffer from overfitting or underfitting issues.
+
+Text embedding has been a solved problem since the days of Word2Vec \cite{mikolov_efficient_2013}. This \ac{AE} (see Section \ref{sec:autoencoders}) model would be trained by getting the meaning of a word taking into account the word with whom the first appeared. This model makes possible the representation of a word through a vector of latent factors.
+
+Nevertheless, the words cannot be merely embedded for the current issue. When a user adds a text input, embedding it is imperative. This represents the entire textual input. For example, computing the average of latent factors for each input would be a naive approximation.
+
+Nevertheless, nowadays, this is mainly solved with transformers (see Section \ref{sec:transformers}), namely the encoder part. This part of the transformer takes a whole string and outputs a vector representation, precisely what the task needs.
+
+After the vanilla transformer, the one that gained more prominence was BERT \cite{devlin_bert_2018} in 2018, which introduced the conditioning of the whole input for each word inputted, not only the words that appeared before, as the vanilla transformer did. Other later encoder transformers are based on BERT or tackle a different problem.
+
+While there are many techniques for data embedding, recent advancements in the field have led to the development of specialized models for various modalities, such as CLIP \cite{radford_learning_2021} for images and MuLan for audio. Instead of embedding the text and the media separately and dealing with it afterward, media and text are embedded in the same space, meaning that a textual segment and a media sample representing the same textual segment should have similar latent factors.
+
+\paragraph{MuLan} \label{sec:mulan}
+
+MuLan \cite{huang_mulan_2022} is a state-of-the-art music audio embedding model that aims to link music audio directly to unconstrained natural language music descriptions.
+
+MuLan employs a two-tower parallel encoder architecture, meaning two completely independent neural architectures, using a contrastive loss objective that elicits a shared embedding space between music audio and text.
+
+Each MuLan model consists of two separate embedding networks for the audio and text input modalities. These networks share no weights, but each terminates in 2-normalized embedding spaces with the same dimensionality. The contrastive loss objective minimizes the distance between matching audio-text pairs while the distance between mismatched pairs is maximized. This approach enables MuLan to learn a joint representation of music audio and text that captures their semantic relationships.
+
+MuLan is trained using 44 million music recordings (370K hours) and weakly-associated, free-form text annotations. The resulting audio-text representation subsumes existing ontologies while graduating to true zero-shot functionalities. MuLan demonstrates versatility in transfer learning, zero-shot music tagging, language understanding in the music domain, and cross-modal retrieval applications.

@@ -1,0 +1,23 @@
+\subsubsection{Preliminary Classification} \label{sec:classification-model}
+
+To develop a comprehensive understanding of sound and its representation, a preliminary classification model was developed as a starting point.
+
+The Audio MNIST dataset (see Section~\ref{sec:dataset-amnist}) was selected due to its simplicity and appropriateness. The dataset consists of spoken digit recordings divided into ten categories (numbers from 0 to 9). This classification was developed model using both TensorFlow and PyTorch frameworks (see Section~\ref{sec:dl-frameworks}).
+
+This model's central premise is the possibility of achieving satisfactory outcomes using a simple \ac{CNN}. The aim is to surpass 90\% accuracy.
+
+Conventional \acp{CNN} usually have convolutional and pooling layers (see Section~\ref{sec:CNN}), which are versatile and can handle inputs of different dimensions. However, utilizing these layers with inputs of varying sizes leads to different output dimensions. It's essential to conduct necessary pre-processing steps to impose uniform dimensions for all input data to obtain a more accurate assessment of the network's outputs.
+
+To reduce variations in sample size, a combination of techniques, such as padding and random cropping, was used. To address padding, an approach called edge padding was adopted. This technique includes extending the beginning and end of smaller audio samples to match a fixed size. The main objective of edge padding is to preserve the audio content's integrity and ensure consistency in the dataset.
+
+In contrast, the random crop technique has a unique operation within the confines of this study because the dataset mainly includes recordings of spoken digits that possess inherent characteristics. The spoken digit samples' nature is leveraged to systematically select discrete segments from the audio samples using random crop. This process produces 1.5-second segments.
+
+The classification model is based on an architecture of \ac{CNN}, with a sequence of five blocks. Each block included a convolutional layer followed by max pooling that systematically extracted hierarchical features. Finally, the network ended with an average pooling layer, which connects to three linear layers for final classification. The output layer, consisting of ten units, corresponds to the ten distinct classes in the dataset.
+
+Average pooling is a down-sampling technique that partitions the input feature map into distinct regions and computes the average value for each partition, resulting in a down-sampled feature map that retains essential information about the input while decreasing spatial dimensions. As a result, the pooled feature map preserves essential information about the input while reducing the spatial dimensions. This technique helps control parameter count and reduce overfitting, thereby improving the generalization ability of the model.
+
+In the present classification model, the average pooling layer effectively reduces dimensionality. The pooled features maintain vital high-level information gathered from previous convolutional layers, allowing the ensuing linear layers to concentrate on extracting more sophisticated semantic features for classification purposes. The decision to use this architecture was purposefully made to make the model lighter. Flattening the convolutional output would result in a higher number of parameters.
+
+Model training involved using \ac{SGD} optimization and Cross-Entropy loss. The training process lasted 20 epochs and involved batch-wise backpropagation to update parameters. It is noteworthy that the training occurred on Tesla P100 with 8GB.
+
+The code for the model and the training loop can be see in Annex~\ref{ann:classification}.

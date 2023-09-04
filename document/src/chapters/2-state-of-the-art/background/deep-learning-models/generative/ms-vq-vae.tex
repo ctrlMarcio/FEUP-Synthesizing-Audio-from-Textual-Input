@@ -1,0 +1,22 @@
+\paragraph{Multi-Scale Vector Quantised Variational AutoEncoder (MS-VQ-VAE) (2019)} \label{sec:ms-vq-vae}
+
+The \acf{MS-VQ-VAE} model is a generalization of the \ac{VQ-VAE} model (see Section \ref{sec:vq-vae}) that employs multiple discrete latent spaces with different scales and dimensions. Tjandra et al. proposed this model \cite{tjandra_vqvae_2019} to learn unsupervised hierarchical and discrete representations of complex data. The \ac{MS-VQ-VAE} architecture comprises an encoder, a multiscale discrete latent space, and a decoder.
+
+The key difference between the \ac{MS-VQ-VAE} and the \ac{VQ-VAE} is that the former defines a collection of latent embedding spaces $e^s \in R^{K_s \times D_s}$, where $s$ denotes the scale index, $K_s$ denotes the cardinality of the discrete latent space at scale $s$, and $D_s$ denotes the dimensionality of each latent embedding vector $e^s_i$. There are $K_s$ embedding vectors $e^s_i \in R^{D_s}, i \in 1, 2, ..., K_s$. The model takes an input $x$, encoded into outputs $z_e^s(x)$ at different scales. The discrete latent variables $z^s$ are then obtained by the nearest neighbor look-up using the shared embedding space $e^s$. The decoder input is the corresponding embedding vector $e^s_k$. This forward computation pipeline resembles a regular \ac{AE} (see section \ref{sec:autoencoders}) with a non-linearity that maps the latents to 1-of-$K_s$ embedding vectors.
+
+The posterior categorical distribution $q(z^s|x)$ probabilities are defined as one-hot (Eq. \ref{eq:ms-vq-vae-posterior}), analogous to Eq. \ref{eq:vq-vae-posterior} in section \ref{sec:vq-vae}, but with an additional scale index:
+
+\begin{equation} \label{eq:ms-vq-vae-posterior}
+ q(z^s = k|x) = \begin{cases}
+ 1 & \text{for } k = \text{argmin}_j ||z_e^s(x)-e^s_j||_2, \\
+ 0 & \text{otherwise}.
+ \end{cases}
+\end{equation}
+
+The overall loss function consists of three components for each scale: the reconstruction loss, the VQ objective, and the commitment loss. The total training objective becomes (Eq. \ref{eq:ms-vq-vae-loss}), analogous to Eq. \ref{eq:vq-vae-loss} in section \ref{sec:vq-vae}, but with a summation over scales:
+
+\begin{equation} \label{eq:ms-vq-vae-loss}
+ L = \sum_{s=1}^{S} (\log p(x|z_q^s(x)) + ||\text{sg}[z_e^s(x)] - e^s||_2^2 + \beta||z_e^s(x) - \text{sg}[e^s]||_2^2)
+\end{equation}
+
+The benefit of using multiple codebooks and scales is that it enables the model to capture different levels of abstraction and granularity in audio signals. For instance, lower scales can encode phonetic information in speech, while higher scales can encode prosodic information. Furthermore, using multiple codebooks can enhance the diversity and expressiveness of the latent space by allowing more combinations of discrete codes.

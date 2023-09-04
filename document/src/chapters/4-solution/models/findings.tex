@@ -1,0 +1,16 @@
+\subsection{Exploratory Experiments} \label{sec:findings}
+
+In the development of generative \ac{AI} models for audio synthesis, it is crucial to conduct extensive experiments that explore various aspects of model architecture, training processes, datasets, and evaluation metrics. This section presents a series of experiments that provide a valuable learning phase before developing the primary model, GANmix. The experiments aim to gain insight into the performance, limitations, and potential of different generative audio models. The author analyzes empirical findings to inform the development of GANmix, aiming for a robust and efficient solution.
+
+The initial experiment focuses on a classification model to uncover the fundamental principles of sound. Training the model on labeled audio data, the author aims to grasp the connections among different audio features and their corresponding categories. This experiment lays the foundation for further research on audio representation.
+
+Based on the results of the classification experiment, the author proceeds to develop a \ac{GAN} for audio synthesis. The aim of this study is to assess the effectiveness of \acp{GAN} in generating high-quality and realistic audio samples.
+
+Furthermore, the author explores the efficacy of \acp{AE} and \acp{VAE} in audio generation. The experiments investigate the reconstruction and generation capabilities of these models, respectively.
+
+The purpose of these experiments is to achieve a comprehensive understanding of both audio and different generative models for audio synthesis. These empirical findings provide a crucial basis for developing GANmix, ensuring a robust and effective solution for audio generation.
+
+\include{src/chapters/4-solution/models/empirical/1-classification}
+\include{src/chapters/4-solution/models/empirical/2-gan}
+\include{src/chapters/4-solution/models/empirical/3-autoencoder}
+\include{src/chapters/4-solution/models/empirical/4-vae}

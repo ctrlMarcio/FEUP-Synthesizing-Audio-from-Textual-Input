@@ -1,0 +1,84 @@
+\chapter{GANmix Model Configuration and Parameters}
+\label{ann:ganmix-conf}
+
+This annex contains the details of the final GANmix model. The GANmix model is a \ac{GAN} that uses fully connected neural networks for both the generator and the discriminator, and leverages a pretrained \ac{VAE} for generating and discriminating audio embeddings.
+
+\begin{table}[h]
+\centering
+\caption{GANmix model parameters}
+\label{tab:ganmix-params}
+\begin{tabular}{|l|l|}
+\hline
+Parameter & Value \\ \hline
+Number of trainable parameters (generator) & 22043368 \\ \hline
+Number of trainable parameters (discriminator) & 21914001 \\ \hline
+Total number of trainable parameters & 43957369 \\ \hline
+Total number of parameters & 99334242 \\ \hline
+Size of the noise vector ($NZ$) & 100 \\ \hline
+Size of the hidden layer ($NH$) & 200 \\ \hline
+Generator learning rate & 0.001 \\ \hline
+Discriminator learning rate & 0.0001 \\ \hline
+Generator scheduler step size & 10 \\ \hline
+Generator scheduler gamma & 0.1 \\ \hline
+Discriminator scheduler step size & 10 \\ \hline
+Discriminator scheduler gamma & 0.1 \\ \hline
+Batch size & 8 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{AudioLDM's \ac{VAE} model encodings}
+\label{tab:ganmix-encodings}
+\begin{tabular}{|l|l|}
+\hline
+Encoding dimension & Value \\ \hline
+Number of dimensions ($ED$) & 8 \\ \hline
+Width ($EW$) & 128 \\ \hline
+Height ($EH$) & 107 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{lstlisting}[language=Python, caption=Generator summary, label=lst:gen-summary]
+----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Linear-1                   [8, 200]          20,200
+         LeakyReLU-2                   [8, 200]               0
+            Linear-3                [8, 109568]      22,023,168
+================================================================
+Total params: 22,043,368
+Trainable params: 22,043,368
+Non-trainable params: 0
+----------------------------------------------------------------
+Input size (MB): 0.00
+Forward/backward pass size (MB): 6.71
+Params size (MB): 84.09
+Estimated Total Size (MB): 90.80
+----------------------------------------------------------------
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python, caption=Discriminator summary, label=lst:dis-summary]
+----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+           Flatten-1                [8, 109568]               0
+            Linear-2                   [8, 200]      21,913,800
+         LeakyReLU-3                   [8, 200]               0
+            Linear-4                     [8, 1]             201
+              Tanh-5                     [8, 1]               0
+================================================================
+Total params: 21,914,001
+Trainable params: 21,914,001
+Non-trainable params: 0
+----------------------------------------------------------------
+Input size (MB): 3.34
+Forward/backward pass size (MB): 6.71
+Params size (MB): 83.60
+Estimated Total Size (MB): 93.65
+----------------------------------------------------------------
+
+\end{lstlisting}
+
+This annex provides the configuration and parameters of the GANmix model that was used to generate audio embeddings from random noise and discriminate them from real audio embeddings.

@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+
+	\node[] (z) {$\vec{z}$};
+	\node[style=input, right=3em of z] (x) {$G(\vec{z})$};
+	\draw[-stealth, thick] (z) -- (x);
+	\node[left=of z] (i) {};
+	\node[below=of x] (xt) {$X$};
+	\node[left=5em of xt] (it) {};
+	\node[style=output, right=5em of x, yshift=-2.5em] (D) {$D(x)$};
+	\node[right=3em of D] (out) {real?};
+	\draw[-stealth, thick] (D) -- (out);
+			
+	\node[right=2.5em of x, circle, fill, inner sep=0.15em] (pt1) {};
+	\node[right=2.5em of xt, circle, fill, inner sep=0.15em] (pt2) {};
+			
+	\draw[dashed, thick] (pt2) edge[bend left] (pt1);
+			
+	\node[circle, draw, thick, fill=white, inner sep=0.15em] at ([xshift=-0.9em, yshift=-3em]pt1.north) (pt3) {};
+			
+	\draw[-stealth, thick] (x) --  node[above] {$\hat{X}$} (pt1);
+	\draw[-stealth, thick] (xt) -- (pt2);
+	\draw[-stealth, thick] (pt3) -- (D);
+
+\end{tikzpicture}
