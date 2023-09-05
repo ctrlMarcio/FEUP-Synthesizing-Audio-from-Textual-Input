@@ -21,7 +21,7 @@ SAMPLE_RATE = 48_000
 MAX_INPUT_SIZE = 65_536
 
 # TRAINING
-DEVICE = "cuda"
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 BATCH_SIZE = 8
 REAL_LABEL = 1
 FAKE_LABEL = 0
