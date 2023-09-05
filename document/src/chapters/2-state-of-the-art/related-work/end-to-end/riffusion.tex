@@ -1,9 +1,0 @@
-\paragraph{Riffusion} \label{sec:riffusion}
-
-Riffusion~\cite{forsgren_riffusion_2022} is an open-source model presented in 2022 that generates music clips from text prompts. The model is based on Stable Diffusion (see Section \ref{sec:stable-diffusion}). Riffusion fine-tunes Stable Diffusion to generate images of spectrograms, which can then be converted to music clips.
-
-The authors use \ac{STFT} (see Section \ref{sec:stft}) to compute the spectrogram from audio. The \ac{STFT} is invertible so that the original audio can be reconstructed from a spectrogram. The authors use the Griffin-Lim algorithm~\cite{griffin_signal_1984} to approximate the phase when reconstructing the audio clip.
-
-The authors use diffusion models (see Section \ref{sec:diffusion}) to condition the model's creations on a text prompt and other images, which is helpful for modifying sounds while preserving the structure of an original clip. The authors also use the denoising strength parameter to control how much to deviate from the original clip and towards a new prompt.
-
-So, for inference, the model takes a text prompt as input. Then, the text is encoded into a latent representation using a text encoder. The model generates an image of a spectrogram from the latent representation using a modified version of Stable Diffusion; this is, the Stable Diffusion model fine-tuned for spectrograms. Finally, the generated spectrogram image is converted into an audio clip using the Griffin-Lim algorithm.

@@ -1,0 +1,52 @@
+\subsection{End-to-End Models} \label{sec:end-to-end}
+
+Audio synthesis is the task of producing artificial audio from text or other kinds of data. Traditionally, audio synthesis systems consist of multiple stages, such as a data analysis frontend, a sound model, and an audio synthesis module. Building these components requires extensive domain expertise and may contain brittle design choices. Moreover, these components are usually trained separately on different objectives and datasets, which may introduce errors and inconsistencies in the final output. To overcome these limitations, end-to-end models have been proposed that directly learn the mapping between text (or other kinds of data) and audio waveform using deep neural networks. These models are presented in this Section.
+
+Existing research establishes two main frameworks for end-to-end models: specialized models designed for a specific domain, and universal models aimed at broader applications. The table \ref{tab:end-to-end-audio-models} shows some examples of these models based on their type, input, output, model architecture, and type of conditioning. Specialized models target either speech or music synthesis, such as Char2wav and Jukebox. Researchers have developed different subsets of technologies within speech and music synthesis models, such as neural codec speech models and discrete diffusion models. Universal models, such as SampleRNN and AudioGen, can generate audio from various inputs and domains, such as text or raw audio seeds.
+
+\begin{table}[ht]
+\centering
+\caption{A comparison of different end-to-end generative models for audio.}
+\begin{tabularx}{\textwidth}{|l|l|X|X|X|}
+\hline
+\textbf{Model} & \textbf{Type} & \textbf{Input}            & \textbf{Output}                        & \textbf{Model Architecture}                                                      \\ \hline
+Char2wav~\cite{sotelo_char2wav_2017}       & Speech        & Text prompt               & Raw audio waveform                     & Encoder-decoder with attention and neural vocoder                                \\ \hline
+VALL-E~\cite{wang_neural_2023}         & Speech        & Text and acoustic prompt  & Raw audio waveform                     & Neural codec language model and neural vocoder                                   \\ \hline
+Jukebox~\cite{dhariwal_jukebox_2020}        & Music         & Genre, artist, and lyrics & Raw audio waveform                     & Hierarchical VQ-VAE and autoregressive Transformer                               \\ \hline
+Riffusion~\cite{forsgren_riffusion_2022}      & Music         & Text prompt               & Raw audio waveform                     & Neural codec language model based on discrete diffusion model and neural vocoder \\ \hline
+MusicLM~\cite{agostinelli_musiclm_2023}        & Music         & Text prompt               & Raw audio waveform                     & Neural codec language model and neural vocoder                                   \\ \hline
+SampleRNN~\cite{mehri_samplernn_2017}      & General       & None                      & Raw audio waveform                     & Hierarchical RNN and neural vocoder                                              \\ \hline
+AudioLM~\cite{borsos_audiolm_2022}        & General       & Text prompt               & Raw audio waveform                     & Hybrid tokenization scheme with Transformer models and neural vocoder            \\ \hline
+DiffSound~\cite{yang_diffsound_2022}      & General       & Text prompt               & Mel-spectrogram and raw audio waveform & VQ-VAE, discrete diffusion model, and neural vocoder                             \\ \hline
+AudioGen~\cite{kreuk_audiogen_2023}       & General       & Text prompt               & Mel-spectrogram and raw audio waveform & Transformer-based generative model and neural vocoder                            \\ \hline
+\end{tabularx}
+\label{tab:end-to-end-audio-models}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Text-to-Speech} \label{sec:tts}
+
+\Acf{TTS} models are designed to convert written text into synthesized speech. These models use deep neural networks to directly learn the mapping between written text and audio waveform. Leveraging developments in \ac{NLP} and speech synthesis techniques, \ac{TTS} models have made significant progress in generating high-quality, human-like speech from text input. This Section examines some of the notable \ac{TTS} models that have been developed recently.
+
+\input{src/chapters/2-state-of-the-art/related-work/end-to-end/char2wav}
+\input{src/chapters/2-state-of-the-art/related-work/end-to-end/vall-e}
+
+\subsubsection{Generative Music}
+
+Generative music is created using generative techniques. End-to-end generative music models enable the production of new musical compositions without using predefined templates or samples, directly from textual or other data inputs. These models use \ac{DL} architectures to capture patterns and structures within different genres or styles of music, and can produce original pieces based on given prompts. This Section explores remarkable generative music models that demonstrate their ability to compose novel musical arrangements.
+
+\input{src/chapters/2-state-of-the-art/related-work/end-to-end/jukebox}
+\input{src/chapters/2-state-of-the-art/related-work/end-to-end/riffusion}
+\input{src/chapters/2-state-of-the-art/related-work/end-to-end/musiclm}
+
+\subsubsection{General Text-to-Audio}
+
+Text-to-audio systems have a wide range of applications beyond speech synthesis or generative music tasks. End-to-end models convert different forms of textual input into corresponding audio outputs. The outputs have diverse purposes, including sound effects generation, voice transformation, and environmental sound synthesis. These models provide flexible solutions for transforming text into realistic auditory experiences by training on large-scale datasets containing paired text-audio examples across various domains. This Section presents several text-to-audio approaches that demonstrate innovative methods of audio synthesis based on specific textual cues.
+
+\input{src/chapters/2-state-of-the-art/related-work/end-to-end/samplernn}
+\input{src/chapters/2-state-of-the-art/related-work/end-to-end/audiolm}
+\input{src/chapters/2-state-of-the-art/related-work/end-to-end/diffsound}
+\input{src/chapters/2-state-of-the-art/related-work/end-to-end/audiogen}
+
+

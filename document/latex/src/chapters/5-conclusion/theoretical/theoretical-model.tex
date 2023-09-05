@@ -1,0 +1,81 @@
+\subsubsection{Theoretical General Audio Transformer}
+
+Transformers have become a prevalent architecture for several sequence modeling tasks in \ac{NLP}~\cite{gruetzemacher_deep_2022}. Their success has also expanded to the generative modeling of mediums such as images and videos. This section proposes adapting the transformer architecture for generative modeling and audio waveform synthesis.
+
+A novel encoder-decoder transformer specifically designed for audio generation is introduced, referred to as the \acf{AT}. The \ac{AT} incorporates convolutional layers and custom attention mechanisms tailored to handle audio data.
+
+The primary motivation is to enable high-quality, flexible audio generation for various applications. While transformers have proven effective in capturing long-range dependencies in sequences, the proposed \ac{AT} aims to optimize these models specifically for audio data.
+
+The use of a transformer architecture for audio generation, propelled by textual prompts, is based on the encoder-decoder framework of the transformer, modified for audio synthesis. This configuration permits the effortless incorporation of textual data to aid in the synthesis of consistent and context-appropriate audio waveforms.
+
+The process for generating audio using transformers includes two components: an encoder and a decoder. Each is composed of stacked layers that work together to process the textual input and create the corresponding audio output. The encoder's main function is to map the textual input to continuous representations that capture semantic information. For a deeper understanding on the encoder's functionality, as well as on transformers, in general, please refer to Section~\ref{sec:transformers}.
+
+Upon receiving the continuous representations from the encoder, the decoder begins to generate the audio waveform. The decoder's functioning is dependent on the encoder's representations, which guarantees that the synthesized audio is aligned with the intended meaning of the input text. 
+
+The synthesis process unfolds sequentially, with the decoder generating the output audio waveform sample-by-sample. The incorporation of multi-head attention mechanisms at the local and global levels enables the model to generate a wide range of natural-sounding audio outputs that correspond with the semantic context of the input.
+
+The hyperparameters such as model dimensions, number of layers, attention heads, and hidden sizes can be tuned to balance performance and computational constraints. In summary, this architecture leverages the strengths of transformers for sequence modeling while optimizing the components for conditional audio generation.
+
+\paragraph{Sound Representation}
+Transformers have demonstrated power in autoregressive sequence modeling and generation. However, directly applying them to raw audio waveforms poses challenges due to the high sampling rates and lack of inherent discretization. As a potential alternative, spectrograms offer a 2D time-frequency audio representation (see section~\ref{sec:sound}). This section analyzes the trade-offs between raw audio versus spectrograms as inputs to transformer-based audio generation models.
+
+\subparagraph{Challenges of Using Spectrograms}
+Spectrograms explicitly encode frequency information, providing interpretable intermediate representations. However, transformers generate outputs one step at a time, and the notion of ``next'' becomes ambiguous on 2D spectrograms, as there are multiple values for each moment.
+
+\subparagraph{Benefits of Raw Audio}
+Raw audio waveforms allow direct modeling of the time-domain signal to be generated. The sequential structure matches the autoregressive nature of transformers without modification. Transformers can learn to model dependencies in the continuous waveform samples directly.
+Raw audio represents the most natural fit for a sequential generation. Parameterizing waveform samples also avoids imposing and inverting a fixed spectrogram transformation that may discard information. Raw audio can capture nuances and exhibit fidelity beyond what prescribed spectrogram representations encode.
+
+\subparagraph{Latent Feature Translation}
+To fix these problems and bridge the gap between spectrograms and transformers, a novel approach is introduced. Instead of directly using the 2D spectrogram as input, a neural network is employed to translate each column of the spectrogram into a single continuous latent feature. This neural network, known from now on as the Latent Feature Translator, is shared across all columns and is conditioned on the corresponding timestamp of the column. The resulting continuous latent features capture the essential characteristics of the audio content while simplifying the representation for the subsequent transformer-based modeling.
+
+This translation process effectively compresses the complex spectral information into a more manageable and informative format that still maintains temporal information, facilitating the transformer's ability to capture dependencies and generate coherent audio output.
+
+This innovative approach leverages the strengths of both spectrogram representations and transformers, enabling efficient and effective generative audio modeling.
+
+\paragraph{Training}
+
+The \ac{AT} is first pretrained in an unsupervised manner to learn effective representations of audio data. During unsupervised pretraining, the model input is a segment of continuous latent features, and the target output is the next latent feature.
+
+The model trains on audio-only data to predict the next latent feature. This relies on no text conditioning or labels. The goal is to learn generalized audio representations that capture dependencies across long sequences.
+
+During training, audio clips are split into fixed-length chunks, 1-10 seconds. Batching multiple chunks together allows more efficient \ac{GPU} processing. Given all previous samples, the model is trained to predict the next latent feature at each step.
+
+An error loss between the predicted and target audio samples is calculated. Over many training iterations, the model parameters are updated to minimize the loss function. Additional regularization techniques like dropout are used to prevent overfitting. The learning rate is gradually decayed for training as the loss function converges.
+
+Validation audio clips not used in training monitor overfitting and determine early stopping. The model with the lowest validation loss is selected.
+
+During supervised training, text conditioning is added to the pre-trained model. The loss function now optimizes conditional generation quality given input text.
+
+This leverages the representations learned during unsupervised pretraining. Text conditioning trains the model to generate relevant audio for textual descriptions.
+
+Pretraining provides an effective regularization technique to prime the model and prevent overfitting the paired text-audio data. This semi-supervised approach with unsupervised pretraining enables learning robust generative audio models.
+
+\paragraph{Why Transformers}
+Transformers are a natural choice for generative audio modeling compared to alternatives like \acp{GAN} or diffusion models (see Sections~\ref{sec:gan},~\ref{sec:diffusion}) due to their strength in sequential modeling. Audio signals inherently exhibit strong temporal consistency and context.
+
+Transformers leverage a self-attention mechanism to model long-range dependencies in sequences effectively. This allows transformers to capture structures spanning longer time scales than recurrent models like \acp{LSTM} (see Section~\ref{sec:rnn-variants}). The global receptive field enables coherently modeling whole utterances, phrases, and even entire passages.
+
+Additionally, as seen in Section~\ref{sec:transformers}, transformers have demonstrated state-of-the-art performance across various sequence transduction tasks in language, speech, and other domains. Leveraging their proven modeling capabilities for a new modality in audio is a natural progression.
+
+The large model capacity of transformers is also advantageous, allowing sufficient expressivity to represent the complexity and nuance of audio data. With solid scalability to leverage large datasets through efficient parallel training, transformers are uniquely positioned as cutting-edge architecture for generative audio.
+
+\paragraph{Limitations and Future Work}
+While the \ac{AT} shows promise for generative audio modeling, there are several limitations and areas for improvement through future work.
+
+First, the model requires large, diverse datasets of high-quality audio examples to train effectively. Collecting such datasets can be challenging, particularly for specialized domains like musical composition.
+
+Data efficiency could be improved through transfer learning and unsupervised pretraining approaches. Leveraging models pretrained on other transformer tasks might provide valuable initializations for audio generation.
+
+Training complex transformer models can also incur high computational costs and time requirements. Optimization for faster training and inference will be necessary for practical deployment. Architectural modifications to reduce model size should be explored.
+
+Rigorously evaluating generated audio samples' coherence, naturalness, and creativity remains difficult. Developing quantitative and qualitative evaluation protocols to measure these attributes is an open research question.
+
+There are many potential extensions to the base \ac{AT} architecture proposed here. For example, alternative conditioning mechanisms, sparser architectures optimized for audio, and adversarial training could improve results. Multi-task learning objectives that combine reconstruction, prediction, and discrimination may also help.
+
+Multimodal integration of audio, text, and other modalities is also an exciting future direction. Jointly modeling text and audio could improve text-to-speech synthesis and transcription tasks. Exploring these multimodal representations with transformers is promising.
+
+\paragraph{Innovative Approach}
+Previous work has explored adapting transformers for raw audio generation, but these models have had limitations. Some, such as AudioGen~\ref{sec:audiogen}, have proposed transformer architectures for next-step audio sample prediction, demonstrating solid results for short-term modeling. However, these models do not allow conditional generation.
+
+The proposed \ac{AT} builds on these predecessors to directly enable unconditional and conditional synthesis from the time-domain audio. By implementing an autoencoder, working on continuous latent features, and leveraging standard encoder-decoder transformers with pretraining, the \ac{AT} offers a novel approach to generative audio synthesis.

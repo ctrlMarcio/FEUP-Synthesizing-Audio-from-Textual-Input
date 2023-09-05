@@ -1,0 +1,47 @@
+\subsection{Traditional Soundscape Generation} \label{sec:trad-soundscape}
+
+Feature engineering methods for soundscape generation typically adopt a threefold strategy to resynthesize (and extend) a short soundscape recording provided by the user:
+
+\begin{enumerate}
+    \item Segmentation,
+    \item Feature extraction and modeling, and
+    \item resynthesis of a given environmental sound.
+\end{enumerate}
+
+Statistical models adopting stochastic processes or pattern recognition methods were commonly applied to model and recreate a given soundscape recording with a degree of variation while maintaining its structure. Generated soundscapes relied on the similarity among audio segments to create smooth transitions~\cite{hoskinson_manipulation_2001}.
+
+\subsubsection{Scaper}
+
+Searching through the academic search engines, one finds that the most cited software for soundscape generation is \textit{Scaper} \cite{salamon_scaper_2017}.
+
+Scaper is an open-source software library for soundscape generation designed to facilitate the creation of synthetic sound environments. It is a tool that allows users to simulate complex soundscapes, including urban, natural, and interior spaces, and investigate how various sound sources interact in these environments.
+
+Scaper implements a modular soundscape generation framework based on basic sound-generating objects or ``sound sources''. These sound sources can represent simple sounds such as bird songs, human speech, or car horns, or more complex sounds like those produced by a crowd of people or a construction site. The user can specify the attributes of each sound source, such as its location, volume, and duration, and can adjust these parameters in real-time to create a dynamic soundscape.
+
+One of the key features of Scaper is its ability to generate synthetic soundscapes that are diverse and statistically representative of real-world environments. To achieve this, the library implements various sound-generating algorithms that can be used to create sounds that are randomized yet realistic. For example, the library can generate sounds similar to real-world sources but with variations in volume, pitch, and timbre to avoid repetition and create a more diverse soundscape.
+
+\subsubsection{SEED}
+
+SEED is a system that addresses the formidable task of resynthesizing environmental sounds, such as city ambiances or nature scenes~\cite{bernardes_seed_2016}. SEED aims to provide a solution that not only extends the duration of environmental sounds but also provides precise control over the degree of variation in the output. This control over variation is critical in applications where maintaining the authenticity and coherence of the audio environment is essential.
+
+SEED is built on a tri-partite architecture consisting of three main modules: segmentation, analysis, and generation. 
+
+In the segmentation module, SEED performs the task of dividing the input audio into segments. This segmentation process is based on detecting spectral stability between frames. Spectral stability is a measure of how similar the frequency spectrum is between consecutive frames. When this stability falls below a certain threshold, it signals a change in the underlying sound source or event, prompting the placement of a segment boundary. This approach ensures that the resynthesized audio remains cohesive and retains its natural flow.
+
+The Analysis module has two main processes. First, it extracts several audio features that capture both the sonic and temporal characteristics of the segments. These features are then clustered into a discrete ``dictionary'' of audio classes, effectively reducing the feature space to a finite set. At the same time, the module builds a transition table that records the sequences of these audio classes. This table is used to determine the probability that one class follows another.
+
+In addition, the analysis module computes a concatenation cost matrix that quantifies how smoothly two segments can transition from one to the other. This matrix is computed by comparing the features at the segment boundaries. A lower cost indicates a smoother transition, while a higher cost indicates a more abrupt change.
+
+In the Generation module, SEED generates new audio by searching for segment sequences that meet certain criteria. To achieve this, SEED references the transition table to determine viable next classes based on the current class in the audio sequence. It then assembles segments belonging to these classes and selects the one with the lowest concatenation cost. Notably, SEED applies a temporary cost penalty to recently selected segments to encourage diversity in the generated audio.
+
+\subsubsection{Physics-Based Concatenative Sound Synthesis}
+
+In the current development of virtual environments, the generation of audio content has been the subject of extensive research. One prominent approach in this area is \acf{CSS}, a method that creates novel auditory experiences by assembling segments of pre-existing sounds from a given database, often referred to as ``audio units''.
+
+A recent scientific paper by Magalhães et al. presents an innovative \ac{CSS} framework based on physics-based principles for virtual reality~\cite{magalhaes_physics-based_2020}. This framework consists of two main components, namely the ``Capture Component'' and the ``Synthesis Component''.
+
+The capture component of the framework is responsible for capturing essential data during interactions with virtual objects. This includes physics simulation data, haptic feedback data, position sensor data, and audio data. In particular, the physics data includes critical information such as collision points, velocities, impulses, and normals, among other parameters. The haptic and audio data are derived from real-world interactions with a variety of materials. This capture process culminates in the creation of a multimodal corpus of annotated audio units, which serves as the foundational resource for subsequent synthesis efforts.
+
+The synthesis component of the framework uses the captured data to orchestrate the synthesis of auditory and haptic feedback by concatenating audio units extracted from the corpus. This unique mapping between physics data and audio units ensures congruence between user interactions and the resulting sensory feedback. For example, when a user applies a certain force and angle to interact with a virtual metal object, the synthesis component selects an audio unit recorded from a similar interaction with a real-world metal object.
+
+At runtime, the framework relies on the target physics vectors to guide the selection of audio units, thus generating congruent auditory and haptic experiences. An overlap-add phase vocoder is used to concatenate the audio segments, while temporal repetition penalties are incorporated to ensure smooth transitions between these segments.

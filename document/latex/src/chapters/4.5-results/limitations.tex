@@ -1,0 +1,29 @@
+\section{Constraints and Challenges} \label{sec:res-limitations}
+
+This section discusses the major constraints and challenges faced in developing the proposed solution. It also describes the strategies and solutions adopted or proposed to address these issues, and the potential impacts, tradeoffs, and opportunities that result.
+
+\subsection{Hardware Resources}
+
+One of the biggest challenges was the scarcity of hardware resources for training and evaluating these models. Generative models require large amounts of computing power and memory to process high-dimensional data and learn complex patterns. However, such resources are often limited or expensive to access, especially for individual researchers or small teams. This is a significant barrier to achieving state-of-the-art results in audio synthesis, as few companies and labs have the necessary hardware capabilities.
+
+To overcome this challenge, several strategies have been employed to optimize the use of available hardware resources. First, the neurons of the models were parallelized across the available \acp{GPU} (two in the final configuration --- \ac{LIACC} 2). This allowed to distribute the workload and speed up the training process. Second, checkpoints were implemented to save and load the model state at each epoch. This allowed the training to be resumed from where it was stopped in case of interruptions or failures. Third, the audio files were dynamically read and translated into spectrograms during training. This reduced memory consumption and disk space requirements. Fourth, gradient scaling and autocast (mixed precision training) techniques were used. These techniques involve performing some computationally expensive operations in 16-bit, while performing other numerically sensitive operations, such as accumulations, in 32-bit. This improved the performance and accuracy of the models while reducing memory consumption.
+
+By applying these strategies, the models were trained and evaluated more efficiently and effectively. However, it is also recognized that these strategies have some limitations and trade-offs. For example, parallelizing neurons across \acp{GPU} can introduce communication overhead and synchronization issues. Checkpoints may not capture the full state of the model or optimizer. Dynamic data processing can increase pipeline latency and complexity. Mixed-precision training can introduce numerical errors or instability.
+
+It is important to note that the hardware configuration with some computational power (\ac{LIACC} 2) was only available about a month before the submission of this thesis, so most of the work was done with really scarce resources. This means that the results presented in this thesis may not reflect the full potential or optimal performance of the proposed solution, as more experiments and improvements could be done with more hardware resources.
+
+\subsection{Data Quality and Quantity}
+
+Another challenge was the quality and quantity of available data. Generative models require a large amount of high-quality and diverse data to learn the underlying patterns and distributions of the data domain. However, such data is often scarce or difficult to obtain, especially for audio synthesis from textual input. Existing datasets for this task are either too small, focused on a specific domain, or lack descriptive labels. This limits the generalization and robustness of the models, as they may overfit to the training data or fail to capture the variability and richness of natural language and sound.
+
+To mitigate this challenge, some data augmentation techniques were applied to increase the size and diversity of the data. For example, random cropping was used to generate different segments of audio from the same file. This increased the number of samples and introduced some variation in the data. However, it is also recognized that these techniques are not sufficient to solve the problem of data quality and quantity. Data augmentation may not produce realistic or novel samples but may introduce noise or artifacts into the data.
+
+\subsection{Hyperparameter Tuning}
+
+A final challenge was the time required for the hyperparameter tuning of the generative models. Hyperparameters are parameters that are not learned by the model, but are set by the user prior to training. They include learning rate, batch size, number of layers, number of neurons, activation functions, regularization methods, etc. Hyperparameters significantly impact the performance and behavior of the model, as they determine how the model learns from the data and adapts to different situations. However, finding the optimal values for these hyperparameters is often a tedious and time-consuming process involving trial-and-error experiments with different combinations of values.
+
+Due to time constraints and deadlines, there was insufficient time to fine-tune our hyperparameters for these generative models. All models presented in this thesis are vanilla versions with default or arbitrary values for their hyperparameters. This means they may not reach their full potential or optimal performance in audio synthesis from textual input. Therefore, it is suggested that future work should devote more time and effort to the hyperparameter tuning of our generative models using methods such as grid search, random search, Bayesian optimization, etc.
+
+\section{Conclusion}
+
+In this section, the author discusses the major limitations and challenges they faced in developing the proposed solution. The author has also described how they addressed these issues and the possible implications, trade-offs, and opportunities that arose. Despite these challenges and limitations, the author believes that the proposed solution has several strengths and advantages that advance the state of the art in generative \ac{AI} models for audio synthesis.

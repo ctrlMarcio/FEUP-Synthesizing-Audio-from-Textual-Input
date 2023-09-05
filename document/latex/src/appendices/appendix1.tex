@@ -1,0 +1,114 @@
+\chapter{Classification Model} \label{ann:classification}
+
+
+This appendix presents the architecture and training process of the developed audio classification model.
+
+\section{Model Architecture}
+
+The ConvClassifier class defines the architecture of the one-dimensional \ac{CNN}. The following code snippet provides an overview of the ConvClassifier class:
+
+\begin{lstlisting}[language=Python, caption={ConvClassifier class for sound classification}]
+class ConvClassifier(nn.Module):
+    def __init__(self):
+        super().__init__()
+
+        self.conv1 = nn.Conv1d(
+            in_channels=1, out_channels=32, kernel_size=9, stride=1, padding=1)
+        self.pool1 = nn.MaxPool1d(2, stride=2)
+
+        self.conv2 = nn.Conv1d(32, 64, 9, stride=1, padding=1)
+        self.pool2 = nn.MaxPool1d(2, stride=2)
+
+        self.conv3 = nn.Conv1d(64, 128, 9, stride=1, padding=1)
+        self.pool3 = nn.MaxPool1d(2, stride=2)
+
+        self.conv4 = nn.Conv1d(128, 256, 9, stride=1, padding=1)
+        self.pool4 = nn.MaxPool1d(2, stride=2)
+
+        self.conv5 = nn.Conv1d(256, 512, 9, stride=1, padding=1)
+        self.pool5 = nn.MaxPool1d(2, stride=2)
+
+        self.gap = nn.AdaptiveAvgPool1d(1)
+
+        self.linear1 = nn.Linear(512, 256)
+        self.linear2 = nn.Linear(256, 128)
+        self.linear3 = nn.Linear(128, 10)
+
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        # pass to float
+        x = x.float()
+
+        x = self.pool1(self.relu(self.conv1(x)))
+        x = self.pool2(self.relu(self.conv2(x)))
+        x = self.pool3(self.relu(self.conv3(x)))
+        x = self.pool4(self.relu(self.conv4(x)))
+        x = self.pool5(self.relu(self.conv5(x)))
+
+        x = self.gap(x)
+
+        x = x.view(-1, 512)
+
+        x = self.relu(self.linear1(x))
+        x = self.relu(self.linear2(x))
+        x = self.linear3(x)
+
+        return x
+\end{lstlisting}
+
+\section{Training Process}
+
+The model is trained using the provided \texttt{train} function, which implements \ac{SGD} optimization and batch-wise backpropagation. The following code snippet outlines the training process:
+
+\begin{lstlisting}[language=Python, caption={Training process for sound classification}]
+def train(data_loader, model, loss_fn, optimizer):
+    model.train()
+
+    for batch, (sample, label, _) in enumerate(data_loader):
+        sample, label = sample.to(device), label.to(device)
+
+        # Compute prediction error
+        pred = model(sample)
+        loss = loss_fn(pred, label)
+
+        # Backpropagation
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        if batch % 100 == 0:
+            loss, current = loss.item(), batch * len(sample)
+            print(f"loss: {loss:>7f}  [{current:>5d}/{len(data_loader.dataset):>5d}]")
+
+def test(data_loader, model, loss_fn):
+    model.eval()
+
+    test_loss, correct = 0, 0
+
+    with torch.no_grad():
+        for sample, label, _ in data_loader:
+            sample, label = sample.to(device), label.to(device)
+
+            pred = model(sample)
+            test_loss += loss_fn(pred, label).item()
+
+            correct += (pred.argmax(1) == label).type(
+                torch.float).sum().item()
+            
+    test_loss /= len(data_loader)
+    correct /= len(data_loader.dataset)
+
+    print(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
+
+epochs = 20
+
+for epoch in range(epochs):
+    print(f"Epoch {epoch + 1}\n-------------------------------")
+    
+    train(dataloader_train, model, loss_fn, optimizer)
+    test(dataloader_test, model, loss_fn)
+    print()
+
+print("Done!")
+\end{lstlisting}

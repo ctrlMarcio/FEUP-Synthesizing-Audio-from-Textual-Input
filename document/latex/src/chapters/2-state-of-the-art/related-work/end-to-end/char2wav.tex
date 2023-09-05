@@ -1,0 +1,9 @@
+\paragraph{Char2Wav}
+
+The Char2Wav model, proposed in 2017 \cite{rao_grapheme--phoneme_2015}, serves as a speech synthesis model comprising two distinct components: a reader and a neural vocoder. The reader takes text as inputs and produces a sequence of acoustic features as outputs. The neural vocoder then takes these acoustic features and generates raw waveform samples.
+
+The reader is an attention-based recurrent sequence generator. It is a type of neural network that can generate a sequence of outputs based on a sequence of inputs. In this case, the inputs are text, and the outputs are acoustic features. The generator uses a bidirectional \ac{RNN} (see Section \ref{sec:rnn-variants}) as an encoder and a \ac{RNN} with attention as a decoder. The attention mechanism allows the model to focus on different parts of the input sequence as it generates the output.
+
+Instead of using a traditional vocoder to generate the raw waveform samples, Char2Wav uses a learned parametric neural module. Specifically, it uses a conditional version of SampleRNN (see Section \ref{sec:samplernn} to learn the mapping from vocoder features to audio samples. This allows \textit{Char2Wav} to generate speech directly from the acoustic features without relying on a specific vocoder.
+
+Although no formal proofs or analytical results are presented in this work, the proposed architecture is a significant breakthrough in speech synthesis. By demonstrating the effectiveness of using attention-based recurrent sequence generators and learned parametric neural modules, Char2Wav establishes a solid foundation for future research in this area.

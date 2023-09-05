@@ -1,0 +1,23 @@
+\subsubsection{Simple Variational Autoencoder} \label{sec:training-vae}
+
+This section focuses on the development and experimentation of the \ac{VAE}, a generative model that, as explained in Section~\ref{sec:vae}, aims to learn latent representations of data while enabling controlled generation. The \ac{VAE} was developed as a means of further exploring generative techniques, expanding on the groundwork established by earlier models and adjusting it to suit the specific characteristics of audio data.
+
+\paragraph{Initial implementation}
+
+The developed \ac{VAE} utilized the identical dataset as the previous models, covering unprocessed audio waveforms. Comparable preprocessing transformations were performed, such as random cropping and padding.
+
+Three primary components constituted the \ac{VAE}'s structure: an encoder, a bottleneck layer, and a decoder. The encoder utilized a variable number of convolutional layers, but for practical reasons, the number was restricted to two. Hardware restrictions played a vital role in imposing this constraint since more layers would result in excessively extended convergence times. Despite its limitations, the bottleneck layer, consisting of two separate linear layers for mean and variance, effectively encapsulated latent features.
+
+The decoder mirrored the encoder's structure, using deconvolutional layers instead of convolutional ones and upsampling instead of max-pooling. This architecture ensured the generation of audio samples preserving the input data's characteristics.
+
+The training process utilized a loss function that combined \ac{BCE} and \ac{KL} divergence, which is in line with standard \ac{VAE} practice. The training emphasized the reconstruction of input samples and learning the latent space, similar to the previous\ac{AE} model.
+
+\paragraph{Fine-Tuning Given Resource Constraints}
+
+As the project progressed, resource limitations played a significant role in shaping the trajectory of the model. Achieving optimal performance of the \ac{VAE} within these constraints became a major challenge. To overcome this challenge, the author underwent fine-tuning of multiple elements such as convolutional layer count and bottle neck layers dimension size. However, the computational demands of these fine-tuning steps proved to be prohibitive, leading the author to explore a different approach.
+
+Focusing on the learning rate, a critical parameter that affects training speed and convergence, was crucial. A structured exploration of learning rates was conducted, considering a range of values spanning several orders of magnitude. This approach facilitated meaningful experimentation within a limited timeframe. The exploration of learning rates uncovered the trade-offs between excessively small and overly large values. Values in the range of $1 \times 10^{-4}$ to $1 \times 10^{-3}$ have shown promising results, indicating a need for further investigation.
+
+The process of training and fine-tuning the \ac{VAE} has highlighted the significant impact of computational resources on model development. Balancing model complexity with resource limitations has proven to be a complex task, resulting in innovative approaches to optimizing training while retaining high-quality generative capabilities.
+
+After training for just five epochs, the loss amounted to $124261.2969$. A visual representation of the reconstructed sample can be found in the annex~\ref{ann:VAE}.

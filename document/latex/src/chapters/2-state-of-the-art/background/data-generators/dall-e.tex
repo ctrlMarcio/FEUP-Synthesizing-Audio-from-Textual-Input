@@ -1,0 +1,32 @@
+\subsubsection{DALL-E} \label{sec:dall-e}
+
+In 2021, the initial version of OpenAI's DALL-E was launched, which introduced zero-shot text-to-image generation \cite{ramesh_zero-shot_2021}. Zero-shot refers to the ability to generate data from textual descriptions without any specific training on those exact combinations of text and images. In other words, DALL-E's training is based on a rich variety of image-text pairs, which enables it to generate new images from textual inputs, relying solely on this training. This issue closely relates to the one addressed by the present research.
+
+The overall structure is easy to comprehend. It primarily comprises of two phases. In the initial phase, image representations or features are learned using a \ac{dVAE}. In this context, a \ac{dVAE} is an enhanced version of the classic \ac{VAE} (see Section~\ref{sec:vae}) that employs discrete latent variables in lieu of continuous ones. Discretizing the latent space allows for explicit control and manipulation of generated images in the synthesis process using \acp{dVAE}.
+
+On the other hand, the second stage produces image representations from textual descriptions using a transformer model, as detailed in Section \ref{sec:transformers}.
+
+Figure \ref{fig:dall-e} illustrates this macro-architecture.
+
+\begin{figure}[ht]
+    \centering
+    \ctikzfig{figures/2-sota/dall-e}
+    \caption[Dall-E macro architecture]{\textbf{Dall-E macro architecture} --- With a green background, one can see textual operations. The complex on the right is a \ac{dVAE}. Upon inference, the transformer's output is used as the latent feature values of the \ac{dVAE}.}
+    \label{fig:dall-e}
+\end{figure}
+
+The \acf{dVAE} trained compresses images into a $32 \times 32$ grid of image tokens. Each token assumes one of 8192 possible values. This reduces the size of the image, improving the performance without significant degradation in visual quality.
+
+At the second stage, the text is first encoded using \ac{BPE}. \Ac{BPE} is a compression technique for representing text using a new, single symbol to replace frequent pairs of characters or symbols. The objective of \ac{BPE} is to merge the most frequent pairs of consecutive symbols, such as letters or bytes, in the given text, until a specific number of merge operations is reached through an iterative process. As a result, this process generates a modified set of symbols that represents the original text but with a smaller vocabulary.
+
+Applying \ac{BPE} enables effective capture of repeating patterns and combinations within the text while achieving better compression than traditional character-level encoding. This encoding step is vital in preparing textual input for subsequent stages and helps enable more efficient processing and modeling.
+
+After the encoding, the resulting symbols are passed as input to a transformer trained to generate the tokens corresponding to the image tokens.
+
+To generate completely new images, the process would be as follows:
+
+\begin{enumerate}
+	\item Encode the text into \acp{BPE}.
+	\item Pass the encoded text to the trained transformer encoder; This outputs image tokens.
+	\item Pass these tokens to the decoder of the \ac{dVAE} trained in stage 1; This outputs the image.
+\end{enumerate}

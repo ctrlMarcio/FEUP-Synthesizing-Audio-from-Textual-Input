@@ -1,0 +1,18 @@
+\paragraph{Convolutional Neural Network (CNN) (1980)} \label{sec:CNN}
+
+During the 1950s and 1960s, Hubel and Wiesel~\cite{hubel_receptive_1959}, who were distinguished neurophysiologists, conducted pioneering research on the eyes of cats. Their research uncovered the presence of neurons with receptive fields that map various visual regions. Receptive fields refer to specific areas in the visual field that activate particular cells. Their studies revealed two fundamental categories of cells involved in visual processing: simple cells with a strong response to edges and complex cells with larger receptive fields that prioritize the organization of edges over their precise positioning.
+
+In 1980, Kinihiko Fukushima introduced the \textit{neocognitron} which marked a significant milestone in the development of \acp{CNN} \cite{fukushima_neocognitron_1980}. It was one of the first \ac{CNN} architectures designed to mimic specific aspects of human visual perception. This laid the groundwork for future advances in deep learning for computer vision tasks.
+
+\Acp{CNN} are a category of \ac{DL} neural networks widely used in computer vision and other sequential data types. The architecture of \acp{CNN} is specifically designed to handle inputs where data correlate with its vicinity.
+
+The key idea behind \acp{CNN} is to learn and extract features from the input hierarchically. This is achieved through convolutional layers, where a small set of learnable filters are used to scan and transform the input image into a feature map. These networks also use pooling layers that perform down-sampling of the feature map to reduce its size while retaining important information. These operations allow the network to capture patterns and features in the input, which can then be passed to feedforward neural networks and used for classification or regression. This process is represented in Figure \ref{fig:cnn}.
+
+\begin{figure}[ht]
+    \centering
+    \ctikzfig{figures/2-sota/cnn}
+    \caption[Convolutional Neural Network]{\textbf{\Acf{CNN}} --- The network present in the Figure deals with 2D data, such as images. The networks' first step consists of convolutional (and pooling) layers. This first step is responsible for finding features. The deeper the convolutional layer, the bigger the receptive field; consequently, the more abstract the feature. After the features are caught, the flatten operation transforms the data into a 1D vector. And then, the network is no more than a feedforward neural network to, in this case, classify what was fed to the network.}
+    \label{fig:cnn}
+\end{figure}
+
+A major benefit of \acp{CNN} compared to other kinds of networks is their ability for parallelism, where a long input sequence can be handled fast \cite{huzaifah_deep_2021}. This can greatly accelerate training since the whole output can be processed in one forward pass. The shared weights and local connectivity among neurons in the network enable efficient computation, and using pooling layers lowers the number of parameters to be learned.

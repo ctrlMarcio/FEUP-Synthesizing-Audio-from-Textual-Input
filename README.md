@@ -11,20 +11,12 @@ The project titled "Synthesizing Audio from Textual Input: Development and Compa
 - To present the results and analysis of the experiments conducted on various datasets and metrics
 - To discuss the challenges, limitations, and future directions of the project
 
-## Data Sources
+## Structure
 
-The data sources for this project are:
+The project is structured as follows:
 
-- Text data: The text data used for training the tokenizer and the text-to-speech model are obtained from various sources such as Wikipedia, news articles, books, transcripts, etc. The total size of the text data is about 10 GB.
-- Audio data: The audio data used for training the text-to-speech model and the vocoder are obtained from various sources such as [LibriSpeech], [Common Voice], [VCTK], etc. The total size of the audio data is about 100 GB.
-
-The text and audio data are preprocessed and cleaned using scripts written in Python. The preprocessing steps include:
-
-- Removing punctuation, numbers, symbols, and other non-speech characters from the text
-- Converting the text to lowercase and applying spelling correction
-- Aligning the text and audio data using forced alignment tools such as [Montreal Forced Aligner]
-- Resampling the audio data to 22.05 kHz and converting them to mono
-- Splitting the data into train, validation, and test sets
+- The `development` folder contains the Python code for the project.
+- The `document` folder contains the LaTeX code as well as the documentation for the project.
 
 ## Dependencies
 

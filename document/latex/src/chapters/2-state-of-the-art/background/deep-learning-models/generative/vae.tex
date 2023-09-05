@@ -1,0 +1,24 @@
+\paragraph{Variational Autoencoder (VAE)} \label{sec:vae}
+
+Kingma and Welling proposed the concept of \acfp{VAE} in 2013 \cite{kingma_auto-encoding_2022}. The authors proposed a new approach to traditional \acp{AE} that utilizes a variational inference method to model complex distributions in high-dimensional spaces. Thus allowing for the generation of new, unseen data similar to the initial training.
+
+In the realm of \acp{AE}, traditional approaches, as discussed in Section \ref{sec:autoencoders}, aim to map the identity function through the utilization of encoder and decoder networks. The encoder takes the input and transforms it into a compressed vector representation, while the decoder reconstructs the input from this compressed representation. However, Variational Autoencoders (\acp{VAE}) introduce a distinct variation in their approach. Instead of modeling the input as a deterministic vector, the encoder in \acp{VAE} characterizes the input data as a probability distribution across potential representations. This distribution is typically represented by two sets of latent values: one corresponding to the mean and the other to the variance. These latent sets are often modeled using fully connected layers within the architecture.
+
+Consequently, the \ac{VAE} framework imposes a constraint on the embedded vector by confining it to a specified number of points in a hyperplane. Interestingly, this enables us to discard the encoder entirely. By working with a continuous latent space, the decoder of the \ac{VAE} can generate novel and diverse samples akin to the training data. Figure \ref{fig:vae} provides a visual depiction of this concept, illustrating how the decoder operates based on samples from the latent distribution to generate new output.
+
+\begin{figure}[ht]
+    \centering
+    \ctikzfig{figures/2-sota/vae}
+    \caption[Variational autoencoder]{\textbf{\Acf{VAE}} --- The \ac{VAE} encoder operates in a manner comparable to the traditional \ac{AE}, but with a notable distinction. Instead of directly mapping the input to a single latent representation, the \ac{VAE} encoder translates the input into two sets of latent features: the normals and the variances. These latent features are represented in the Figure by the two sets of nodes within the bottleneck of the encoder architecture.}
+    \label{fig:vae}
+\end{figure}
+
+This was encouraging, as distributions near each other would produce similar outputs. This means, it created smooth changes between data points. The explanation for this is that \acp{VAE} discover low-dimensional parameterized representations of the data \cite{huzaifah_deep_2021}.
+
+For training, these networks use an objective function that aims to minimize the loss between input and output and ensure that the learned distribution is similar to a prior distribution, such as a Gaussian.
+
+However, sometimes during training, the \ac{VAE} can learn to ignore the latent variable and instead rely solely on the decoder network to generate the output. This means that the encoder network outputs the same distribution over the latent space for all input data points, resulting in a collapsed posterior distribution. In other words, the encoder fails to capture the variability in the input data, and the decoder generates outputs that are not diverse.
+
+This phenomenon is known as \textit{posterior collapse}, and it can occur due to various reasons, such as a high reconstruction loss weight or a small latent space size. Posterior collapse can severely impact the performance of the \ac{VAE} and result in poor-quality generated samples.
+
+These models can be used for any generative task, such as computer vision, natural language processing, and sound generation.

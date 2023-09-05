@@ -1,0 +1,392 @@
+\chapter{VAMOS} \label{ann:vamos}
+
+Contained in this appendix are important insights into the architectural foundations of the VAMOS model, along with three key components that are central to its effectiveness. These components include the \textit{Text Encoder}, which uses BERT's encoder for transforming textual data, the \textit{ResNet (Audio Encoder)} designed for audio processing tasks, and the \textit{CLAP} model for creating joint audio-text embeddings. Furthermore, this text presents an implementation and analysis of the \textit{U-Net} architecture, which is known for its superior segmentation capabilities. All components of the model are accompanied by their code and academic explanation to highlight their importance in the overall framework.
+
+\section{Text Encoder}
+
+\begin{lstlisting}[language=Python, caption={Text encoding function utilizing BERT tokenizer and encoder for semantic representation extraction.}]
+def encode(text):
+    # Pass text through the BERT tokenizer
+    input_ids = tokenizer(text, add_special_tokens=True)["input_ids"]
+    input_tensor = torch.tensor([input_ids])
+
+    # Pass the input tensor through the BERT encoder
+    with torch.no_grad():
+        encoded_output = self.model(input_tensor)[0]
+        flatten_output = torch.flatten(encoded_output, start_dim=1)
+
+    return flatten_output
+\end{lstlisting}
+
+The provided code excerpt describes the \texttt{encode} function, which plays an essential role in the developed model. This function utilizes a BERT model's encoder to convert input textual data into a structured numerical representation that encapsulates its semantic essence.
+
+The function begins by calling a BERT tokenizer that translates human-readable text into an ordered sequence of discrete numerical identifiers. This conversion aligns with the established protocol for facilitating computational analysis and interpretation.
+
+Afterward, the input tensor passes through the encoder module of the BERT model, which captures contextual dependencies within the text data. This process fosters a dynamic and enriched representation at the token level.
+
+\section{ResNet (Audio Encoder)}
+
+\begin{lstlisting}[language=Python, caption={Residual Network (ResNet) architecture for audio processing with custom residual block implementation.}]
+class ResNet(nn.Module):
+  
+    # ... (other initialization code)
+
+    def build_resnet(self):
+        if self.useBottleneck:
+            filters = [64, 256, 512, 1024, 2048]
+        else:
+            filters = [64, 64, 128, 256, 512]
+
+        self.layer1 = nn.Sequential()
+        self.layer1.add_module('conv2_1', resblock(
+            filters[0], filters[1], downsample=False))
+        for i in range(1, self.repeat[0]):
+            self.layer1.add_module('conv2_%d' % (
+                i+1,), resblock(filters[1], filters[1], downsample=False))
+
+        self.layer2 = nn.Sequential()
+        self.layer2.add_module('conv3_1', resblock(
+            filters[1], filters[2], downsample=True))
+        for i in range(1, self.repeat[1]):
+            self.layer2.add_module('conv3_%d' % (
+                i+1,), resblock(filters[2], filters[2], downsample=False))
+
+        self.layer3 = nn.Sequential()
+        self.layer3.add_module('conv4_1', resblock(
+            filters[2], filters[3], downsample=True))
+        for i in range(1, self.repeat[2]):
+            self.layer3.add_module('conv2_%d' % (
+                i+1,), resblock(filters[3], filters[3], downsample=False))
+
+        self.layer4 = nn.Sequential()
+        self.layer4.add_module('conv5_1', resblock(
+            filters[3], filters[4], downsample=True))
+        for i in range(1, self.repeat[3]):
+            self.layer4.add_module('conv3_%d' % (
+                i+1,), resblock(filters[4], filters[4], downsample=False))
+
+        self.gap = torch.nn.AdaptiveAvgPool2d(1)
+        self.fc = torch.nn.Linear(filters[4], outputs)
+
+    def forward(self, input):
+        input = self.layer0(input)
+        input = self.layer1(input)
+        input = self.layer2(input)
+        input = self.layer3(input)
+        input = self.layer4(input).detach()
+        input = self.gap(input)
+        input = torch.flatten(input, start_dim=1)
+        input = self.fc(input)
+
+        return input
+  
+class ResBlock(nn.Module):
+
+    def __init__(self, in_channels, out_channels, downsample):
+  
+        # ... (other initialization code)
+
+        # Define convolutional layers and batch normalization
+        if downsample:
+            # If downsample is True
+            # apply convolution that reduces the size and apply a shortcut
+            self.conv1 = nn.Conv2d(
+                in_channels, out_channels, kernel_size=3, stride=2, padding=1)
+            self.shortcut = nn.Sequential(
+                nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=2),
+                nn.BatchNorm2d(out_channels)
+            )
+        else:
+            # If downsample is False, apply convolution with stride 1 and no
+            # shortcut path
+            self.conv1 = nn.Conv2d(
+                in_channels, out_channels, kernel_size=3, stride=1, padding=1)
+            self.shortcut = nn.Identity()
+
+        # Define additional convolutional layers and batch normalization
+        self.conv2 = nn.Conv2d(out_channels, out_channels,
+                               kernel_size=3, stride=1, padding=1)
+        self.bn1 = nn.BatchNorm2d(out_channels)
+        self.bn2 = nn.BatchNorm2d(out_channels)
+
+    def forward(self, input_tensor):
+        # Apply the shortcut path to the input
+        shortcut = self.shortcut(input_tensor)
+        shortcut = shortcut.detach()
+
+        # Apply the first convolutional layer and ReLU activation, followed by
+        # batch normalization
+        x = nn.ReLU()(self.bn1(self.conv1(input_tensor)))
+        x = x.detach()
+
+        # Apply the second convolutional layer and ReLU activation, followed by
+        # batch normalization
+        x = nn.ReLU()(self.bn2(self.conv2(x)))
+        x = x.detach()
+
+        # Add the shortcut to the output of the second convolutional layer
+        output_tensor = x + shortcut
+
+        # Apply ReLU activation to the output and return it
+        return nn.ReLU()(output_tensor)
+\end{lstlisting}
+
+The provided code segment introduces a customized neural network architecture based on the ResNet framework, specifically designed for audio processing. The architecture includes a variety of key components, including the use of residual blocks that are critical to constructing the ResNet layers. The explanation then provides a concise overview of the overall structure and operation of the code. 
+
+At the core of this demonstration is the \texttt{ResNet} class. This class includes methods for assembling the architecture and managing data flow through the network.  This class includes methods for assembling the architecture and managing data flow through the network. A key method is \texttt{build\_resnet}, which creates the network by stacking residual blocks. This assembly follows the architectural configuration principles outlined by the specified guidelines.
+
+Additionally, the \texttt{ResBlock} class serves as a fundamental construct that houses a single residual block- revered for its role as a building block within the larger ResNet architecture. Within this enclosed domain, the architectural formulation of the residual block is contextualized.
+
+\section{CLAP}
+
+\begin{lstlisting}[language=Python, caption={CLAP model architecture for joint audio-text embeddings with pairwise cosine similarity-based alignment.}]
+class Clap(nn.Module):
+    def __init__(self,
+                 audio_feature_dim,
+                 text_feature_dim,
+                 shared_embedding_dim
+                 ):
+        # ... (other initialization code)
+  
+        # Initialize the weights that will connect the input audio and text
+        # features to the shared embedding space.
+        self._audio_projection = torch.nn.Linear(
+            audio_feature_dim, shared_embedding_dim)
+        self._text_projection = torch.nn.Linear(
+            text_feature_dim, shared_embedding_dim)
+
+        # Initialize the temperature parameter used for scaling the pairwise
+        # cosine similarities between image and text embeddings.
+        self._learned_temperature = torch.nn.Parameter(torch.tensor([1.0]))
+
+    def encode_audio(self, audio_features):
+        # Project the audio features into the shared embedding space and
+        # normalize the resulting embedding vectors.
+        audio_embeddings = F.normalize(
+            self._audio_projection(audio_features), p=2, dim=1)
+        return audio_embeddings
+
+    def encode_text(self, text_features):
+        # Project the text features into the shared embedding space and
+        # normalize the resulting embedding vectors.
+        text_embeddings = F.normalize(
+            self._text_projection(text_features), p=2, dim=1)
+        return text_embeddings
+
+    def forward(self, audio_features, text_features):
+        # Encode the audio and text features into their respective embedding
+        # spaces.
+        audio_embeddings = self.encode_audio(audio_features)
+        text_embeddings = self.encode_text(text_features)
+
+        # Compute the pairwise cosine similarities between the image and text
+        # embeddings, scaled by the learned temperature parameter.
+        pairwise_similarities = torch.matmul(
+            audio_embeddings, text_embeddings.T) * torch.exp(
+            self._learned_temperature)
+
+        # Compute the symmetric cross-entropy loss between the predicted
+        # pairwise similarities and the true pairwise similarities.
+        labels = torch.arange(audio_features.size(0))
+        loss_i = F.cross_entropy(
+            pairwise_similarities, labels, reduction='mean')
+        loss_t = F.cross_entropy(
+            pairwise_similarities.T, labels, reduction='mean')
+        loss = (loss_i + loss_t) / 2
+
+        return loss
+\end{lstlisting}
+
+The presented code introduces a class called \texttt{Clap}. It is a neural network model designed to acquire shared embeddings for both audio and text input data. The model aims to align audio and text features in a shared embedding space by utilizing pairwise cosine similarities. 
+
+The essence of the code is explained in further detail below. The initialization of the model includes parameterizing the primary dimensions: audio and text feature dimensions, coupled with the dimensionality of the embedding space for their alignment.
+
+The model's architecture incorporates linear projection layers for audio and text input streams, as well as a temperature parameter.  The learned temperature parameter is useful in calibrating pairwise cosine similarities by incorporating a scaling factor to the magnitudes.
+
+The \texttt{forward} method represents the procedural logic for the model's forward pass. This includes incorporating audio and text input features into their respective embedding spaces, accomplished through the use of the \texttt{encode\_audio} and \texttt{encode\_text} methods. An important step is the subsequent calculation of pairwise cosine similarities using matrix multiplication, which reflects the underlying relationships between audio and text embeddings. The use of the acquired temperature parameter adjusts the importance of these pairwise similarities. Based on this foundation, the algorithm's optimization is enhanced by calculating a symmetric cross-entropy loss that takes into account audio-to-text as well as text-to-audio relationships. The final loss metric directing the model's training trajectory is achieved by averaging these dual losses.
+
+\section{U-Net}
+
+\begin{lstlisting}[language=Python, caption={U-Net architecture for semantic segmentation}]
+class UNet(nn.Module):
+
+    # ... (other initialization code)
+
+    def forward(self, x):
+        x = x.to(self.device)
+
+        # implements the forward pass with concatenations
+        skip_connections = []
+
+        # contracting path
+        for block in self._contracting_path:
+            # create a sequential block from the list of layers
+            net = nn.Sequential(*block).to(self.device)
+
+            # apply
+            x = net(x)
+
+            # save the skip connection
+            skip_connections.append(x)
+
+        # bottleneck
+        x = self._bottleneck(x)
+
+        # expanding path
+        for layer_idx in range(self.depth - 1):
+            # the first layer is a transposed convolutional layer
+            transposed_conv = self._expanding_path_layers[layer_idx * 2].to(
+                self.device)
+            x = transposed_conv(x)
+
+            # concatenate the skip connection
+            skip_connection = skip_connections.pop()
+            # make sure the shapes match
+            if x.shape != skip_connection.shape:
+                # resize the skip connection
+                skip_connection = nn.functional.interpolate(skip_connection,
+                                                            size=x.shape[2:],
+                                                            mode='nearest')
+
+            # concatenate the skip connection
+            x = torch.cat((x, skip_connection), dim=1)
+
+            # the second layer is a sequential block of convolutional layers
+            conv_block = self._expanding_path_layers[layer_idx * 2 + 1].to(
+                self.device)
+            x = conv_block(x)
+
+        # final convolutional layer
+        x = self._expanding_path_layers[-1].to(self.device)(x)
+
+        return x
+
+    def _make_contracting_path(self):
+        """
+        Create the contracting path of the U-Net.
+        """
+        layers = []
+
+        # configs the used convolutional layers
+        in_channels = self.in_channels
+        out_channels = 64
+
+        # create a convolutional block for each number in depth
+        for _ in range(self.depth - 1):
+            # create a convolutional block
+            block = []
+
+            # create the number of convolutional layers specified by
+            # conv_layers_per_block
+            for _ in range(self.conv_layers_per_block):
+                block.append(nn.Conv2d(in_channels=in_channels,
+                             out_channels=out_channels, kernel_size=3, padding="same"))
+                # batch normalization
+                block.append(nn.BatchNorm2d(out_channels))
+                # ReLU activation
+                block.append(nn.ReLU())
+
+                # update the in_channels
+                in_channels = out_channels
+
+            # add a max pooling layer
+            block.append(nn.MaxPool2d(kernel_size=2))
+
+            # add the block to the layers
+            layers.append(block)
+
+            # double the number of channels
+            out_channels *= 2
+
+        # create a network from the layers
+        return layers
+
+    def _make_bottleneck(self):
+        """
+        Create the bottleneck of the U-Net.
+        """
+        # build the bottleneck
+        layers = []
+
+        # config the bottleneck channels
+        in_channels = 64 * (2 ** (self.depth - 2))
+        out_channels = in_channels * 2
+
+        # create the number of convolutional layers specified by
+        # conv_layers_per_block
+        for _ in range(self.conv_layers_per_block):
+            layers.append(nn.Conv2d(in_channels=in_channels,
+                                    out_channels=out_channels,
+                                    kernel_size=3,
+                                    padding="same"))
+            # batch normalization
+            layers.append(nn.BatchNorm2d(out_channels))
+            # ReLU activation
+            layers.append(nn.ReLU())
+
+            # update the in_channels
+            in_channels = out_channels
+
+        # add all the layers in block in the layers list
+        return nn.Sequential(*layers).to(self.device)
+
+    def _make_expanding_path(self):
+        """
+        Create the expanding path of the U-Net.
+        This returns a list of layers, which will be used in the forward pass.
+        Some layers are transposed convolutional layers, others are sequential
+            blocks of convolutional layers.
+        """
+        layers = []
+
+        # configs the used convolutional layers
+        # the number of in channels is the number of out channels from the last
+        # block in the contracting path
+        in_channels = 64 * (2 ** (self.depth - 1))
+        out_channels = in_channels // 2
+
+        # create a convolutional block for each number in depth
+        for _ in range(self.depth - 1):
+            # add an up conv 2x2
+            layers.append(nn.ConvTranspose2d(in_channels=in_channels,
+                                             out_channels=out_channels,
+                                             kernel_size=2,
+                                             stride=2))
+
+            block = []
+
+            # create the number of convolutional layers specified by
+            # conv_layers_per_block
+            for _ in range(self.conv_layers_per_block):
+                block.append(nn.Conv2d(in_channels=in_channels,
+                             out_channels=out_channels, kernel_size=3, padding="same"))
+                # batch normalization
+                block.append(nn.BatchNorm2d(out_channels))
+                # ReLU activation
+                block.append(nn.ReLU())
+
+                # update the in_channels
+                in_channels = out_channels
+
+            # add the block to the layers
+            layers.append(nn.Sequential(*block))
+
+            # double the number of channels
+            out_channels //= 2
+
+        # final convolutional layer
+        final_layer = []
+        final_layer.append(nn.Conv2d(in_channels=in_channels,
+                                     out_channels=self.out_channels,
+                                     kernel_size=1,
+                                     padding="same"))
+
+        final_layer.append(nn.Softmax(dim=1))
+
+        layers.append(nn.Sequential(*final_layer))
+
+        # create a network from the layers
+        return layers
+\end{lstlisting}
+
+The code provides insight into the U-Net architecture, renowned for its effectiveness in segmentation tasks. It includes a class called \texttt{UNet}, which embodies the architectural blueprint of the U-Net model. Its structure is composed of three primary components - the contracting path, the bottleneck layer, and the expanding path - which are crucial to the model's implementation. The forward pass follows the characteristic U-shaped configuration.  This architectural layout is used to create the favorable integration of skip connections, which enhances the capacity for precise segmentation.

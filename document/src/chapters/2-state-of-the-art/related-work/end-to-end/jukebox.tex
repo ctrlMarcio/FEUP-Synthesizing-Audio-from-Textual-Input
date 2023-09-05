@@ -1,9 +1,0 @@
-\paragraph{Jukebox}
-
-Jukebox, a generative model for music that produces music with singing in the raw audio domain, was introduced by Dhariwal et al. in 2020 \cite{dhariwal_jukebox_2020}. The model tackles the long context of raw audio using a multiscale \ac{VQ-VAE} (see Section \ref{sec:ms-vq-vae}) to compress it to discrete codes and models those using \ac{AR} Transformers (see Section \ref{sec:transformers}).
-
-The hierarchical \ac{VQ-VAE} architecture compresses audio into a discrete space, retaining the maximum amount of musical information at increasing compression levels. The model uses residual networks consisting of WaveNet-style (see Section \ref{sec:wavenet}) noncausal 1-D dilated convolutions, interleaved with downsampling and upsampling 1-D convolutions to match different hop lengths. Separate autoencoders with varying hop lengths are trained to maximize the amount of information stored at each level.
-
-After training the \ac{VQ-VAE}, a prior $p(z)$ over the compressed space is learned to generate samples. The prior model is broken up as $p(z) = p(z_{top})p(z_{middle}|z_{top})p(z_{bottom}|z_{middle}, z_{top})$, and separate models are trained for the top-level prior $p(z_{top})$, and upsamplers $p(z_{middle}|z_{top})$ and $p(z_{bottom}|z_{middle}, z_{top})$. Autoregressive Transformers with sparse attention are used for modeling in the discrete token space produced by the \ac{VQ-VAE}.
-
-Jukebox can generate high-fidelity and diverse songs with coherence for up to multiple minutes. It can be conditioned on the artist and genre to steer the musical and vocal style and on unaligned lyrics to make the singing more controllable. The model's release includes thousands of non-cherry-picked samples, model weights, and code.

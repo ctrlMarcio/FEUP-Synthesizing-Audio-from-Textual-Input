@@ -1,7 +1,0 @@
-\paragraph{SampleRNN} \label{sec:samplernn}
-
-\textit{SampleRNN} is a neural audio generation model proposed in 2017 that can produce high-quality audio samples from scratch \cite{mehri_samplernn_2017}. It uses a hierarchical structure of \acp{RNN} (see Section \ref{sec:rnn}) to model the probability distribution of audio waveforms at different temporal resolutions. The lowest \ac{RNN} operates on individual samples, while higher \acp{RNN} capture longer-term dependencies and structure. SampleRNN can learn from any audio data without any prior knowledge or labels.
-
-The higher \acp{RNN} capture the longer-term dependencies by receiving inputs from lower \acp{RNN} at a lower sampling rate. This way, they can process longer audio sequences. The higher \acp{RNN} also use skip connections to directly access the outputs of lower \acp{RNN}, which helps to avoid vanishing gradients and preserve information across different levels of abstraction.
-
-Each cell is a \ac{RNN} variant, such as \ac{GRU} (see Section \ref{sec:rnn-variants}) that takes as input a frame of audio samples from a lower \ac{RNN} and outputs a hidden state vector that encodes the long-term context of the audio. This output is passed upwards in the hierarchy to other \acp{RNN} that take it. Multiple layers are possible, each operating at a different temporal resolution. All the outputs are then inputted in the final level \ac{RNN}, whose output is the next audio sample based on the combined information from all hierarchy levels.

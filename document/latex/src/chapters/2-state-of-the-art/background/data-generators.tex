@@ -1,0 +1,28 @@
+\subsection{Data Generators} \label{sec:data-generators}
+
+Creating new data from existing data is known as generative modeling. This technique has numerous applications across various media types, including images, text, and video. However, each media type possesses unique characteristics, so generating them requires distinct approaches and techniques. Sound, for instance, presents a different set of challenges than other media types, and hence its generation necessitates diverse techniques.
+
+This section aims to survey some of the state-of-the-art generators for media types that are not sound-based, primarily focusing on image generators. By doing so, one hopes to comprehensively understand the different approaches and techniques employed for generating various media types.
+
+The discussion delves into the main ideas behind these generators, their strengths and limitations, and how they can be related to or inspired by sound generation. Through this exploration, this section highlights the diversity of methods used for generative modeling and how they can be adapted to different contexts.
+
+\begin{table}[ht]
+\centering
+\caption{Comparison of Data Generators}
+\begin{tabularx}{\textwidth}{|X|X|X|X|}
+\hline
+\textbf{Generator Name} & \textbf{Main Idea}                                                                                                                    & \textbf{Strengths}                                                                                                                                 & \textbf{Limitations}                                                                                                          \\ \hline
+PixelCNN~\cite{oord_conditional_2016}                & Uses autoregressive connections to model images pixel by pixel.                                                                       & Fast and parallelizable training, high resolution and diversity, interpretable latent space.                                                       & Slow and sequential sampling, limited global coherence, difficulty in conditioning on high-level features.                    \\ \hline
+DALL-E~\cite{ramesh_zero-shot_2021}                  & A transformer language model that creates images from text descriptions, using a dataset of text–image pairs.                         & Can generate novel and creative images, combine concepts in plausible ways, render text and apply transformations.                                 & Requires large amounts of data and compute, may produce harmful or biased outputs, not publicly accessible.                   \\ \hline
+Stable Diffusion~\cite{rombach_high-resolution_2021}        & A latent diffusion model that creates images from text descriptions, using a dataset of text–image pairs and a pretrained CLIP model. & Can generate realistic and detailed images, is lighter than previous state of the art models.                                                      & Requires fine-tuning for specific domains, may produce artifacts or inconsistencies, sensitive to text prompts.               \\ \hline
+GLIDE~\cite{nichol_glide_2021}                   & Guided diffusion-based approach for text-conditioned image generation.                                                                & High-fidelity image synthesis, classifier-free guidance preferred for photorealism and caption similarity, text-driven image editing capabilities. & Difficulty generating images for complex or unusual text prompts, slow generation speed.                                      \\ \hline
+DALL-E 2~\cite{ramesh_hierarchical_2022}                & An improved version of DALL-E that generates more realistic and accurate images using a diffusion model.                              & Has better results than DALL-E and is faster.                                                                                                      & Still requires large amounts of data and compute, may still produce harmful or biased outputs, still not publicly accessible. \\ \hline
+\end{tabularx}
+\label{tab:data-generators}
+\end{table}
+
+\input{src/chapters/2-state-of-the-art/background/data-generators/pixelcnn}
+\input{src/chapters/2-state-of-the-art/background/data-generators/dall-e}
+\input{src/chapters/2-state-of-the-art/background/data-generators/stable-diffusion}
+\input{src/chapters/2-state-of-the-art/background/data-generators/glide}
+\input{src/chapters/2-state-of-the-art/background/data-generators/dall-e-2}

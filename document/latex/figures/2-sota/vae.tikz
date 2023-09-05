@@ -1,0 +1,101 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=input] (0) at (-9, 0) {};
+		\node [style=input] (1) at (-9, 3) {};
+		\node [style=input] (2) at (-9, 6) {};
+		\node [style=input] (3) at (-9, -3) {};
+		\node [style=input] (4) at (-9, -6) {};
+		\node [style=neuron] (6) at (-5, 3) {};
+		\node [style=neuron] (7) at (-5, 0) {};
+		\node [style=neuron] (8) at (-5, -3) {};
+		\node [style=neuron] (13) at (5, 3) {};
+		\node [style=neuron] (14) at (5, 0) {};
+		\node [style=neuron] (15) at (5, -3) {};
+
+            % bottleneck
+            \node [style=neuron] (bm1) at (0, 5.5) {};
+            \node [style=neuron] (bm2) at (0, 2.5) {};
+            \node [style=neuron] (bv1) at (0, -2.5) {};
+            \node [style=neuron] (bv2) at (0, -5.5) {};
+            
+		\node [style=output] (16) at (9, 6) {};
+		\node [style=output] (17) at (9, 3) {};
+		\node [style=output] (18) at (9, 0) {};
+		\node [style=output] (19) at (9, -3) {};
+		\node [style=output] (20) at (9, -6) {};
+		\node [style=output] (21) at (9, 6) {};
+		\node [style=none] (26) at (0, 9) {Bottleneck};
+		\node [style=none] (27) at (-8, 9) {Input};
+		\node [style=none] (28) at (8, 9) {Output};
+		\node [style=none] (29) at (0, 11) {};
+		\node [style=none] (30) at (0, -8) {};
+		\node [style=none] (40) at (0, 0) {$\mathcal{N}(\mu,\,\sigma^{2})$};
+		\node [style=none] (41) at (-1.75, 0.5) {};
+		\node [style=none] (42) at (1.75, 0.5) {};
+		\node [style=none] (43) at (-2, 0) {};
+		\node [style=none] (44) at (-1.75, -0.5) {};
+		\node [style=none] (45) at (2, 0) {};
+		\node [style=none] (46) at (1.75, -0.5) {};
+  
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=input->neuron] (2) to (6);
+		\draw [style=input->neuron] (2) to (7);
+		\draw [style=input->neuron] (2) to (8);
+		\draw [style=input->neuron] (0) to (6);
+		\draw [style=input->neuron] (3) to (7);
+		\draw [style=input->neuron] (4) to (8);
+		\draw [style=input->neuron] (1) to (6);
+		\draw [style=input->neuron] (1) to (7);
+		\draw [style=input->neuron] (1) to (8);
+		\draw [style=input->neuron] (0) to (7);
+		\draw [style=input->neuron] (3) to (8);
+		\draw [style=input->neuron] (0) to (8);
+		\draw [style=input->neuron] (3) to (6);
+		\draw [style=input->neuron] (4) to (7);
+		\draw [style=input->neuron] (4) to (6);
+		\draw [style=neuron->output] (13) to (16);
+		\draw [style=neuron->output] (13) to (17);
+		\draw [style=neuron->output] (13) to (18);
+		\draw [style=neuron->output] (13) to (19);
+		\draw [style=neuron->output] (13) to (20);
+		\draw [style=neuron->output] (14) to (16);
+		\draw [style=neuron->output] (14) to (17);
+		\draw [style=neuron->output] (14) to (18);
+		\draw [style=neuron->output] (14) to (19);
+		\draw [style=neuron->output] (14) to (20);
+		\draw [style=neuron->output] (15) to (21);
+		\draw [style=neuron->output] (15) to (17);
+		\draw [style=neuron->output] (15) to (18);
+		\draw [style=neuron->output] (15) to (19);
+		\draw [style=neuron->output] (15) to (20);
+
+            % connections to bottleneck
+		\draw [style=neuron->neuron] (6) to (bm1);
+		\draw [style=neuron->neuron] (6) to (bm2);
+		\draw [style=neuron->neuron] (6) to (bv1);
+		\draw [style=neuron->neuron] (6) to (bv2);
+		\draw [style=neuron->neuron] (7) to (bm1);
+		\draw [style=neuron->neuron] (7) to (bm2);
+		\draw [style=neuron->neuron] (7) to (bv1);
+		\draw [style=neuron->neuron] (7) to (bv2);
+		\draw [style=neuron->neuron] (8) to (bm1);
+		\draw [style=neuron->neuron] (8) to (bm2);
+		\draw [style=neuron->neuron] (8) to (bv1);
+		\draw [style=neuron->neuron] (8) to (bv2);
+
+            % connections from bottleneck
+		\draw [style=neuron->neuron] (bm1) to (13);
+		\draw [style=neuron->neuron] (bm2) to (13);
+		\draw [style=neuron->neuron] (bv1) to (13);
+		\draw [style=neuron->neuron] (bv2) to (13);
+		\draw [style=neuron->neuron] (bm1) to (14);
+		\draw [style=neuron->neuron] (bm2) to (14);
+		\draw [style=neuron->neuron] (bv1) to (14);
+		\draw [style=neuron->neuron] (bv2) to (14);
+		\draw [style=neuron->neuron] (bm1) to (15);
+		\draw [style=neuron->neuron] (bm2) to (15);
+		\draw [style=neuron->neuron] (bv1) to (15);
+		\draw [style=neuron->neuron] (bv2) to (15);
+	\end{pgfonlayer}
+\end{tikzpicture}

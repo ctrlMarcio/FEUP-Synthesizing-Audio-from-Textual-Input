@@ -1,0 +1,49 @@
+\begin{tikzpicture}[font=\tiny]
+    \node (fig1) at (0, 0)
+    {\includegraphics[width=350pt]{figures/2-sota/sound-wave.jpg}};
+
+    \node[below=2em of fig1] (fig2)
+    {\includegraphics[width=350pt]{figures/2-sota/sound-spectrogram.jpg}};
+
+    \begin{pgfonlayer}{nodelayer}
+        % first plot
+		\node (0) at (-13, -0.2) {-2500};
+		\node[above=7pt of 0] (1) {0};
+		\node[above=7pt of 1] (2) {2500};
+		\node[above=7pt of 2] (3) {5000};
+		\node[above=7pt of 3] (4) {7500};
+		\node[below=7pt of 0] (5) {-5000};
+		\node[below=7pt of 5] (6) {-7500};
+		\node[below=7pt of 6] (7) {-10000};
+
+        \node (8) at (-11, -6) {0};
+		\node[right=40pt of 8] (9) {500};
+		\node[right=40pt of 9] (10) {1000};
+		\node[right=40pt of 10] (11) {1500};
+		\node[right=40pt of 11] (12) {2000};
+		\node[right=40pt of 12] (13) {2500};
+
+        \node[rotate=90, left=15pt of 1] (energy) {energy};\node[below=5pt of fig1] (fig1des) {sample rate $\times$ time};
+
+        % second plot
+
+  		\node (14) at (-13, -19) {0};
+		\node[above=7.5pt of 14] (15) {1000};
+		\node[above=7.5pt of 15] (16) {2000};
+		\node[above=7.5pt of 16] (17) {3000};
+		\node[above=7.5pt of 17] (18) {4000};
+		\node[above=7.5pt of 18] (19) {5000};
+		\node[above=7.5pt of 19] (20) {6000};
+		\node[above=7.5pt of 20] (21) {7000};
+		\node[above=7.5pt of 21] (22) {8000};
+
+        \node (23) at (-9.4, -19.5) {0.04};
+		\node[right=45pt of 23] (24) {0.06};
+		\node[right=45pt of 24] (25) {0.08};
+		\node[right=45pt of 25] (26) {0.10};
+		\node[right=45pt of 26] (27) {0.12};
+  
+        \node[rotate=90, left=8pt of 19] (frequency) {frequency};
+        \node[below=5pt of fig2] (fig2des) {time};
+	\end{pgfonlayer}
+\end{tikzpicture}

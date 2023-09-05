@@ -1,0 +1,43 @@
+\paragraph{Optimization with the Adam Optimizer} \label{sec:adam}
+
+Adam is a variant of \ac{SGD} (see Section \ref{sec:sgd}) that adapts the learning rate for each parameter based on the estimates of the first and second moments of the gradients \cite{kingma_adam_2017}.
+
+Adam addresses some of the limitations of \ac{SGD}, such as the sensitivity to the learning rate and the mini-batch size, using a more sophisticated update rule incorporating information about the gradients and their history. Specifically, Adam computes a moving average of the gradients and their squares, which adjusts the updates' learning rate and momentum.
+
+The estimates of the moments are computed as follows:
+
+\begin{equation}
+    m_t = \beta_1 m_{t-1} + (1-\beta_1)g_t
+\end{equation}
+
+\begin{equation}
+    v_t = \beta_2 v_{t-1} + (1-\beta_2)g_t^2
+\end{equation}
+
+where $g_t$ is the gradient of the loss function with respect to the parameters at iteration $t$, $m_{t-1}$ and $v_{t-1}$ are the estimates of the moments at the previous iteration, and $\beta_1$ and $\beta_2$ are the decay rates for the moving averages of the gradients and their squares, respectively.
+
+The update rule for Adam can then be written as follows:
+
+\begin{equation}
+    \theta_{t+1} = \theta_{t} - \frac{\alpha}{\sqrt{\hat{v}_t+\epsilon}}\hat{m}_t
+\end{equation}
+
+where $\theta_t$ is the vector of model parameters at iteration $t$, $\alpha$ is the learning rate, $\hat{m}_t$ and $\hat{v}_t$ are the biased estimates of the first and second moments of the gradients, respectively, and $\epsilon$ is a small constant to avoid division by zero.
+
+The biased estimates of the moments are computed as follows:
+
+\begin{equation}
+    \hat{m}_t = \frac{m_t}{1-\beta_1^t}
+\end{equation}
+
+\begin{equation}
+    \hat{v}_t = \frac{v_t}{1-\beta_2^t}
+\end{equation}
+
+where $t$ is the iteration number. The bias correction is necessary to account for the fact that the estimates are initialized at zero and may be biased towards zero in the early iterations.
+
+By using the biased estimates of the moments, Adam can handle noisy or sparse gradients and converge faster than SGD on a wide range of optimization problems. However, the choice of the hyperparameters, such as the learning rate, the decay rates, and the epsilon value, can significantly affect the performance of Adam and should be carefully tuned for each problem.
+
+Adam combines the benefits of both momentum and adaptive learning rates by using the moving average of the gradients to update the momentum and the moving average of the squared gradients to adapt the learning rate. Unlike \ac{SGD}, which uses a fixed learning rate for all parameters, Adam adapts the learning rate individually for each parameter based on the estimate of the second moment of the gradient. This can improve the solutions' convergence and quality, especially for problems with sparse or noisy gradients. Moreover, Adam can handle non-stationary objective functions and noisy gradients, which can be challenging for other optimization algorithms.
+
+However, Adam also has some limitations, such as its sensitivity to the choice of hyperparameters and its tendency to overshoot the optimal solution. Therefore, tuning the hyperparameters carefully and monitoring the algorithm's convergence during training is important.

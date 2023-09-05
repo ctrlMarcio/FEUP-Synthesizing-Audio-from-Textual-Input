@@ -1,0 +1,45 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=input] (0) at (-5, 0) {$X_0$};
+		\node [style=etc] (1) at (-1, 0) {};
+		\node [style=etc] (2) at (-0.5, 0) {};
+		\node [style=etc] (3) at (0, 0) {};
+		\node [style=neuron] (4) at (4, 0) {$X_{k-1}$};
+		\node [style=neuron] (5) at (9, 0) {$X_k$};
+		\node [style=etc] (6) at (13, 0) {};
+		\node [style=etc] (7) at (13.5, 0) {};
+		\node [style=etc] (8) at (14, 0) {};
+		\node [style=neuron] (9) at (18, 0) {$X_K$};
+		\node [style=none] (10) at (-1.25, 0.5) {};
+		\node [style=none] (11) at (-1.25, -0.5) {};
+		\node [style=none] (12) at (0.25, 0.5) {};
+		\node [style=none] (13) at (0.25, -0.5) {};
+		\node [style=none] (14) at (12.75, 0.5) {};
+		\node [style=none] (15) at (12.75, -0.5) {};
+		\node [style=none] (16) at (14.25, 0.5) {};
+		\node [style=none] (17) at (14.25, -0.5) {};
+		\node [style=none] (18) at (6.5, 2) {$q(X_K|X_{K-1})$};
+		\node [style=none] (19) at (6.5, -2) {$p(X_{K-1}|X_K)$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=input->neuron, bend left=15] (0) to (10.center);
+		\draw [style=input->neuron, bend right=345] (11.center) to (0);
+		\draw [style=neuron->neuron, bend left=15] (12.center) to (4);
+		\draw [style=neuron->neuron, bend left=15] (4) to (13.center);
+		\draw [style=neuron->neuron, bend left=15] (4) to (5);
+		\draw [style=neuron->neuron, in=345, out=195] (5) to (4);
+		\draw [style=neuron->neuron, bend left=15] (5) to (14.center);
+		\draw [style=neuron->neuron, bend right=345] (15.center) to (5);
+		\draw [style=neuron->neuron, bend left=15] (16.center) to (9);
+		\draw [style=neuron->neuron, bend left=15] (9) to (17.center);
+	\end{pgfonlayer}
+
+    \node[below=2em of 0] (original)
+    {\includegraphics[width=50pt]{figures/2-sota/diffusion/0.jpg}};
+
+    \node[below=2em of 5] (original)
+    {\includegraphics[width=50pt]{figures/2-sota/diffusion/50.jpg}};
+
+    \node[below=2em of 9] (original)
+    {\includegraphics[width=50pt]{figures/2-sota/diffusion/100.jpg}};
+\end{tikzpicture}
