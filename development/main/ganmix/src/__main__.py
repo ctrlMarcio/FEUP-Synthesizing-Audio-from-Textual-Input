@@ -10,7 +10,11 @@ import models
 import config
 import train_rewrite
 
-def main():
+import sys
+
+def main(data_path):
+    config.set_data_path(data_path)
+    print(config.DATA_PATH.path)
     train_rewrite.main()
 
 def _main():
@@ -71,4 +75,5 @@ def _main():
 
 if __name__ == "__main__":
     # Call the main function to start the application
-    main()
+    data_path = sys.argv[1]
+    main(data_path)

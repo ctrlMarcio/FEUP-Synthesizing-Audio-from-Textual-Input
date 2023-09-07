@@ -1,16 +1,53 @@
 import torch
 
-# PATHS
-CLOTHO = {
-    "BASE_DIR": "/home/admin/FEUP-Synthesizing-Audio-from-Textual-Input/clotho/data",
-    "RAW_DATA_DIR": "/home/admin/FEUP-Synthesizing-Audio-from-Textual-Input/clotho/data/raw_data/development",
-    "CAPTIONS_CSV": "/home/admin/FEUP-Synthesizing-Audio-from-Textual-Input/clotho/data/clotho_captions_development.csv",
-    "AUDIO_TRIM_SECONDS": 5
-}
-WORKING_DIR = "/home/admin/FEUP-Synthesizing-Audio-from-Textual-Input/data/working"
-SPECTROGRAM_DIR = WORKING_DIR + "/spectrograms"
-STATS_DIR = WORKING_DIR + "/stats"
-SPECTROGRAM_PLOT_DIR = WORKING_DIR + "/spectrogram_plots"
+class Path:
+    def __init__(self):
+        self.path = ""
+
+    def set_data_path(self, data_path):
+        self.path = data_path
+
+    def clotho_base_dir(self):
+        return self.path + "/clotho"
+    
+    def clotho_raw_data_dir(self):
+        return self.path + "/clotho/raw_data/development"
+    
+    def clotho_captions_csv(self):
+        return self.path + "/clotho/clotho_captions_development.csv"
+    
+    def clotho_audio_trim_seconds(self):
+        return 5
+    
+    def working_dir(self):
+        return self.path + "/working"
+    
+    def spectrogram_dir(self):
+        return self.path + "/working/spectrograms"
+    
+    def stats_dir(self):
+        return self.path + "/working/stats"
+    
+    def spectrogram_plot_dir(self):
+        return self.path + "/working/spectrogram_plots"
+
+def set_data_path(data_path):
+    global DATA_PATH
+    DATA_PATH.set_data_path(data_path)
+
+
+# # PATHS
+DATA_PATH = Path()
+# CLOTHO = {
+#     "BASE_DIR": DATA_PATH.path + "/clotho",
+#     "RAW_DATA_DIR": DATA_PATH.path + "/clotho/raw_data/development",
+#     "CAPTIONS_CSV": DATA_PATH.path + "/clotho/clotho_captions_development.csv",
+#     "AUDIO_TRIM_SECONDS": 5
+# }
+# WORKING_DIR = DATA_PATH.path + "/working"
+# SPECTROGRAM_DIR = WORKING_DIR + "/spectrograms"
+# STATS_DIR = WORKING_DIR + "/stats"
+# SPECTROGRAM_PLOT_DIR = WORKING_DIR + "/spectrogram_plots"
 
 # MODELS
 VAE_MODEL = "cvssp/audioldm"
@@ -51,7 +88,7 @@ BETA1 = 0.5
 
 CHECKPOINT = {
     "EPOCH_INTERVAL": 1,
-    "DIR": WORKING_DIR + "/checkpoints",
+    "DIR": DATA_PATH.working_dir() + "/checkpoints",
     "BASE_NAME": "ganmix_cp",
 }
 

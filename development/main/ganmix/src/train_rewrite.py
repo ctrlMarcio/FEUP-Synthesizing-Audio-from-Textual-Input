@@ -23,7 +23,7 @@ class Settings():
         self.scaler = GradScaler()
 
         # For file writing
-        self.stats_file_path = config.STATS_DIR + f"/training_stats_{self.start_time}.csv"
+        self.stats_file_path = config.DATA_PATH.stats_dir() + f"/training_stats_{self.start_time}.csv"
 
 def _init():
     # call the ganmix factory

@@ -73,7 +73,7 @@ def fit(netG, netD, vae, dataloader, criterion, optimizerG, optimizerD, num_epoc
     dataloader_len = len(dataloader)
 
     # initialize the file that will log the training stats
-    stats_file_path = config.STATS_DIR + f"/training_stats_{start_time}.csv"
+    stats_file_path = config.DATA_PATH.stats_dir() + f"/training_stats_{start_time}.csv"
 
     # to handle gradient scaling (mixed precision training)
     scaler = GradScaler()

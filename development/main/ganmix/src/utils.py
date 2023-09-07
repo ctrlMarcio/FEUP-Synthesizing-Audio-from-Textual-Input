@@ -44,13 +44,13 @@ def save_spectrogram_plot(spectrogram, title=None):
     if title:
         plt.title(title)
 
-    # save the figure to config.SPECTROGRAM_PLOT_DIR
-    plt.savefig(config.SPECTROGRAM_PLOT_DIR + "/" + title + ".png")
+    # save the figure
+    plt.savefig(config.DATA_PATH.spectrogram_plot_dir() + "/" + title + ".png")
     plt.close()
 
 def save_spectrogram_data(spectrogram, title=None):
-    # save the spectrogram data to config.SPECTROGRAM_DIR
-    np.save(config.SPECTROGRAM_DIR + "/" + title + ".npy", spectrogram)
+    # save the spectrogram data
+    np.save(config.DATA_PATH.spectrogram_dir() + "/" + title + ".npy", spectrogram)
 
 def save_histogram(data, title=None):
     # Display the spectrogram using matplotlib
@@ -59,8 +59,8 @@ def save_histogram(data, title=None):
     if title:
         plt.title(title)
 
-    # save the figure to config.SPECTROGRAM_PLOT_DIR
-    plt.savefig(config.SPECTROGRAM_PLOT_DIR + "/" + title + ".png")
+    # save the figure
+    plt.savefig(config.DATA_PATH.spectrogram_plot_dir() + "/" + title + ".png")
     plt.close()
 
 

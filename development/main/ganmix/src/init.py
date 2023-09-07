@@ -18,15 +18,15 @@ def boot():
         None
     """
     # Check if 'WORKING_DIR' directory exists, and create if it doesn't
-    if not os.path.exists(config.WORKING_DIR):
-        os.mkdir(config.WORKING_DIR)
+    if not os.path.exists(config.DATA_PATH.working_dir()):
+        os.mkdir(config.DATA_PATH.working_dir())
 
     # Check if 'SPECTROGRAM_DIR' directory exists, and create if it doesn't
-    if not os.path.exists(config.SPECTROGRAM_DIR):
-        os.mkdir(config.SPECTROGRAM_DIR)
+    if not os.path.exists(config.DATA_PATH.spectrogram_dir()):
+        os.mkdir(config.DATA_PATH.spectrogram_dir())
 
-    if not os.path.exists(config.SPECTROGRAM_PLOT_DIR):
-        os.makedirs(config.SPECTROGRAM_PLOT_DIR)
+    if not os.path.exists(config.DATA_PATH.spectrogram_plot_dir()):
+        os.makedirs(config.DATA_PATH.spectrogram_plot_dir())
 
 
 if __name__ == "__main__":

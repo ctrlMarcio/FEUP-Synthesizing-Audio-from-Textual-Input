@@ -10,9 +10,9 @@ import utils
 
 class ClothoDataset(Dataset):
     def __init__(self,
-                 audio_seconds=config.CLOTHO["AUDIO_TRIM_SECONDS"],
-                 data_root=config.CLOTHO["RAW_DATA_DIR"],
-                 csv_file=config.CLOTHO["CAPTIONS_CSV"]
+                 audio_seconds=config.DATA_PATH.clotho_audio_trim_seconds(),
+                data_root=config.DATA_PATH.clotho_raw_data_dir(),
+                csv_file=config.DATA_PATH.clotho_captions_csv()
                  ):
         """
         Args:
