@@ -18,28 +18,6 @@ The project is structured as follows:
 - The `development` folder contains the Python code for the project.
 - The `document` folder contains the LaTeX code as well as the documentation for the project.
 
-## Dependencies
-
-You can install the dependencies for this project using the following command:
-
-```
-pip install -r requirements.txt
-```
-
-## Installation
-
-To install and run this project, follow these steps:
-
-1. Clone this repository:
-... etc
-TODO
-
-## Usage
-
-You can use this project to synthesize audio from any textual input. Here are some examples of how you can use it:
-
-TODO
-
 ## License
 
 This project is licensed under the GNU General Public License (GPL). See the LICENSE file for more details.
