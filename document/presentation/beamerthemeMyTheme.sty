@@ -1,0 +1,33 @@
+\ProvidesPackage{beamerthemeMyTheme}
+
+\usetheme{default}
+
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamercolor{title}{fg=black,bg=white}
+\setbeamercolor{frametitle}{fg=white,bg=black}
+\setbeamercolor{structure}{fg=black}
+
+\setbeamertemplate{title page}{
+  \begin{center}
+    \includegraphics[width=0.3\textwidth]{./images/logo.png}\\
+    \vspace{1cm}
+    \usebeamerfont{title}\inserttitle\par
+    \vspace{0.5cm}
+    \usebeamerfont{author}\insertauthor\par
+    \vspace{0.5cm}
+    \usebeamerfont{institute}\insertinstitute\par
+  \end{center}
+}
+
+\setbeamertemplate{frametitle}{
+  \begin{center}
+    \usebeamerfont{frametitle}\insertframetitle\par
+  \end{center}
+}
+
+\setbeamertemplate{footline}{
+  \begin{center}
+    \insertframenumber/\inserttotalframenumber
+  \end{center}
+}
