@@ -1,11 +1,11 @@
 # Fdb version 3
-["biber out/presentation"] 1695326758 "out/presentation.bcf" "out/presentation.bbl" "out/presentation" 1695330386
-  "out/presentation.bcf" 1695330386 106788 acb3de39d690dea3b7c45d857e6785d4 "pdflatex"
+["biber out/presentation"] 1695326758 "out/presentation.bcf" "out/presentation.bbl" "out/presentation" 1695378659
+  "out/presentation.bcf" 1695378659 106788 acb3de39d690dea3b7c45d857e6785d4 "pdflatex"
   "sections/references.bib" 0 -1 0 ""
   (generated)
   "out/presentation.bbl"
   "out/presentation.blg"
-["pdflatex"] 1695330385 "/Users/marcio/Projects/tesese/document/presentation/presentation.tex" "out/presentation.pdf" "presentation" 1695330386
+["pdflatex"] 1695378658 "/Users/marcio/Projects/tesese/document/presentation/presentation.tex" "out/presentation.pdf" "presentation" 1695378659
   "/Users/marcio/Projects/tesese/document/presentation/presentation.tex" 1695326643 147 fbb1f4fd646cc0dc26fe9fb8f8722525 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -216,15 +216,15 @@
   "config/meta.tex" 1695318051 352 1353082a0e561f9c6e7d5c6811407ea2 ""
   "config/packages.tex" 1695316813 43 d682662193bccc725c0b4e980bf8088a ""
   "config/preface.tex" 1695317195 114 e91d53a994d1b97e1659f321ff230c57 ""
-  "content/1-introduction.tex" 1695330385 6343 2997cf0c67c7d6571335b57ae683da06 ""
+  "content/1-introduction.tex" 1695378656 6171 390fd6e76af83424efa39149e1f62aaf ""
   "content/header.tex" 1695317179 105 e111e08db5d6283f6b14bd562a693f25 ""
   "images/logo.png" 1695301979 60946 70e78e88a571686b4ef612fb422baa45 ""
-  "out/presentation.aux" 1695330386 4005 03ae539fecc8fff954d926568acd73e0 "pdflatex"
+  "out/presentation.aux" 1695378659 3858 988be4b9af50d2f3eb9785784aaff1a8 "pdflatex"
   "out/presentation.bbl" 0 -1 0 "biber out/presentation"
-  "out/presentation.nav" 1695330386 2011 312c2a7b662d6244b877e881a3678403 "pdflatex"
-  "out/presentation.out" 1695330386 566 4d22c5010f7ce5bee92a8b5dd9523c53 "pdflatex"
-  "out/presentation.run.xml" 1695330386 2370 16b2089dc03831e708a10d5bae9b6ccb "pdflatex"
-  "out/presentation.toc" 1695330386 264 9966a4263a22e7ea58c4aa67d03c07ab "pdflatex"
+  "out/presentation.nav" 1695378659 1900 e60b46fc71f6ac2b2ff30d9c05c349a5 "pdflatex"
+  "out/presentation.out" 1695378659 566 4d22c5010f7ce5bee92a8b5dd9523c53 "pdflatex"
+  "out/presentation.run.xml" 1695378659 2370 16b2089dc03831e708a10d5bae9b6ccb "pdflatex"
+  "out/presentation.toc" 1695378659 264 9966a4263a22e7ea58c4aa67d03c07ab "pdflatex"
   "presentation.tex" 1695326643 147 fbb1f4fd646cc0dc26fe9fb8f8722525 ""
   (generated)
   "out/presentation.aux"

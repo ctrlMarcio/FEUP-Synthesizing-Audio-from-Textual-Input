@@ -8,13 +8,13 @@ Recently, the landscape of audio generation has been undergoing a paradigm shift
 
 The landscape of audio synthesis through generative \ac{AI} models presents a spectrum of challenges and limitations that impact various applications, including content creation, sound design, music production, and interactive media. These challenges include computational constraints, model architectural intricacies, quality/realism trade-offs, data-related hurdles, interpretability issues, and scalability concerns. Addressing these limitations has the potential to significantly improve the quality and utility of audio synthesis methods.
 
-Significant hurdles in the use of generative \ac{AI} models for audio synthesis are the computational cost and the training time. PixelCNN Decoders, Jukebox, and Hi-Fi GAN, which exemplify these models, require extensive computational resources and long training times. These limitations render these models inaccessible to researchers and developers and limit their applicability in real-world situations where efficient generation is critical. Developing more efficient training algorithms or model architectures could democratize access and broaden the reach of audio synthesis methods by overcoming these challenges.
+Significant hurdles in the use of generative \ac{AI} models for audio synthesis are the computational cost and the training time. PixelCNN Decoders~\cite{oord_conditional_2016}, Jukebox~\cite{dhariwal_jukebox_2020}, and Hi-Fi GAN~\cite{kong_hifi-gan_2020}, which exemplify these models, require extensive computational resources and long training times. These limitations render these models inaccessible to researchers and developers and limit their applicability in real-world situations where efficient generation is critical. Developing more efficient training algorithms or model architectures could democratize access and broaden the reach of audio synthesis methods by overcoming these challenges.
 
-Producing \textbf{high-quality and realistic audio} synthesis is a complex task. The lack of ability to capture minute details, as seen in models such as WaveNet and MelGAN, causes audio outputs to be deficient in delicate nuances and textures. Limitations such as mode collapse, GANSynth, and Jukebox can cause a lack of variety, leading to repetitive and monotonous audio outputs. Additionally, maintaining coherence throughout extended audio sequences - as observed in PixelCNN, WaveNet, Jukebox, and Riffusion - is a challenge that can affect the final output.
+Producing \textbf{high-quality and realistic audio} synthesis is a complex task. The lack of ability to capture minute details, as seen in models such as WaveNet~\cite{oord_wavenet_2016} and MelGAN~\cite{kumar_melgan_2019}, causes audio outputs to be deficient in delicate nuances and textures. Limitations such as mode collapse, seen in GANSynth~\cite{engel_gansynth_2019}, and Jukebox~\cite{dhariwal_jukebox_2020} can cause a lack of variety, leading to repetitive and monotonous audio outputs. Additionally, maintaining coherence throughout extended audio sequences - as observed in PixelCNN~\cite{oord_conditional_2016}, WaveNet~\cite{oord_wavenet_2016}, Jukebox~\cite{dhariwal_jukebox_2020}, and Riffusion~\cite{forsgren_riffusion_2022} - is a challenge that can affect the final output.
 
-The versatility of synthesis models is impacted by data efficiency and generalization capabilities. Models such as DALL-E, VALL-E, and MusicLM have suboptimal data efficiency, which requires large datasets for effective training. It is crucial to address the challenges in handling unusual concepts, as observed in \ac{GLIDE}, to broaden the creative potential of these models. Moreover, the practical utility and user-friendliness of models such as DALL-E and VALL-E are constrained due to their limited control and interpretability.
+The versatility of synthesis models is impacted by data efficiency and generalization capabilities. Models such as DALL-E~\cite{ramesh_zero-shot_2021}, VALL-E~\cite{wang_neural_2023}, and MusicLM~\cite{agostinelli_musiclm_2023} have suboptimal data efficiency, which requires large datasets for effective training. It is crucial to address the challenges in handling unusual concepts, as observed in \ac{GLIDE}~\cite{nichol_glide_2021}, to broaden the creative potential of these models. Moreover, the practical utility and user-friendliness of models such as DALL-E~\cite{ramesh_zero-shot_2021} and VALL-E~\cite{wang_neural_2023} are constrained due to their limited control and interpretability.
 
-The challenges and limitations within audio synthesis through generative AI models align with the key objectives of this thesis. The aim to develop advanced systems that handle sound, classification, and end-to-end generation while accounting for hardware limitations aligns with the need to overcome computational constraints highlighted in the literature. The thesis aims to address the computational hurdles that hinder the accessibility and practicality of audio synthesis models by devising more efficient training algorithms or model architectures. This directly contributes to the broader objective of providing valuable contributions to deep learning and its applications.
+The challenges and limitations within audio synthesis through generative \ac{AI} models align with the key objectives of this thesis. The aim to develop advanced systems that handle sound, classification, and end-to-end generation while accounting for hardware limitations aligns with the need to overcome computational constraints highlighted in the literature. The thesis aims to address the computational hurdles that hinder the accessibility and practicality of audio synthesis models by devising more efficient training algorithms or model architectures. This directly contributes to the broader objective of providing valuable contributions to deep learning and its applications.
 
 The goal to create end-to-end systems that generate sound from any textual input is intricately connected to the challenges of quality, realism, and coherence in audio synthesis. The thesis aims to bridge the gap between textual input and high-fidelity, immersive soundscapes by exploring the intricacies of model architectural design and refining the generation process. Evaluating the accuracy of generated audio aligns with the broader pursuit of overcoming limitations in capturing fine-grained details, mode collapse, and long-term coherence. This pursuit ultimately enhances the authenticity and richness of the synthesized audio.
 
@@ -28,21 +28,20 @@ The goal of this study is to address the synthesis of audio based on textual pro
 
 These models are trained using sounds labeled by humans from openly available datasets. Furthermore, the evaluation involves comparing the generated sounds with their corresponding real sounds.
 
-To formally define this problem, the following elements must be specified:
+To formally define this problem, the elements in Figure~\ref{fig:problem-definition} must be defined.
 
-\begin{itemize}
-    \item input data
-    \item output data
-    \item objective function
-    \item optimization algorithm
-    \item evaluation metrics
-\end{itemize}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/3-problem/Problem-Definition.pdf}
+    \caption{AI Problem Definition}
+    \label{fig:problem-definition}
+\end{figure}
 
 \subsubsection{Input Data}
 
-The synthesis of audio from textual prompts introduces a captivating interplay between audio samples and textual labels, infusing the model's learning process with a symphony of complexity and richness. However, synthesizing audio from textual prompts entails several challenges, especially when dealing with the diverse formats present in sound samples and text labels. As these formats converge, they add layers of intricacy that require innovative solutions and thoughtful consideration.
+Synthesizing audio from textual prompts entails several challenges, especially when dealing with the diverse formats present in sound samples and text labels. As these formats converge, they add layers of intricacy that require innovative solutions and thoughtful consideration.
 
-In the field of sound samples, dealing with diverse formats manifests itself in a medley of sonic expressions, ranging from musical melodies and spoken dialogues to environmental noises and abstract compositions. These formats encompass a spectrum of acoustic textures and temporal dynamics, demanding a unique processing and analysis approach for each. The model must navigate through this sonic kaleidoscope, effectively capturing and learning from the essence of each format without resorting to a one-size-fits-all approach.
+In the audio domain, dealing with diverse formats manifests itself in multiple sonic expressions, ranging from music and spoken dialogues to environmental noises and abstract compositions. These formats encompass a spectrum of acoustic textures and temporal dynamics, demanding a unique processing and analysis approach for each.
 
 Text labels also introduce a variety of challenges as they take various forms from different sources. The range of text labels spans from brief categorical tags that capture high-level features to verbose textual descriptions that explore intricate details. This variation poses the model with the task of decoding and utilizing the diverse meanings, tones, and contexts embedded within these labels. Achieving balance between the weight of these different formats while incorporating them into the generative fabric poses its own challenge.
 

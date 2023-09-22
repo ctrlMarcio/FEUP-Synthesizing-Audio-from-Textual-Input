@@ -26,10 +26,10 @@ These hardware configurations were chosen to facilitate GANmix model training an
 
 The GANmix model was implemented using the Python programming language and the PyTorch deep learning framework. There is a further discussion about this framework in Section~\ref{sec:dl-frameworks}.
 
-Before training, a preprocessing step was applied to the audio data by randomly Random cropping was done with a set duration of 5 seconds. Random cropping is discussed further in Section~\ref{sec:findings}. This approach enabled a more diverse dataset since the majority of its samples had longer durations. Random cropping aided in capturing diverse segments of the audio and improved the model's ability to generate realistic audio samples.
+Before training, a preprocessing step was applied to the audio data by randomly cropping the dataset sample to the duration of 5 seconds. Random cropping is discussed further in Section~\ref{sec:findings}. This approach enabled a more diverse dataset since the majority of its samples had longer durations. Random cropping aided in capturing diverse segments of the audio and improved the model's ability to generate realistic audio samples.
 
 The GANmix model underwent training using a set of specific hyperparameters. The batch size ranged between 1 and 32, providing varying trade-offs between computational efficiency and model convergence. The training epochs varied from a few tens to a few hundreds, depending on the dataset and model complexity. 
 
-The learning rates utilized to train the GANmix model ranged from $1 \times 10^{-5}$ to $1 \times 10^{-2}$, chosen based on empirical observations and prior research.
+The learning rates utilized to train the GANmix model ranged from $1 \times 10^{-5}$ to $1 \times 10^{-2}$.
 
-For some models, the training process was halted before reaching the maximum number of epochs due to evidence of convergence. This choice was made to optimize computational resources while obtaining satisfactory outcomes.
+The training process was stopped based on evidence of convergence before reaching any predetermined number of epochs. This choice was made to optimize computational resources while still obtaining satisfactory results. In the analysis presented in section~\ref{sec:res-presentation}, the graphs are set to plot a maximum of 100 epochs.
