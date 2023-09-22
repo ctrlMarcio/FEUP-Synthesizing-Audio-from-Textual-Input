@@ -78,17 +78,75 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Digital Audio Processing}
-    % Explain how audio is represented digitally and how it can be processed.
+    \frametitle{Digital Audio Processing 1}
+
+    \begin{itemize}
+        \item Sound can be discretized by sampling at a specific time rate, known as the sampling rate.
+        \item Sampling rate impacts the accuracy of the signal, with the standard value being 44,100 Hz.
+        \item Sound can be represented digitally as an array, enabling reconstruction by a computer.
+    \end{itemize}
+
+    \textbf{Short-Time Fourier Transform (STFT):}
+    \begin{itemize}
+        \item The STFT allows the analysis of the frequency content of a signal over time.
+        \item It computes the Fourier Transform of the input signal within windowed time intervals.
+        \item The resulting time-frequency representation is used to generate spectrograms.
+    \end{itemize}
 \end{frame}
+
+\begin{frame}
+    \frametitle{Digital Audio Processing 2}
+
+    \textbf{Spectrograms and Machine Learning:}
+    \begin{itemize}
+        \item Spectrograms represent sound as a time-frequency image, enabling analysis and processing.
+        \item Convolutional Neural Networks (CNNs) can be used for sound analysis, but filter shapes and convolution axes require careful consideration.
+    \end{itemize}
+
+    \textbf{Soundscapes:}
+    \begin{itemize}
+        \item Soundscapes are complex mixes of sounds heard in everyday life.
+        \item They encompass natural, human-made, and cultural sounds, creating immersive auditory environments.
+        \item Generating soundscapes with machine learning is challenging due to their lack of specific structure.
+    \end{itemize}
+\end{frame}
+
+
 
 \begin{frame}
     \frametitle{Foundations for Enhancing Generative Models for Audio}
+
+    To develop generative models for audio, it is necessary to address several factors that impact their performance and quality. This thesis concentrates on three main areas:
+
+    \begin{itemize}
+        \item \textbf{Data Augmentation:} Applying transformations to the original data to increase its size and diversity. This helps overcome limitations of small or imbalanced datasets and improves the generalization ability of generative models.
+        \item \textbf{Evaluation Metrics:} Methods used to measure the quality and diversity of the generated sounds. They provide a way to compare different generative models and assess their strengths and weaknesses.
+        \item \textbf{Data Embedding:} Converting data into numerical representations that capture its essential features and characteristics. This facilitates the learning process of generative models and enhances their expressiveness and efficiency.
+    \end{itemize}
+
+    In the following sections, we delve into each of these areas, discussing different techniques and methods employed to enhance generative models for audio.
+
 \end{frame}
+
 
 \begin{frame}
     \frametitle{Deep Learning Frameworks}
+    
+    Deep learning frameworks have played a pivotal role in advancing the field of AI, enabling researchers and practitioners to efficiently develop and deploy complex neural networks. These frameworks provide a wide range of tools and techniques for building, training, and evaluating deep neural networks, accelerating progress in the field.
+
+    \begin{itemize}
+        \item TensorFlow: TensorFlow is a widely-used deep learning framework developed by Google. It offers a comprehensive ecosystem for building and deploying machine learning models, including support for audio-related tasks. TensorFlow provides a static computation graph and is known for its scalability and performance.
+
+        \item PyTorch: PyTorch is an open-source deep learning framework developed by Facebook. It has gained popularity due to its ease of use and dynamic computation graph, which allows for more flexibility and intuitive programming. PyTorch offers a user-friendly API and is known for its flexibility and support for various applications.
+
+        \item Keras: Keras is a high-level deep learning library that runs on top of TensorFlow and other lower-level frameworks. It provides a user-friendly interface for building and training neural network models. Keras simplifies the creation of neural networks by abstracting away many low-level details, making it a popular choice for beginners.
+
+    \end{itemize}
+
+    Each framework has its own strengths and characteristics, and the choice of framework depends on factors such as ease of use, performance, and flexibility. In this thesis, we have selected PyTorch as the deep learning framework of choice due to its flexibility, ease of use, and optimal performance for our specific tasks.
+
 \end{frame}
+
 
 \begin{frame}
     \frametitle{State of the Art Generative Models}

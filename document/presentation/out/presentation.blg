@@ -1,9 +1,0 @@
-[0] Config.pm:307> INFO - This is Biber 2.17
-[0] Config.pm:310> INFO - Logfile is 'out/presentation.blg'
-[62] biber-darwin:340> INFO - === Thu Sep 21, 2023, 21:05:59
-[74] Biber.pm:418> INFO - Reading 'out/presentation.bcf'
-[160] Biber.pm:972> INFO - Found 1 citekeys in bib section 0
-[173] Biber.pm:4383> INFO - Processing section 0
-[186] Biber.pm:4574> INFO - Looking for bibtex file 'sections/references.bib' for section 0
-[343] Utils.pm:409> ERROR - Cannot find 'sections/references.bib'!
-[343] Biber.pm:135> INFO - ERRORS: 1
