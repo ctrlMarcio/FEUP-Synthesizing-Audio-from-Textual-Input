@@ -1,0 +1,9 @@
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Context}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{Background}{5}{0}{1}
+\beamer@subsectionintoc {1}{3}{Motivation}{11}{0}{1}
+\beamer@subsectionintoc {1}{4}{Research objectives}{12}{0}{1}
+\beamer@sectionintoc {2}{State of the Art}{13}{0}{2}
+\beamer@subsectionintoc {2}{1}{Introduction}{13}{0}{2}
+\beamer@subsectionintoc {2}{2}{Traditional Soundscape Generation}{14}{0}{2}
+\beamer@subsectionintoc {2}{3}{Unsupervised Sound Generation}{15}{0}{2}

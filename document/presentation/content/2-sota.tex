@@ -1,0 +1,68 @@
+\section{State of the Art}
+
+\subsection{Introduction}
+\begin{frame}
+    \frametitle{Introduction}
+    \begin{itemize}
+        \item Sound generation is the task of creating realistic and expressive sounds from scratch or based on some input
+        \item It has many applications in music, entertainment, education, and research
+        \item There are different types of sound generation methods, depending on the level of abstraction and supervision involved
+        \item Four types of sound generation methods are considered in this thesis:
+        \begin{itemize}
+            \item Traditional
+            \item Unsupervised
+            \item Vocoders
+            \item End-to-end models
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+\subsection{Traditional Soundscape Generation}
+
+\begin{frame}
+    \frametitle{Traditional Soundscape Generation}
+    
+    \textbf{Approach}
+    \begin{itemize}
+        \item Threefold strategy: Segmentation, Feature extraction, Resynthesis
+        \item Statistical models and stochastic processes used
+    \end{itemize}
+
+    \textbf{Notable Tools}
+    \begin{itemize}
+        \item \textit{Scaper}~\cite{salamon_scaper_2017}: Open-source library for synthetic sound environments
+        \item SEED~\cite{bernardes_seed_2016}: System for resynthesizing environmental sounds with precise control over variation
+        \item Physics-Based Concatenative Sound Synthesis~\cite{magalhaes_physics-based_2020}: Creates novel auditory experiences by assembling pre-existing sound segments
+    \end{itemize}
+\end{frame}
+
+\subsection{Unsupervised Sound Generation}
+
+\begin{frame}
+    \frametitle{Unsupervised Sound Generation}
+    
+    \textbf{Approach}
+    \begin{itemize}
+        \item Learn sound features and distributions without explicit labels
+        \item Utilize unlabeled audio data for pattern capture and structure learning
+        \item Valuable when labeled datasets are limited or costly
+    \end{itemize}
+
+    \textbf{Notable Models}
+    \begin{itemize}
+        \item WaveGAN~\cite{donahue_adversarial_2019}: Unsupervised waveform synthesis using modified GAN
+        \item Generative Transformer~\cite{verma_generative_2021}: Autoregressive prediction of audio samples using transformer networks
+        \item wav2vec 2.0~\cite{baevski_wav2vec_2020}: Speech generation model with convolutional feature encoder, Transformer, and quantization module
+        \item SoundStream~\cite{zeghidour_soundstream_2021}: Neural audio codec for efficient audio compression
+    \end{itemize}
+\end{frame}
+
+
+\subsection{Vocoders}
+
+\subsection{End-to-End Models}
+
+\subsection{AudioLM}
+\subsection{DiffSound}
+\subsection{AudioGen}
