@@ -1,6 +1,209 @@
 \section{Results}
 
+\begin{frame}
+    \frametitle{Results}
+
+    \begin{itemize}
+        \item Setup: Overview of experimental conditions and configurations.
+        \item Presentation of Results: Showcase of outcomes from GANmix experiments.
+        \item Discussion: Analyzing and interpreting the obtained results.
+        \item Constraints and Challenges: Addressing limitations and difficulties encountered.
+    \end{itemize}
+\end{frame}
+
+
 \subsection{Setup}
+
+\begin{frame}
+    \frametitle{Experimental Setup}
+
+    \begin{itemize}
+        \item GANmix model trained using BCE loss in PyTorch.
+        \item Utilized two datasets: Audio MNIST and Clotho for diverse training.
+        \item Three hardware setups: Kaggle, LIACC 1, LIACC 2, tailored for resources.
+        \item Implementation: Python, PyTorch framework.
+        \item Preprocessing: Randomly cropped samples to 5 seconds for diversity.
+        \item Hyperparameters adjusted for batch size, epochs, and learning rates.
+        \item Stopped training based on convergence for resource efficiency.
+    \end{itemize}
+\end{frame}
+
 \subsection{Presentation of Results}
+
+\begin{frame}
+    \frametitle{Presentation of Results}
+
+    \begin{itemize}
+        \item Objectives: Explore generative AI models for audio production, assess performance.
+        \item Context: Each experiment designed with specific research questions and hypotheses.
+        \item Methodology: Hardware, software, and architecture details provided for transparency.
+        \item Evaluation: Performance assessed through evolving loss plots and spectrograms.
+        \item Systematic Organization: Ensures a comprehensive understanding of procedures and results.
+        \item Basis for Analysis: Provides foundation for discussing effectiveness of generative AI models.
+    \end{itemize}
+\end{frame}
+
+\subsection{Experiment X: Title} \label{sec:expX}
+
+\begin{frame}
+    \frametitle{Experiment X: Title}
+
+    \begin{itemize}
+        \item Objectives: [Objectives of the experiment]
+        \item Model Details: [Describe key details of the model used, e.g., parameters, loss function]
+        \item Dataset: [Mention the dataset used for training and evaluation]
+        \item Optimizer and Learning Rate: [Specify the optimizer and learning rate used]
+        \item Training Process: [Provide essential details about the training process, e.g., convergence status]
+    \end{itemize}
+
+    [Optional: Any unique aspects or considerations for this experiment]
+
+    % \begin{figure}[!ht]
+    %     \centering
+    %     \begin{subfigure}{0.45\textwidth}
+    %         \includegraphics[width=\textwidth]{figures/4.5-results/expX_loss.png}
+    %         \caption{Evolving losses throughout the training process for Experiment X.}
+    %         \label{fig:expX_loss}
+    %     \end{subfigure}
+    %     \begin{subfigure}{0.45\textwidth}
+    %         \includegraphics[width=\textwidth]{figures/4.5-results/expX_spectrogram.png}
+    %         \caption{Spectrogram generated in Experiment X.}
+    %         \label{fig:expX_spectrogram}
+    %     \end{subfigure}
+    %     \caption{Results of Experiment X.}
+    %     \label{fig:expX_results}
+    % \end{figure}
+
+    [Optional: Any additional insights or observations from this experiment]
+
+\end{frame}
+
 \subsection{Discussion}
+
+\section{Analysis and Interpretation} \label{sec:res-analysis}
+
+\begin{frame}
+    \frametitle{Analysis and Interpretation}
+    
+    \begin{itemize}
+        \item Identifying Trends
+        \item Results for Future Investigation
+        \item Interpretation of Results
+        \item Conclusion
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Identifying Trends}
+
+    \begin{itemize}
+        \item Inverse correlation between generator and discriminator losses
+        \item Convergence tends to plateau after a certain number of epochs
+        \item Impact of learning rate on convergence speed
+        \item Influence of optimization algorithms (e.g., SGD, RMSprop, Adam)
+        \item Benefits of regularization methods (e.g., dropout, batch normalization, Gaussian noise)
+        \item Importance of dataset size
+        \item Exploration of latent space
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Results for Future Investigation}
+
+    \begin{itemize}
+        \item Occurrence of performance decline and NaN losses in certain experiments
+        \item Further exploration of elastic network regularization
+        \item Investigation of continuously increasing generator loss
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Interpretation of Results}
+
+    \begin{itemize}
+        \item Results didn't meet initial expectations but show potential
+        \item Latent space exploration as a promising strategy
+        \item Limitations of small datasets, especially in audio length and quantity
+        \item Need for access to comprehensive datasets
+        \item Computational resource challenges
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Conclusion}
+
+    \begin{itemize}
+        \item Analysis and interpretation of trends and patterns
+        \item Potential for future advances in generative AI models for audio synthesis
+        \item Lack of satisfactory practical results due to dataset limitations
+        \item Importance of comprehensive datasets and computational resources
+    \end{itemize}
+    
+\end{frame}
+
 \subsection{Constraints and Challenges}
+
+\section{Constraints and Challenges} \label{sec:res-limitations}
+
+\begin{frame}
+    \frametitle{Constraints and Challenges}
+    
+    \begin{itemize}
+        \item Hardware Resources
+        \item Data Quality and Quantity
+        \item Hyperparameter Tuning
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Hardware Resources}
+
+    \begin{itemize}
+        \item Scarcity of hardware resources for training and evaluation
+        \item Challenges in accessing sufficient computing power and memory
+        \item Strategies adopted to optimize hardware usage
+        \item Impacts, trade-offs, and opportunities resulting from resource limitations
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Data Quality and Quantity}
+
+    \begin{itemize}
+        \item Challenges posed by the quality and quantity of available data
+        \item Importance of high-quality and diverse data for generative models
+        \item Strategies employed to mitigate data limitations
+        \item Considerations regarding data augmentation techniques
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Hyperparameter Tuning}
+
+    \begin{itemize}
+        \item Time constraints and challenges in hyperparameter tuning
+        \item Significance of hyperparameters in model performance
+        \item Impact of default or arbitrary values on model potential
+        \item Recommendations for future work in hyperparameter optimization
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Conclusion}
+
+    \begin{itemize}
+        \item Discussion of major limitations and challenges faced in solution development
+        \item Description of strategies employed to address these issues
+        \item Possible implications, trade-offs, and opportunities arising from constraints
+        \item Affirmation of the proposed solution's strengths and advancements in generative AI models for audio synthesis
+    \end{itemize}
+    
+\end{frame}

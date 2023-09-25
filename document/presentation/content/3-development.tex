@@ -95,3 +95,47 @@
 \end{frame}
 
 \subsection{GANmix}
+
+\begin{frame}
+    \frametitle{GANmix: Introduction}
+
+    \begin{itemize}
+        \item GANmix: Fusion of GAN and VAE for audio generation under constraints.
+        \item Addresses computational limitations for high-quality audio.
+        \item Combines GAN's generative power with VAE's latent space manipulation.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{GANmix: Model Architecture}
+
+    \begin{itemize}
+        \item Generator and discriminator operate in latent space.
+        \item VAE Training: Computational challenge, requires extensive datasets.
+        \item AudioLDM's High-Performance: Top model for audio generation.
+        \item Accessibility of AudioLDM: Open source, accessible via Hugging Face's model hub.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{GANmix: Experimental Results}
+
+    \begin{itemize}
+        \item Preliminary experiments with Audio MNIST: Promising but suboptimal.
+        \item Refinements: Different optimizers, model sizes, loss functions.
+        \item Clotho dataset: Significant improvement in generated audio quality.
+        \item Challenges in achieving equilibrium between generator and discriminator.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{GANmix: Final Model}
+
+    \begin{itemize}
+        \item GANmix architecture with Clotho dataset: Significant improvements.
+        \item Unlike typical models using CNN, GANmix uses fully connected neural networks.
+        \item Generator input: Random Gaussian noise, passes through hidden layers.
+        \item Discriminator: Takes embedding as input, applies tanh activation.
+        \item Loss function: BCE. Optimized with Adam. Learning rate updates every 10 epochs.
+    \end{itemize}
+\end{frame}
