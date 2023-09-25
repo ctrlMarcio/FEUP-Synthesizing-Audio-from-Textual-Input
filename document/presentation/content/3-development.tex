@@ -2,6 +2,96 @@
 
 \subsection{Datasets}
 
+\begin{frame}
+    \frametitle{Dataset Introduction}
+
+    \begin{itemize}
+        \item Datasets form the foundation for generative models
+        \item Learning material for DL algorithms and evaluation of audio outputs
+        \item Two types of datasets: categorical and descriptive
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Table of Datasets}
+
+    \begin{table}[ht]
+        \centering
+        \caption{Comparison of datasets for soundscapes}
+        \label{tab:datasets}
+        \begin{tabularx}{\textwidth}{|X|X|X|X|X|}
+            \hline
+            \textbf{Name}                                           &
+            \textbf{Type}                                           &
+            \textbf{\# Samples}                                     &
+            \textbf{Duration}                                       &
+            \textbf{Labels}                                           \\ \hline
+
+            Acoustic Event Dataset \cite{takahashi_deep_2016}       &
+            Categorical labeled                                     &
+            5223                                                    &
+            Average 8.8s                                            &
+            One of 28 labels                                          \\ \hline
+
+            AudioCaps \cite{kim_audiocaps_2019}                     &
+            Descriptive labeled                                     &
+            39597                                                   &
+            10s each                                                &
+            9 words per caption                                       \\ \hline
+
+            AudioSet \cite{gemmeke_audio_2017}                      &
+            Categorical labeled                                     &
+            2084320                                                 &
+            Average 10s                                             &
+            One or more of 527 labels                                 \\ \hline
+
+            Audio MNIST~\cite{becker_interpreting_2018}             &
+            Categorical labeled                                     &
+            30000                                                   &
+            Average 0.6s                                            &
+            One of 10 labels                                          \\ \hline
+
+            Clotho \cite{drossos_clotho_2019}                       &
+            Descriptive labeled                                     &
+            4981                                                    &
+            15 to 30s                                               &
+            24 905 captions (5 per audio). 8 to 20 words long each    \\ \hline
+
+            FSDKaggle2018 \cite{fonseca_general-purpose_2018}       &
+            Categorical labeled                                     &
+            11073                                                   &
+            From 300ms to 30s                                       &
+            One or more of 41 labels                                  \\ \hline
+
+            UrbanSound8K \cite{salamon_dataset_2014}                &
+            Categorical labeled                                     &
+            8732                                                    &
+            Less or equal to 4s                                     &
+            One of 10 labels                                          \\ \hline
+
+            YouTube-8M Segments \cite{abu-el-haija_youtube-8m_2016} &
+            Categorical labeled                                     &
+            237000                                                  &
+            5s                                                      &
+            One or more of 1000 labels                                \\ \hline
+        \end{tabularx}
+    \end{table}
+\end{frame}
+
+
 \subsection{Exploratory Experiments}
+
+\begin{frame}
+    \frametitle{Exploratory Experiments}
+    
+    \begin{itemize}
+        \item Objective: Gain insights for GANmix development
+        \item Experiments: Classification, GAN, AE, VAE
+        \item Findings: Foundation for audio representation, GAN effectiveness, AE/VAE capabilities
+        \item Impact: Crucial for robust audio generation with GANmix
+    \end{itemize}
+
+\end{frame}
 
 \subsection{GANmix}

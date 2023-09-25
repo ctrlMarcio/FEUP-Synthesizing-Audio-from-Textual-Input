@@ -8,12 +8,12 @@
         \item It has many applications in music, entertainment, education, and research
         \item There are different types of sound generation methods, depending on the level of abstraction and supervision involved
         \item Four types of sound generation methods are considered in this thesis:
-        \begin{itemize}
-            \item Traditional
-            \item Unsupervised
-            \item Vocoders
-            \item End-to-end models
-        \end{itemize}
+              \begin{itemize}
+                  \item Traditional
+                  \item Unsupervised
+                  \item Vocoders
+                  \item End-to-end models
+              \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -22,7 +22,7 @@
 
 \begin{frame}
     \frametitle{Traditional Soundscape Generation}
-    
+
     \textbf{Approach}
     \begin{itemize}
         \item Threefold strategy: Segmentation, Feature extraction, Resynthesis
@@ -41,7 +41,7 @@
 
 \begin{frame}
     \frametitle{Unsupervised Sound Generation}
-    
+
     \textbf{Approach}
     \begin{itemize}
         \item Learn sound features and distributions without explicit labels
@@ -61,8 +61,132 @@
 
 \subsection{Vocoders}
 
+\begin{frame}
+    \frametitle{Vocoders}
+
+    \textbf{Approach}
+    \begin{itemize}
+        \item DL vocoders use neural networks to generate artificial audio directly
+        \item No reliance on predefined models or feature extraction
+        \item Capture complex nonlinear relationships between input and output
+    \end{itemize}
+
+    \textbf{Notable Models}
+    \begin{itemize}
+        \item WaveNet~\cite{oord_wavenet_2016}: Generative neural network using dilated causal convolutions for raw audio waveform generation
+        \item WaveNet Variants: Models like WaveRNN, FloWaveNet, and Fast WaveNet reduce complexity while maintaining effectiveness
+        \item MelGAN~\cite{kumar_melgan_2019}: GAN-based model using Mel-Spectrograms for coherent audio waveform generation
+        \item GANSynth~\cite{engel_gansynth_2019}: GAN using log-magnitude spectrograms and phases for waveform generation
+        \item HiFi-GAN~\cite{kong_hifi-gan_2020}: GAN model combining efficiency and high-fidelity speech synthesis
+    \end{itemize}
+\end{frame}
+
+
 \subsection{End-to-End Models}
 
+\begin{frame}
+    \frametitle{End-to-End Models}
+
+    \textbf{Introduction}
+    \begin{itemize}
+        \item Traditional audio synthesis involves multiple stages
+        \item Challenges: expertise, design choices, errors, inconsistencies
+        \item End-to-end models directly map text to audio waveform with neural networks
+    \end{itemize}
+
+    \textbf{Frameworks}
+    \begin{itemize}
+        \item Specialized models for specific domains (speech, music)
+        \item Universal models for broader applications
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{End-to-End Audio Models Comparison}
+
+    \begin{table}[ht]
+        \centering
+        \caption{A comparison of different end-to-end generative models for audio.}
+        \begin{tabularx}{\textwidth}{|X|l|X|X|}
+            \hline
+            \textbf{Model}                           & \textbf{Type} & \textbf{Input}            & \textbf{Output} \\ \hline
+            Char2wav~\cite{sotelo_char2wav_2017}     & Speech        & Text prompt               & Raw audio waveform \\ \hline
+            VALL-E~\cite{wang_neural_2023}           & Speech        & Text and acoustic prompt  & Raw audio waveform \\ \hline
+            Jukebox~\cite{dhariwal_jukebox_2020}     & Music         & Genre, artist, and lyrics & Raw audio waveform \\ \hline
+            Riffusion~\cite{forsgren_riffusion_2022} & Music         & Text prompt               & Raw audio waveform \\ \hline
+            MusicLM~\cite{agostinelli_musiclm_2023}  & Music         & Text prompt               & Raw audio waveform \\ \hline
+            SampleRNN~\cite{mehri_samplernn_2017}    & General       & None                      & Raw audio waveform \\ \hline
+            AudioLM~\cite{borsos_audiolm_2022}       & General       & Text prompt               & Raw audio waveform \\ \hline
+            DiffSound~\cite{yang_diffsound_2022}     & General       & Text prompt               & Mel-spectrogram and raw audio waveform \\ \hline
+            AudioGen~\cite{kreuk_audiogen_2023}      & General       & Text prompt               & Mel-spectrogram and raw audio waveform \\ \hline
+        \end{tabularx}
+        \label{tab:end-to-end-audio-models}
+    \end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Text-to-Speech (TTS)}
+
+    \textbf{Definition}
+    \begin{itemize}
+        \item Convert written text into synthesized speech
+        \item Use deep neural networks for direct mapping
+        \item Notable TTS Models:
+            \begin{itemize}
+                \item Char2wav
+                \item VALL-E
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Generative Music}
+
+    \textbf{Definition}
+    \begin{itemize}
+        \item Create music using generative techniques
+        \item End-to-end models for composing new musical pieces
+        \item Notable Generative Music Models:
+            \begin{itemize}
+                \item Jukebox
+                \item Riffusion
+                \item MusicLM
+            \end{itemize}
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{General Text-to-Audio}
+
+    \textbf{Definition}
+    \begin{itemize}
+        \item Convert various forms of text to corresponding audio outputs
+        \item Applications: sound effects, voice transformation, environmental sound synthesis
+        \item Notable Text-to-Audio Models:
+            \begin{itemize}
+                \item SampleRNN
+                \item AudioLM
+                \item DiffSound
+                \item AudioGen
+            \end{itemize}
+    \end{itemize}
+
+\end{frame}
+
+
 \subsection{AudioLM}
+\begin{frame}
+    \frametitle{AudioLM}
+\end{frame}
+
 \subsection{DiffSound}
+\begin{frame}
+    \frametitle{DiffSound}
+\end{frame}
+
 \subsection{AudioGen}
+\begin{frame}
+    \frametitle{AudioGen}
+\end{frame}
