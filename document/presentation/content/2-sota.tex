@@ -173,11 +173,24 @@
 \end{frame}
 
 \subsection{DiffSound}
-\begin{frame}
-    \frametitle{DiffSound}
+
+\begin{frame}{DiffSound}
+    \begin{itemize}
+        \item A novel text-to-sound generation framework that uses a text encoder, a VQ-VAE, a decoder, and a vocoder~\cite{yang_diffsound_2022}.
+        \item Takes text as input and outputs synthesized audio corresponding to the input text.
+        \item Uses a diffusion decoder (DiffSound) that predicts and refines all Mel-Spectrogram tokens in one step, resulting in better and faster generation than an AR decoder.
+        \item Produces high-quality sound synthesis for various domains such as speech, music, and environmental sounds.
+    \end{itemize}
 \end{frame}
 
+
 \subsection{AudioGen}
-\begin{frame}
-    \frametitle{AudioGen}
+\begin{frame}{AudioGen}
+    \begin{itemize}
+        \item An auto-regressive generative model that generates audio samples conditioned on text inputs~\cite{kreuk_audiogen_2023}.
+        \item Learns a discrete representation of the raw audio using an AE method and trains a Transformer language model over the learned codes, conditioned on textual features.
+        \item Uses an augmentation technique that mixes different audio samples to train the model to separate multiple sources internally.
+        \item Explores the use of multi-stream modeling for faster inference, allowing the use of shorter sequences while maintaining a similar bitrate and perceptual quality.
+        \item Outperforms evaluated baselines over both objective and subjective metrics and extends to conditional and unconditional audio continuation.
+    \end{itemize}
 \end{frame}
