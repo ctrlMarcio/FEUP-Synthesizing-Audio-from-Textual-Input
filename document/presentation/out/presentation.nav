@@ -1,0 +1,170 @@
+\headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
+\headcommand {\beamer@framepages {1}{1}}
+\headcommand {\slideentry {0}{0}{2}{2/2}{}{0}}
+\headcommand {\beamer@framepages {2}{2}}
+\headcommand {\beamer@sectionpages {1}{2}}
+\headcommand {\beamer@subsectionpages {1}{2}}
+\headcommand {\sectionentry {1}{Introduction}{3}{Introduction}{0}}
+\headcommand {\beamer@subsectionpages {3}{2}}
+\headcommand {\beamer@subsectionentry {0}{1}{1}{3}{Context}}
+\headcommand {\slideentry {1}{1}{1}{3/3}{Context}{0}}
+\headcommand {\beamer@framepages {3}{3}}
+\headcommand {\slideentry {1}{1}{2}{4/4}{Context}{0}}
+\headcommand {\beamer@framepages {4}{4}}
+\headcommand {\beamer@subsectionpages {3}{4}}
+\headcommand {\beamer@subsectionentry {0}{1}{2}{5}{Background}}
+\headcommand {\slideentry {1}{2}{1}{5/5}{Background}{0}}
+\headcommand {\beamer@framepages {5}{5}}
+\headcommand {\slideentry {1}{2}{2}{6/6}{Background}{0}}
+\headcommand {\beamer@framepages {6}{6}}
+\headcommand {\slideentry {1}{2}{3}{7/7}{Background}{0}}
+\headcommand {\beamer@framepages {7}{7}}
+\headcommand {\slideentry {1}{2}{4}{8/8}{Background}{0}}
+\headcommand {\beamer@framepages {8}{8}}
+\headcommand {\slideentry {1}{2}{5}{9/9}{Background}{0}}
+\headcommand {\beamer@framepages {9}{9}}
+\headcommand {\beamer@subsectionpages {5}{9}}
+\headcommand {\beamer@subsectionentry {0}{1}{3}{10}{Motivation}}
+\headcommand {\slideentry {1}{3}{1}{10/10}{Motivation}{0}}
+\headcommand {\beamer@framepages {10}{10}}
+\headcommand {\beamer@subsectionpages {10}{10}}
+\headcommand {\beamer@subsectionentry {0}{1}{4}{11}{Research objectives}}
+\headcommand {\slideentry {1}{4}{1}{11/11}{Research objectives}{0}}
+\headcommand {\beamer@framepages {11}{11}}
+\headcommand {\beamer@sectionpages {3}{11}}
+\headcommand {\beamer@subsectionpages {11}{11}}
+\headcommand {\sectionentry {2}{State of the Art}{12}{State of the Art}{0}}
+\headcommand {\beamer@subsectionpages {12}{11}}
+\headcommand {\beamer@subsectionentry {0}{2}{1}{12}{Introduction}}
+\headcommand {\slideentry {2}{1}{1}{12/12}{Introduction}{0}}
+\headcommand {\beamer@framepages {12}{12}}
+\headcommand {\beamer@subsectionpages {12}{12}}
+\headcommand {\beamer@subsectionentry {0}{2}{2}{13}{Traditional Soundscape Generation}}
+\headcommand {\slideentry {2}{2}{1}{13/13}{Traditional Soundscape Generation}{0}}
+\headcommand {\beamer@framepages {13}{13}}
+\headcommand {\beamer@subsectionpages {13}{13}}
+\headcommand {\beamer@subsectionentry {0}{2}{3}{14}{Unsupervised Sound Generation}}
+\headcommand {\slideentry {2}{3}{1}{14/14}{Unsupervised Sound Generation}{0}}
+\headcommand {\beamer@framepages {14}{14}}
+\headcommand {\beamer@subsectionpages {14}{14}}
+\headcommand {\beamer@subsectionentry {0}{2}{4}{15}{Vocoders}}
+\headcommand {\slideentry {2}{4}{1}{15/15}{Vocoders}{0}}
+\headcommand {\beamer@framepages {15}{15}}
+\headcommand {\beamer@subsectionpages {15}{15}}
+\headcommand {\beamer@subsectionentry {0}{2}{5}{16}{End-to-End Models}}
+\headcommand {\slideentry {2}{5}{1}{16/16}{End-to-End Models}{0}}
+\headcommand {\beamer@framepages {16}{16}}
+\headcommand {\slideentry {2}{5}{2}{17/17}{End-to-End Models}{0}}
+\headcommand {\beamer@framepages {17}{17}}
+\headcommand {\slideentry {2}{5}{3}{18/18}{End-to-End Models}{0}}
+\headcommand {\beamer@framepages {18}{18}}
+\headcommand {\slideentry {2}{5}{4}{19/19}{End-to-End Models}{0}}
+\headcommand {\beamer@framepages {19}{19}}
+\headcommand {\slideentry {2}{5}{5}{20/20}{End-to-End Models}{0}}
+\headcommand {\beamer@framepages {20}{20}}
+\headcommand {\beamer@subsectionpages {16}{20}}
+\headcommand {\beamer@subsectionentry {0}{2}{6}{21}{AudioLM}}
+\headcommand {\slideentry {2}{6}{1}{21/21}{AudioLM}{0}}
+\headcommand {\beamer@framepages {21}{21}}
+\headcommand {\beamer@subsectionpages {21}{21}}
+\headcommand {\beamer@subsectionentry {0}{2}{7}{22}{DiffSound}}
+\headcommand {\slideentry {2}{7}{1}{22/22}{DiffSound}{0}}
+\headcommand {\beamer@framepages {22}{22}}
+\headcommand {\beamer@subsectionpages {22}{22}}
+\headcommand {\beamer@subsectionentry {0}{2}{8}{23}{AudioGen}}
+\headcommand {\slideentry {2}{8}{1}{23/23}{AudioGen}{0}}
+\headcommand {\beamer@framepages {23}{23}}
+\headcommand {\beamer@sectionpages {12}{23}}
+\headcommand {\beamer@subsectionpages {23}{23}}
+\headcommand {\sectionentry {3}{Development}{24}{Development}{0}}
+\headcommand {\beamer@subsectionpages {24}{23}}
+\headcommand {\beamer@subsectionentry {0}{3}{1}{24}{Datasets}}
+\headcommand {\slideentry {3}{1}{1}{24/24}{Datasets}{0}}
+\headcommand {\beamer@framepages {24}{24}}
+\headcommand {\slideentry {3}{1}{2}{25/25}{Datasets}{0}}
+\headcommand {\beamer@framepages {25}{25}}
+\headcommand {\beamer@subsectionpages {24}{25}}
+\headcommand {\beamer@subsectionentry {0}{3}{2}{26}{Exploratory Experiments}}
+\headcommand {\slideentry {3}{2}{1}{26/26}{Exploratory Experiments}{0}}
+\headcommand {\beamer@framepages {26}{26}}
+\headcommand {\beamer@subsectionpages {26}{26}}
+\headcommand {\beamer@subsectionentry {0}{3}{3}{27}{GANmix}}
+\headcommand {\slideentry {3}{3}{1}{27/27}{GANmix}{0}}
+\headcommand {\beamer@framepages {27}{27}}
+\headcommand {\slideentry {3}{3}{2}{28/28}{GANmix}{0}}
+\headcommand {\beamer@framepages {28}{28}}
+\headcommand {\slideentry {3}{3}{3}{29/29}{GANmix}{0}}
+\headcommand {\beamer@framepages {29}{29}}
+\headcommand {\slideentry {3}{3}{4}{30/30}{GANmix}{0}}
+\headcommand {\beamer@framepages {30}{30}}
+\headcommand {\beamer@sectionpages {24}{30}}
+\headcommand {\beamer@subsectionpages {27}{30}}
+\headcommand {\sectionentry {4}{Results}{31}{Results}{0}}
+\headcommand {\slideentry {4}{0}{1}{31/31}{}{0}}
+\headcommand {\beamer@framepages {31}{31}}
+\headcommand {\beamer@subsectionpages {31}{31}}
+\headcommand {\beamer@subsectionentry {0}{4}{1}{32}{Setup}}
+\headcommand {\slideentry {4}{1}{1}{32/32}{Setup}{0}}
+\headcommand {\beamer@framepages {32}{32}}
+\headcommand {\beamer@subsectionpages {32}{32}}
+\headcommand {\beamer@subsectionentry {0}{4}{2}{33}{Presentation of Results}}
+\headcommand {\slideentry {4}{2}{1}{33/33}{Presentation of Results}{0}}
+\headcommand {\beamer@framepages {33}{33}}
+\headcommand {\beamer@subsectionpages {33}{33}}
+\headcommand {\beamer@subsectionentry {0}{4}{3}{34}{Experiment X: Title}}
+\headcommand {\slideentry {4}{3}{1}{34/34}{Experiment X: Title}{0}}
+\headcommand {\beamer@framepages {34}{34}}
+\headcommand {\beamer@subsectionpages {34}{34}}
+\headcommand {\beamer@subsectionentry {0}{4}{4}{35}{Discussion}}
+\headcommand {\beamer@sectionpages {31}{34}}
+\headcommand {\beamer@subsectionpages {35}{34}}
+\headcommand {\sectionentry {5}{Analysis and Interpretation}{35}{Analysis and Interpretation}{0}}
+\headcommand {\slideentry {5}{0}{1}{35/35}{}{0}}
+\headcommand {\beamer@framepages {35}{35}}
+\headcommand {\slideentry {5}{0}{2}{36/36}{}{0}}
+\headcommand {\beamer@framepages {36}{36}}
+\headcommand {\slideentry {5}{0}{3}{37/37}{}{0}}
+\headcommand {\beamer@framepages {37}{37}}
+\headcommand {\slideentry {5}{0}{4}{38/38}{}{0}}
+\headcommand {\beamer@framepages {38}{38}}
+\headcommand {\slideentry {5}{0}{5}{39/39}{}{0}}
+\headcommand {\beamer@framepages {39}{39}}
+\headcommand {\beamer@subsectionpages {35}{39}}
+\headcommand {\beamer@subsectionentry {0}{5}{1}{40}{Constraints and Challenges}}
+\headcommand {\beamer@sectionpages {35}{39}}
+\headcommand {\beamer@subsectionpages {40}{39}}
+\headcommand {\sectionentry {6}{Constraints and Challenges}{40}{Constraints and Challenges}{0}}
+\headcommand {\slideentry {6}{0}{1}{40/40}{}{0}}
+\headcommand {\beamer@framepages {40}{40}}
+\headcommand {\slideentry {6}{0}{2}{41/41}{}{0}}
+\headcommand {\beamer@framepages {41}{41}}
+\headcommand {\slideentry {6}{0}{3}{42/42}{}{0}}
+\headcommand {\beamer@framepages {42}{42}}
+\headcommand {\slideentry {6}{0}{4}{43/43}{}{0}}
+\headcommand {\beamer@framepages {43}{43}}
+\headcommand {\slideentry {6}{0}{5}{44/44}{}{0}}
+\headcommand {\beamer@framepages {44}{44}}
+\headcommand {\beamer@sectionpages {40}{44}}
+\headcommand {\beamer@subsectionpages {40}{44}}
+\headcommand {\sectionentry {7}{Conclusions}{45}{Conclusions}{0}}
+\headcommand {\beamer@subsectionpages {45}{44}}
+\headcommand {\beamer@subsectionentry {0}{7}{1}{45}{Overview and Reflections}}
+\headcommand {\slideentry {7}{1}{1}{45/45}{Overview and Reflections}{0}}
+\headcommand {\beamer@framepages {45}{45}}
+\headcommand {\beamer@subsectionpages {45}{45}}
+\headcommand {\beamer@subsectionentry {0}{7}{2}{46}{Future Directions}}
+\headcommand {\slideentry {7}{2}{1}{46/46}{Future Directions}{0}}
+\headcommand {\beamer@framepages {46}{46}}
+\headcommand {\beamer@subsectionpages {46}{46}}
+\headcommand {\beamer@subsectionentry {0}{7}{3}{47}{Novel Architectures}}
+\headcommand {\slideentry {7}{3}{1}{47/47}{Novel Architectures}{0}}
+\headcommand {\beamer@framepages {47}{47}}
+\headcommand {\beamer@subsectionpages {47}{47}}
+\headcommand {\beamer@subsectionentry {0}{7}{4}{48}{Conclusion}}
+\headcommand {\slideentry {7}{4}{1}{48/48}{Conclusion}{0}}
+\headcommand {\beamer@framepages {48}{48}}
+\headcommand {\beamer@partpages {1}{48}}
+\headcommand {\beamer@subsectionpages {48}{48}}
+\headcommand {\beamer@sectionpages {45}{48}}
+\headcommand {\beamer@documentpages {48}}
+\headcommand {\gdef \inserttotalframenumber {48}}

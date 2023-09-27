@@ -2,10 +2,8 @@
 
 \subsection{Introduction}
 \begin{frame}
-    \frametitle{Introduction}
+    \frametitle{State of the Art}
     \begin{itemize}
-        \item Sound generation is the task of creating realistic and expressive sounds from scratch or based on some input
-        \item It has many applications in music, entertainment, education, and research
         \item There are different types of sound generation methods, depending on the level of abstraction and supervision involved
         \item Four types of sound generation methods are considered in this thesis:
               \begin{itemize}
@@ -22,12 +20,6 @@
 
 \begin{frame}
     \frametitle{Traditional Soundscape Generation}
-
-    \textbf{Approach}
-    \begin{itemize}
-        \item Threefold strategy: Segmentation, Feature extraction, Resynthesis
-        \item Statistical models and stochastic processes used
-    \end{itemize}
 
     \textbf{Notable Tools}
     \begin{itemize}
@@ -63,13 +55,6 @@
 
 \begin{frame}
     \frametitle{Vocoders}
-
-    \textbf{Approach}
-    \begin{itemize}
-        \item DL vocoders use neural networks to generate artificial audio directly
-        \item No reliance on predefined models or feature extraction
-        \item Capture complex nonlinear relationships between input and output
-    \end{itemize}
 
     \textbf{Notable Models}
     \begin{itemize}
@@ -110,14 +95,14 @@
         \caption{A comparison of different end-to-end generative models for audio.}
         \begin{tabularx}{\textwidth}{|X|l|X|X|}
             \hline
-            \textbf{Model}                           & \textbf{Type} & \textbf{Input}            & \textbf{Output} \\ \hline
-            Char2wav~\cite{sotelo_char2wav_2017}     & Speech        & Text prompt               & Raw audio waveform \\ \hline
-            VALL-E~\cite{wang_neural_2023}           & Speech        & Text and acoustic prompt  & Raw audio waveform \\ \hline
-            Jukebox~\cite{dhariwal_jukebox_2020}     & Music         & Genre, artist, and lyrics & Raw audio waveform \\ \hline
-            Riffusion~\cite{forsgren_riffusion_2022} & Music         & Text prompt               & Raw audio waveform \\ \hline
-            MusicLM~\cite{agostinelli_musiclm_2023}  & Music         & Text prompt               & Raw audio waveform \\ \hline
-            SampleRNN~\cite{mehri_samplernn_2017}    & General       & None                      & Raw audio waveform \\ \hline
-            AudioLM~\cite{borsos_audiolm_2022}       & General       & Text prompt               & Raw audio waveform \\ \hline
+            \textbf{Model}                           & \textbf{Type} & \textbf{Input}            & \textbf{Output}                        \\ \hline
+            Char2wav~\cite{sotelo_char2wav_2017}     & Speech        & Text prompt               & Raw audio waveform                     \\ \hline
+            VALL-E~\cite{wang_neural_2023}           & Speech        & Text and acoustic prompt  & Raw audio waveform                     \\ \hline
+            Jukebox~\cite{dhariwal_jukebox_2020}     & Music         & Genre, artist, and lyrics & Raw audio waveform                     \\ \hline
+            Riffusion~\cite{forsgren_riffusion_2022} & Music         & Text prompt               & Raw audio waveform                     \\ \hline
+            MusicLM~\cite{agostinelli_musiclm_2023}  & Music         & Text prompt               & Raw audio waveform                     \\ \hline
+            SampleRNN~\cite{mehri_samplernn_2017}    & General       & None                      & Raw audio waveform                     \\ \hline
+            AudioLM~\cite{borsos_audiolm_2022}       & General       & Text prompt               & Raw audio waveform                     \\ \hline
             DiffSound~\cite{yang_diffsound_2022}     & General       & Text prompt               & Mel-spectrogram and raw audio waveform \\ \hline
             AudioGen~\cite{kreuk_audiogen_2023}      & General       & Text prompt               & Mel-spectrogram and raw audio waveform \\ \hline
         \end{tabularx}
@@ -133,10 +118,10 @@
         \item Convert written text into synthesized speech
         \item Use deep neural networks for direct mapping
         \item Notable TTS Models:
-            \begin{itemize}
-                \item Char2wav
-                \item VALL-E
-            \end{itemize}
+              \begin{itemize}
+                  \item Char2wav
+                  \item VALL-E
+              \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -148,11 +133,11 @@
         \item Create music using generative techniques
         \item End-to-end models for composing new musical pieces
         \item Notable Generative Music Models:
-            \begin{itemize}
-                \item Jukebox
-                \item Riffusion
-                \item MusicLM
-            \end{itemize}
+              \begin{itemize}
+                  \item Jukebox
+                  \item Riffusion
+                  \item MusicLM
+              \end{itemize}
     \end{itemize}
 
 \end{frame}
@@ -165,20 +150,26 @@
         \item Convert various forms of text to corresponding audio outputs
         \item Applications: sound effects, voice transformation, environmental sound synthesis
         \item Notable Text-to-Audio Models:
-            \begin{itemize}
-                \item SampleRNN
-                \item AudioLM
-                \item DiffSound
-                \item AudioGen
-            \end{itemize}
+              \begin{itemize}
+                  \item SampleRNN
+                  \item AudioLM
+                  \item DiffSound
+                  \item AudioGen
+              \end{itemize}
     \end{itemize}
 
 \end{frame}
 
 
 \subsection{AudioLM}
-\begin{frame}
-    \frametitle{AudioLM}
+\begin{frame}{AudioLM}
+    \begin{itemize}
+        \item A framework for high-quality audio generation with long-term consistency~\cite{borsos_audiolm_2022}.
+        \item Maps input audio to a sequence of discrete tokens and treats audio generation as a language modeling task.
+        \item Achieves high-quality synthesis and long-term structure through a hybrid tokenization scheme of semantic and acoustic tokens.
+        \item Consists of three main components: tokenizer, language model, and detokenizer.
+        \item Generates syntactically and semantically plausible speech and music continuations without any transcript or annotation.
+    \end{itemize}
 \end{frame}
 
 \subsection{DiffSound}

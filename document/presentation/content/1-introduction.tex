@@ -17,6 +17,11 @@
 \begin{frame}
     \frametitle{Timeline of Key Events in AI and Machine Learning}
     \begin{enumerate}
+        \item \textbf{1646 - Birth of Leibniz:}
+              \begin{itemize}
+                  \item Gottfried Wilhelm Leibniz, the founder of computer science, is born.
+              \end{itemize}
+
         \item \textbf{1958 - Birth of Modern AI:}
               \begin{itemize}
                   \item F. Rosenblatt proposes three fundamental questions leading to the development of the perceptron.
@@ -27,9 +32,10 @@
                   \item Intensive work on convergence algorithms for the perceptron.
               \end{itemize}
 
-        \item \textbf{1969 - Limitations of Perceptrons:}
+        \item \textbf{1969 - First Winter of AI:}
               \begin{itemize}
                   \item Minksy and Papert demonstrate the limitations of perceptrons, leading to a slowdown in AI research.
+                  \item This led to the first AI winter.
               \end{itemize}
 
         \item \textbf{1980s - Emergence of Multilayer Neural Networks:}
@@ -55,16 +61,12 @@
         \item \textbf{2010s - DL in Everyday Applications:}
               \begin{itemize}
                   \item DL becomes integral for various computer-made tasks, including text translation, recommender systems, and more.
-              \end{itemize}
-
-        \item \textbf{Generative Models and Their Impact:}
-              \begin{itemize}
                   \item Introduction of generative models and their applications in image and text generation.
               \end{itemize}
 
         \item \textbf{2020s - Decade of Generative Applications:}
               \begin{itemize}
-                  \item Rise of generative
+                  \item Rise of generative models in various applications, including audio processing.
               \end{itemize}
     \end{enumerate}
 \end{frame}
@@ -73,12 +75,7 @@
 \subsection{Background}
 
 \begin{frame}
-    \frametitle{Introduction to Background}
-    % Briefly introduce the vast body of research on Deep Learning (DL).
-\end{frame}
-
-\begin{frame}
-    \frametitle{Digital Audio Processing 1}
+    \frametitle{Digital Audio Processing}
 
     \begin{itemize}
         \item Sound can be discretized by sampling at a specific time rate, known as the sampling rate.
@@ -95,7 +92,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Digital Audio Processing 2}
+    \frametitle{Digital Audio Processing (contd.)}
 
     \textbf{Spectrograms and Machine Learning:}
     \begin{itemize}
@@ -116,15 +113,11 @@
 \begin{frame}
     \frametitle{Foundations for Enhancing Generative Models for Audio}
 
-    To develop generative models for audio, it is necessary to address several factors that impact their performance and quality. This thesis concentrates on three main areas:
-
     \begin{itemize}
-        \item \textbf{Data Augmentation:} Applying transformations to the original data to increase its size and diversity. This helps overcome limitations of small or imbalanced datasets and improves the generalization ability of generative models.
+        \item \textbf{Data Augmentation:} Applying transformations to the original data to increase its size and diversity.
         \item \textbf{Evaluation Metrics:} Methods used to measure the quality and diversity of the generated sounds. They provide a way to compare different generative models and assess their strengths and weaknesses.
         \item \textbf{Data Embedding:} Converting data into numerical representations that capture its essential features and characteristics. This facilitates the learning process of generative models and enhances their expressiveness and efficiency.
     \end{itemize}
-
-    In the following sections, we delve into each of these areas, discussing different techniques and methods employed to enhance generative models for audio.
 
 \end{frame}
 
@@ -132,18 +125,16 @@
 \begin{frame}
     \frametitle{Deep Learning Frameworks}
 
-    Deep learning frameworks have played a pivotal role in advancing the field of AI, enabling researchers and practitioners to efficiently develop and deploy complex neural networks. These frameworks provide a wide range of tools and techniques for building, training, and evaluating deep neural networks, accelerating progress in the field.
-
     \begin{itemize}
-        \item TensorFlow: TensorFlow is a widely-used deep learning framework developed by Google. It offers a comprehensive ecosystem for building and deploying machine learning models, including support for audio-related tasks. TensorFlow provides a static computation graph and is known for its scalability and performance.
+        \item TensorFlow: offers a comprehensive ecosystem for building and deploying machine learning models, including support for audio-related tasks. TensorFlow provides a static computation graph and is known for its scalability and performance.
 
-        \item PyTorch: PyTorch is an open-source deep learning framework developed by Facebook. It has gained popularity due to its ease of use and dynamic computation graph, which allows for more flexibility and intuitive programming. PyTorch offers a user-friendly API and is known for its flexibility and support for various applications.
+        \item PyTorch: has gained popularity due to its ease of use and dynamic computation graph, which allows for more flexibility and intuitive programming. PyTorch offers a user-friendly API and is known for its flexibility and support for various applications.
 
-        \item Keras: Keras is a high-level deep learning library that runs on top of TensorFlow and other lower-level frameworks. It provides a user-friendly interface for building and training neural network models. Keras simplifies the creation of neural networks by abstracting away many low-level details, making it a popular choice for beginners.
+        \item Keras: Keras is a high-level deep learning library that runs on top of TensorFlow. It provides a user-friendly interface for building and training neural network models. Keras simplifies the creation of neural networks by abstracting away many low-level details, making it a popular choice for beginners.
 
     \end{itemize}
 
-    Each framework has its own strengths and characteristics, and the choice of framework depends on factors such as ease of use, performance, and flexibility. In this thesis, we have selected PyTorch as the deep learning framework of choice due to its flexibility, ease of use, and optimal performance for our specific tasks.
+    In this thesis, we have selected PyTorch as the deep learning framework of choice due to its flexibility, ease of use, and optimal performance for our specific tasks.
 
 \end{frame}
 
@@ -152,19 +143,19 @@
     \frametitle{Generative Deep Learning Architectures}
     \begin{itemize}
         \item Generative deep learning architectures are designed to generate new and diverse data samples from a learned distribution.
-        \item They learn to estimate the underlying probability distribution of the data by minimizing some distance or loss function between the model and the actual distribution. 
+        \item They learn to estimate the underlying probability distribution of the data by minimizing some distance or loss function between the model and the actual distribution.
         \item They have been applied to various tasks, such as image synthesis, text generation, and audio synthesis.
         \item In this thesis, we focus on some of the most popular and influential generative deep learning architectures, such as:
-        \begin{itemize}
-            \item Deep autoregressive networks (DARNs) 
-            \item Variational autoencoders (VAEs) 
-            \item Generative adversarial networks (GANs) 
-            \item Normalizing flows 
-            \item Diffusion models 
-            \item Transformers 
-            \item Vector quantized variational autoencoders (VQ-VAEs) 
-            \item Multi-scale vector quantized variational autoencoders (MS-VQ-VAEs)
-        \end{itemize}
+              \begin{itemize}
+                  \item Deep autoregressive networks (DARNs)
+                  \item Variational autoencoders (VAEs)
+                  \item Generative adversarial networks (GANs)
+                  \item Normalizing flows
+                  \item Diffusion models
+                  \item Transformers
+                  \item Vector quantized variational autoencoders (VQ-VAEs)
+                  \item Multi-scale vector quantized variational autoencoders (MS-VQ-VAEs)
+              \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -172,11 +163,6 @@
 
 \begin{frame}{Motivation}
     \begin{enumerate}
-        \item \textbf{ML in Audio Processing}
-              \begin{itemize}
-                  \item ML techniques enhance sound synthesis, restoration, and speech recognition.
-                  \item Learn complex patterns, improving quality and efficiency.
-              \end{itemize}
         \item \textbf{Revolutionizing Sound Generation}
               \begin{itemize}
                   \item Integration of ML transforms sound creation and experience.
@@ -191,10 +177,6 @@
               \begin{itemize}
                   \item Reshaping human potential in sound creation through digital technologies.
                   \item Valuable resource for audio processing professionals, guiding future endeavors.
-              \end{itemize}
-        \item \textbf{Overall Significance}
-              \begin{itemize}
-                  \item Valuable contribution to audio processing and machine learning field.
               \end{itemize}
     \end{enumerate}
 \end{frame}
