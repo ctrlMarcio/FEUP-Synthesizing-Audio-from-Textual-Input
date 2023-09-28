@@ -58,25 +58,138 @@
 
     [Optional: Any unique aspects or considerations for this experiment]
 
-    % \begin{figure}[!ht]
-    %     \centering
-    %     \begin{subfigure}{0.45\textwidth}
-    %         \includegraphics[width=\textwidth]{figures/4.5-results/expX_loss.png}
-    %         \caption{Evolving losses throughout the training process for Experiment X.}
-    %         \label{fig:expX_loss}
-    %     \end{subfigure}
-    %     \begin{subfigure}{0.45\textwidth}
-    %         \includegraphics[width=\textwidth]{figures/4.5-results/expX_spectrogram.png}
-    %         \caption{Spectrogram generated in Experiment X.}
-    %         \label{fig:expX_spectrogram}
-    %     \end{subfigure}
-    %     \caption{Results of Experiment X.}
-    %     \label{fig:expX_results}
-    % \end{figure}
-
     [Optional: Any additional insights or observations from this experiment]
 
 \end{frame}
+
+\begin{frame}
+    \frametitle{Experiment 1: Initial Model Evaluation}
+
+    \begin{itemize}
+        \item Objectives: To assess the initial model's performance and to establish a baseline for future development in generative model research.
+        \item Model Details: The model comprised about 4 million parameters, evenly distributed between the generator and the discriminator. The model was trained using the binary cross-entropy loss function, and no regularization techniques were applied in this experiment.
+        \item Dataset: The Audio MNIST dataset was used for both training and evaluation.
+        \item Optimizer and Learning Rate: The Adam optimizer with a learning rate of $1 \times 10^{-4}$ was used for the generator and discriminator.
+        \item Training Process: The training process quickly stabilized. The generator loss was calculated as $0.487$, while the discriminator loss was measured to be $1.440$. The total loss, which is the sum of the generator and discriminator losses, was calculated to be $1.927$.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Experiment 2: Accelerating Convergence through Elevated Learning Rates}
+
+    \begin{itemize}
+        \item Objectives: To hasten the convergence rate by raising the learning rates for both the generator and the discriminator.
+        \item Model Details: The model shared the same number of parameters (about 4 million), loss function (binary cross-entropy), dataset, optimizer, and hardware setup as the former one.
+        \item Learning Rate: The learning rate, for both the generator and the discriminator, was elevated to $1 \times 10^{-2}$.
+        \item Training Process: The point at which the models began learning at a slower rate was reached more quickly, but the outcomes remained unsatisfactory. The generator’s loss was calculated at $0.545$, and the discriminator’s loss was measured at $1.412$. The total loss, represented as the cumulative sum of the generator and discriminator losses, was calculated at $1.957$.
+    \end{itemize}
+
+    The spectrogram of the initial model was determined to be similar to the first one. No figures are mentioned in this frame.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Experiment 3: Enhancing Performance through Learning Rate and Model Complexity}
+
+    \begin{itemize}
+        \item Objectives: To test two hypotheses aimed at improving the generative model's performance: (1) setting a higher learning rate for the generator than for the discriminator at the outset could enhance performance; (2) improving the generator model's complexity could lead to better results.
+        \item Model Details: The discriminator model remained unchanged while the generator model had significantly more trainable parameters, totaling about 25 million. This was done by increasing the number of filters and the number of convolutional layers per deconvolutional block. The experiment utilized the same loss function (binary cross-entropy), dataset, optimizer, and hardware configuration as the previous iterations.
+        \item Learning Rate: The generator learning rate was increased to $1 \times 10^{-3}$, while the discriminator learning rate remained at $1 \times 10^{-4}$.
+        \item Training Process: Training for this model stopped after 14 epochs because the results were comparable to those of the first iteration. The total loss was $2.037$, calculated by adding the generator loss of $0.351$ and the discriminator loss of $1.686$.
+    \end{itemize}
+
+    The spectrogram of the initial model was determined to be similar to the first two experiments.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Experiment 4: Comparing Optimization Algorithms: RMSProp and SGD}
+
+    \begin{itemize}
+        \item Objectives: To test the performance of the RMSProp and SGD optimizers, in contrast to the previous experiments that relied on the Adam optimizer.
+        \item Model Details: This experiment utilized identical model architecture, loss function (binary cross-entropy), and dataset as Experiment 3. The code was transferred to LIACC 1 hardware configuration, with minimal alterations.
+        \item Optimizer: The experiment examined the performance of the RMSProp and SGD optimizers. The initial experiment in this set utilized the RMSProp optimizer's default settings. The next experiment in the sequence employed the standard configuration of the SGD optimizer.
+        \item Training Process: The comprehensive loss was $1.966$ for RMSProp, comprising a generator loss of $0.558$ and a discriminator loss of $1.407$. The total loss was calculated to be $1.945$ for SGD, with a generator loss of $0.516$ and a discriminator loss of $1.429$. The obtained results were comparable to those obtained with the Adam optimizer in previous iterations.
+    \end{itemize}
+
+    The spectrogram of the initial model was determined to be similar to the previous experiments.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Experiment 5: Enhancing Performance with Regularization Techniques}
+
+    \begin{itemize}
+        \item Objectives: To test the hypothesis that incorporating regularization techniques can enhance model performance. Several regularization techniques were utilized in the model, such as dropout layers, batch normalization, noise injection, and elastic network regularization.
+        \item Model Details: The experimental setup was identical to Experiment 4, except for the use of the Adam optimizer. The model architecture, loss function (binary cross-entropy), dataset, and hardware configuration were the same as the previous experiments.
+        \item Training Process: The total loss for this experiment was $4.791$, calculated by summing the generator loss of $3.362$ and the discriminator loss of $1.428$. However, comparing the current generator loss to previous results is not appropriate due to the incorporation of the elastic net regularization. This regularization method substantially elevates the generator loss but is crucial for training goals. A flaw in the elastic net implementation was detected in the code, but not until after a few subsequent experiments.
+    \end{itemize}
+
+    The spectrogram of the initial model was determined to be similar to the previous experiments.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Experiment 6: Optimizing Model Balance}
+
+    \begin{itemize}
+        \item Objectives: To leverage the upgraded hardware configuration of the LIACC 2 system and to optimize the balance of the generator and discriminator models by adjusting their number of parameters.
+        \item Model Details: The generator and discriminator models were both adjusted to have around 2 million parameters each. The loss function, regularization techniques, and optimizer remained unchanged. The Clotho dataset was used for both training and evaluation.
+        \item Training Process: The total loss for this experiment was $2.045$, calculated by adding the generator loss of $0.587$ and the discriminator loss of $1.458$.
+    \end{itemize}
+
+    The spectrogram of the initial model was determined to be similar to the previous experiments.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Experiment 7: Scaling Complexity}
+
+    \begin{itemize}
+        \item Objectives: To replicate the same approach as Experiment 6 utilizing larger models. This was achieved by amplifying the number of convolutional layers in each block and the number of filters in each convolutional layer. This experiment tested two sets of models: one with 20 million parameters and another with 50 million parameters.
+        \item Model Details: The other configuration aspects, such as the loss function (binary cross-entropy), regularization techniques, data set (Clotho), optimizer (Adam), and hardware configuration (LIACC 2), remained the same as the previous experiments.
+        \item Training Process: In the initial test, the total loss was $2.512$, comprising a generator loss of $1.132$ and a discriminator loss of $1.389$. The second experiment resulted in a total loss of $3.177$, comprising a generator loss of $1.738$ and a discriminator loss of $1.439$.
+    \end{itemize}
+
+    The spectrogram of the initial model was determined to be similar to the previous experiments.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Experiment 8: Unregularized and Removal of Elastic Net}
+
+    \begin{itemize}
+        \item Objectives: To eliminate the elastic net implementation due to a bug and to train the model without any regularization techniques. The experimental setup is identical to the larger test performed in Experiment 7, which featured a model containing roughly 50 million parameters.
+        \item Model Details: The loss function (binary cross-entropy), data set (Clotho), optimizer (Adam), and hardware configuration (LIACC 2) remained the same as the previous experiments. The model architecture was the same as the second set of models in Experiment 7, with 25 million parameters each for the generator and the discriminator.
+        \item Training Process: In epoch 37, the experiment incurred a total loss of $1.832$, consisting of the generator loss of $0.693$ and the discriminator loss of $1.139$. Training of the model resulted in a sudden collapse at epoch 37, with inexplicable loss values plummeting to as low as 0 thereafter.
+    \end{itemize}
+
+    The spectrogram of the initial model was determined to be similar to the previous experiments. 
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Experiment 9: Regularization Techniques and Training Progress for Rebuilt Model}
+
+    \begin{itemize}
+        \item Objectives: To employ regularization techniques while holding all other parameters constant to build upon the previous experiment. The regularization techniques included dropout layers, batch normalization, noise injection, and elastic network regularization.
+        \item Model Details: The experimental setup was identical to the larger test performed in Experiment 7, which featured a model containing roughly 50 million parameters. The loss function (binary cross-entropy), data set (Clotho), optimizer (Adam), and hardware configuration (LIACC 2) remained the same as the previous experiments.
+        \item Training Process: In epoch 34, the experiment incurred a total loss of $1.700$, with $0.693$ pertaining to the generator loss and $1.007$ to the discriminator loss. Training of the model resulted in a sudden collapse at epoch 34, with inexplicable loss values plummeting to as low as 0 thereafter.
+    \end{itemize}
+
+    The spectrogram of the initial model was determined to be similar to the previous experiments.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Experiment 10: Fully Connected Neural Networks}
+
+    \begin{itemize}
+        \item Objectives: To test the hypothesis that fully connected neural networks may provide better results than convolutional neural networks for generating embeddings. The models were modified so that the generator and the discriminator have a connection (fully connected linear layer) from the input to the hidden layer, and another connection from the hidden layer to the output (the embeddings).
+        \item Model Details: The experimental setup was identical to the larger test performed in Experiment 7, which featured a model containing roughly 50 million parameters. The loss function (binary cross-entropy), regularization techniques, data set (Clotho), optimizer (Adam), and hardware configuration (LIACC 2) remained the same as the previous experiments.
+        \item Training Process: The experiment incurred a total loss of $6.425$, with $6.987$ pertaining to the generator loss and $-0.562$ to the discriminator loss. Training of the model resulted in a curious pattern: the discriminator loss steadily decreased as the generator loss continuously increased. This trend could be due to insufficient epochs, problems with the optimizer, or the lack of a suitable scheduler.
+    \end{itemize}
+
+    The spectrogram of the initial model was determined to be similar to the previous experiments.
+\end{frame}
+
 
 \subsection{Discussion}
 
@@ -104,7 +217,6 @@
         \item Influence of optimization algorithms (e.g., SGD, RMSprop, Adam)
         \item Benefits of regularization methods (e.g., dropout, batch normalization, Gaussian noise)
         \item Importance of dataset size
-        \item Exploration of latent space
     \end{itemize}
     
 \end{frame}
@@ -200,7 +312,6 @@
     \frametitle{Conclusion}
 
     \begin{itemize}
-        \item Discussion of major limitations and challenges faced in solution development
         \item Description of strategies employed to address these issues
         \item Possible implications, trade-offs, and opportunities arising from constraints
         \item Affirmation of the proposed solution's strengths and advancements in generative AI models for audio synthesis
