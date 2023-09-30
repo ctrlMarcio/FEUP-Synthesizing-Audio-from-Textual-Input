@@ -79,52 +79,52 @@
 \begin{frame}
     \frametitle{Digital Audio Processing}
 
-\begin{center}
-    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/1-introduction/sound_sample.png}
-\end{center}
+    \begin{center}
+        \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/1-introduction/sound_sample.png}
+    \end{center}
 
-\note{
-\begin{itemize}
-    \item Sound can be discretized by sampling at a specific time rate, known as the sampling rate.
-    \item Sampling rate impacts the accuracy of the signal, with the standard value being 44,100 Hz.
-    \item Sound can be represented digitally as an array, enabling reconstruction by a computer.
-\end{itemize}
+    \note{
+        \begin{itemize}
+            \item Sound can be discretized by sampling at a specific time rate, known as the sampling rate.
+            \item Sampling rate impacts the accuracy of the signal, with the standard value being 44,100 Hz.
+            \item Sound can be represented digitally as an array, enabling reconstruction by a computer.
+        \end{itemize}
 
-\textbf{Short-Time Fourier Transform (STFT):}
-\begin{itemize}
-    \item The STFT allows the analysis of the frequency content of a signal over time.
-    \item It computes the Fourier Transform of the input signal within windowed time intervals.
-    \item The resulting time-frequency representation is used to generate spectrograms.
-\end{itemize}
+        \textbf{Short-Time Fourier Transform (STFT):}
+        \begin{itemize}
+            \item The STFT allows the analysis of the frequency content of a signal over time.
+            \item It computes the Fourier Transform of the input signal within windowed time intervals.
+            \item The resulting time-frequency representation is used to generate spectrograms.
+        \end{itemize}
 
-\textbf{Spectrograms and Machine Learning:}
-\begin{itemize}
-    \item Spectrograms represent sound as a time-frequency image, enabling analysis and processing.
-    \item Convolutional Neural Networks (CNNs) can be used for sound analysis, but filter shapes and convolution axes require careful consideration.
-\end{itemize}
+        \textbf{Spectrograms and Machine Learning:}
+        \begin{itemize}
+            \item Spectrograms represent sound as a time-frequency image, enabling analysis and processing.
+            \item Convolutional Neural Networks (CNNs) can be used for sound analysis, but filter shapes and convolution axes require careful consideration.
+        \end{itemize}
 
-\textbf{Soundscapes:}
-\begin{itemize}
-    \item Soundscapes are complex mixes of sounds heard in everyday life.
-    \item They encompass natural, human-made, and cultural sounds, creating immersive auditory environments.
-    \item Generating soundscapes with machine learning is challenging due to their lack of specific structure.
-\end{itemize}
-}
+        \textbf{Soundscapes:}
+        \begin{itemize}
+            \item Soundscapes are complex mixes of sounds heard in everyday life.
+            \item They encompass natural, human-made, and cultural sounds, creating immersive auditory environments.
+            \item Generating soundscapes with machine learning is challenging due to their lack of specific structure.
+        \end{itemize}
+    }
 \end{frame}
 
 \begin{frame}
-\frametitle{Foundations for Enhancing Generative Models for Audio}
+    \frametitle{Foundations for Enhancing Generative Models for Audio}
 
-\includegraphics[width=\textwidth]{images/1-introduction/Problem-Definition.pdf}
+    \includegraphics[width=\textwidth]{images/1-introduction/Problem-Definition.pdf}
 
-\note{
+    \note{
 
-\begin{itemize}
-    \item \textbf{Data Augmentation:} Applying transformations to the original data to increase its size and diversity.
-    \item \textbf{Evaluation Metrics:} Methods used to measure the quality and diversity of the generated sounds. They provide a way to compare different generative models and assess their strengths and weaknesses.
-    \item \textbf{Data Embedding:} Converting data into numerical representations that capture its essential features and characteristics. This facilitates the learning process of generative models and enhances their expressiveness and efficiency.
-\end{itemize}
-}
+        \begin{itemize}
+            \item \textbf{Data Augmentation:} Applying transformations to the original data to increase its size and diversity.
+            \item \textbf{Evaluation Metrics:} Methods used to measure the quality and diversity of the generated sounds. They provide a way to compare different generative models and assess their strengths and weaknesses.
+            \item \textbf{Data Embedding:} Converting data into numerical representations that capture its essential features and characteristics. This facilitates the learning process of generative models and enhances their expressiveness and efficiency.
+        \end{itemize}
+    }
 
 \end{frame}
 
@@ -132,46 +132,59 @@
 \begin{frame}
     \frametitle{Deep Learning Frameworks}
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.2\textwidth]{images/1-introduction/tensorflow.png}\hspace{1cm}
-    \includegraphics[width=0.2\textwidth]{images/1-introduction/pytorch.png}\hspace{1cm}
-    \includegraphics[width=0.2\textwidth]{images/1-introduction/keras.png}
-\end{figure}
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=0.2\textwidth]{images/1-introduction/tensorflow.png}\hspace{1cm}
+        \includegraphics[width=0.2\textwidth]{images/1-introduction/pytorch.png}\hspace{1cm}
+        \includegraphics[width=0.2\textwidth]{images/1-introduction/keras.png}
+    \end{figure}
 
-\note{
-\begin{itemize}
-\item TensorFlow: offers a comprehensive ecosystem for building and deploying machine learning models, including support for audio-related tasks. TensorFlow provides a static computation graph and is known for its scalability and performance.
+    \note{
+        \begin{itemize}
+            \item TensorFlow: offers a comprehensive ecosystem for building and deploying machine learning models, including support for audio-related tasks. TensorFlow provides a static computation graph and is known for its scalability and performance.
 
-\item PyTorch: has gained popularity due to its ease of use and dynamic computation graph, which allows for more flexibility and intuitive programming. PyTorch offers a user-friendly API and is known for its flexibility and support for various applications.
+            \item PyTorch: has gained popularity due to its ease of use and dynamic computation graph, which allows for more flexibility and intuitive programming. PyTorch offers a user-friendly API and is known for its flexibility and support for various applications.
 
-\item Keras: Keras is a high-level deep learning library that runs on top of TensorFlow. It provides a user-friendly interface for building and training neural network models. Keras simplifies the creation of neural networks by abstracting away many low-level details, making it a popular choice for beginners.
+            \item Keras: Keras is a high-level deep learning library that runs on top of TensorFlow. It provides a user-friendly interface for building and training neural network models. Keras simplifies the creation of neural networks by abstracting away many low-level details, making it a popular choice for beginners.
 
-\end{itemize}
+        \end{itemize}
 
-In this thesis, we have selected PyTorch as the deep learning framework of choice due to its flexibility, ease of use, and optimal performance for our specific tasks.
-}
+        In this thesis, we have selected PyTorch as the deep learning framework of choice due to its flexibility, ease of use, and optimal performance for our specific tasks.
+    }
 \end{frame}
 
 
 \begin{frame}
     \frametitle{Generative Deep Learning Architectures}
     \begin{itemize}
-        \item Generative deep learning architectures are designed to generate new and diverse data samples from a learned distribution.
-        \item They learn to estimate the underlying probability distribution of the data by minimizing some distance or loss function between the model and the actual distribution.
-        \item They have been applied to various tasks, such as image synthesis, text generation, and audio synthesis.
-        \item In this thesis, we focus on some of the most popular and influential generative deep learning architectures, such as:
-              \begin{itemize}
-                  \item Deep autoregressive networks (DARNs)
-                  \item Variational autoencoders (VAEs)
-                  \item Generative adversarial networks (GANs)
-                  \item Normalizing flows
-                  \item Diffusion models
-                  \item Transformers
-                  \item Vector quantized variational autoencoders (VQ-VAEs)
-                  \item Multi-scale vector quantized variational autoencoders (MS-VQ-VAEs)
-              \end{itemize}
+        \item Deep autoregressive networks (DARNs)
+        \item Variational autoencoders (VAEs)
+        \item Generative adversarial networks (GANs)
+        \item Normalizing flows
+        \item Diffusion models
+        \item Transformers
+        \item Vector quantized variational autoencoders (VQ-VAEs)
+        \item Multi-scale vector quantized variational autoencoders (MS-VQ-VAEs)
     \end{itemize}
+
+    \note{
+        \begin{itemize}
+            \item Generative deep learning architectures are designed to generate new and diverse data samples from a learned distribution.
+            \item They learn to estimate the underlying probability distribution of the data by minimizing some distance or loss function between the model and the actual distribution.
+            \item They have been applied to various tasks, such as image synthesis, text generation, and audio synthesis.
+            \item In this thesis, we focus on some of the most popular and influential generative deep learning architectures, such as:
+                  \begin{itemize}
+                      \item Deep autoregressive networks (DARNs)
+                      \item Variational autoencoders (VAEs)
+                      \item Generative adversarial networks (GANs)
+                      \item Normalizing flows
+                      \item Diffusion models
+                      \item Transformers
+                      \item Vector quantized variational autoencoders (VQ-VAEs)
+                      \item Multi-scale vector quantized variational autoencoders (MS-VQ-VAEs)
+                  \end{itemize}
+        \end{itemize}
+    }
 \end{frame}
 
 \subsection{Motivation}
@@ -179,21 +192,29 @@ In this thesis, we have selected PyTorch as the deep learning framework of choic
 \begin{frame}{Motivation}
     \begin{enumerate}
         \item \textbf{Revolutionizing Sound Generation}
-              \begin{itemize}
-                  \item Integration of ML transforms sound creation and experience.
-                  \item Opens creative avenues for artists, impacts industries like film, gaming, VR.
-              \end{itemize}
         \item \textbf{Need for Further Research}
-              \begin{itemize}
-                  \item Urgency for studies in sound generation technologies.
-                  \item This dissertation contributes significantly, offering resources for exploration.
-              \end{itemize}
         \item \textbf{Impact and Contribution}
-              \begin{itemize}
-                  \item Reshaping human potential in sound creation through digital technologies.
-                  \item Valuable resource for audio processing professionals, guiding future endeavors.
-              \end{itemize}
     \end{enumerate}
+
+    \note{
+        \begin{enumerate}
+            \item \textbf{Revolutionizing Sound Generation}
+                  \begin{itemize}
+                      \item Integration of ML transforms sound creation and experience.
+                      \item Opens creative avenues for artists, impacts industries like film, gaming, VR.
+                  \end{itemize}
+            \item \textbf{Need for Further Research}
+                  \begin{itemize}
+                      \item Urgency for studies in sound generation technologies.
+                      \item This dissertation contributes significantly, offering resources for exploration.
+                  \end{itemize}
+            \item \textbf{Impact and Contribution}
+                  \begin{itemize}
+                      \item Reshaping human potential in sound creation through digital technologies.
+                      \item Valuable resource for audio processing professionals, guiding future endeavors.
+                  \end{itemize}
+        \end{enumerate}
+    }
 \end{frame}
 
 \subsection{Research objectives}
