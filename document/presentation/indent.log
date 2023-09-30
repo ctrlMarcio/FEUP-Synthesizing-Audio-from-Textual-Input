@@ -1,6 +1,6 @@
 INFO:  latexindent version 3.16, 2022-03-13, a script to indent .tex files
        latexindent lives here: /usr/local/texlive/2022/texmf-dist/scripts/latexindent/
-       Fri Sep 29 17:28:18 2023
+       Sat Sep 30 16:38:30 2023
        Filename: /Users/marcio/Projects/tesese/document/presentation/content/__latexindent_temp_1-introduction.tex
 INFO:  Processing switches:
        -y|--yaml: YAML settings specified via command line
@@ -17,6 +17,7 @@ INFO:  YAML settings read: -y switch
        single-quoted string found in -y switch: '    ', substitute to     
        Updating mainSettings with defaultIndent:     
 INFO:  Phase 1: searching for objects
+       No objects found.
 INFO:  Phase 2: finding surrounding indentation
 INFO:  Phase 3: indenting objects
 INFO:  Phase 4: final indentation check

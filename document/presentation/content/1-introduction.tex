@@ -22,49 +22,49 @@
                   \begin{itemize}
                       \item Gottfried Wilhelm Leibniz, the founder of computer science, is born.
                   \end{itemize}
-    
+
             \item \textbf{1958 - Birth of Modern AI:}
                   \begin{itemize}
                       \item F. Rosenblatt proposes three fundamental questions leading to the development of the perceptron.
                   \end{itemize}
-    
+
             \item \textbf{1960s - Perceptron Convergence:}
                   \begin{itemize}
                       \item Intensive work on convergence algorithms for the perceptron.
                   \end{itemize}
-    
+
             \item \textbf{1969 - First Winter of AI:}
                   \begin{itemize}
                       \item Minksy and Papert demonstrate the limitations of perceptrons, leading to a slowdown in AI research.
                       \item This led to the first AI winter.
                   \end{itemize}
-    
+
             \item \textbf{1980s - Emergence of Multilayer Neural Networks:}
                   \begin{itemize}
                       \item Studies on learning under multilayer neural networks.
                   \end{itemize}
-    
+
             \item \textbf{1986 - Backpropagation:}
                   \begin{itemize}
                       \item Rumelhart et al. describe backpropagation, a key learning procedure for neural networks.
                   \end{itemize}
-    
+
             \item \textbf{1990s - Second Winter of AI:}
                   \begin{itemize}
                       \item Decreased investments in ML due to lack of real successes.
                   \end{itemize}
-    
+
             \item \textbf{Turn of the Millennium - Resurgence of ML:}
                   \begin{itemize}
                       \item Emergence of three trends: Big Data, reduced cost of parallel computing, and interest in Deep Neural Networks (DNN).
                   \end{itemize}
-    
+
             \item \textbf{2010s - DL in Everyday Applications:}
                   \begin{itemize}
                       \item DL becomes integral for various computer-made tasks, including text translation, recommender systems, and more.
                       \item Introduction of generative models and their applications in image and text generation.
                   \end{itemize}
-    
+
             \item \textbf{2020s - Decade of Generative Applications:}
                   \begin{itemize}
                       \item Rise of generative models in various applications, including audio processing.
@@ -79,47 +79,52 @@
 \begin{frame}
     \frametitle{Digital Audio Processing}
 
-    \begin{itemize}
-        \item Sound can be discretized by sampling at a specific time rate, known as the sampling rate.
-        \item Sampling rate impacts the accuracy of the signal, with the standard value being 44,100 Hz.
-        \item Sound can be represented digitally as an array, enabling reconstruction by a computer.
-    \end{itemize}
+\begin{center}
+    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/1-introduction/sound_sample.png}
+\end{center}
 
-    \textbf{Short-Time Fourier Transform (STFT):}
-    \begin{itemize}
-        \item The STFT allows the analysis of the frequency content of a signal over time.
-        \item It computes the Fourier Transform of the input signal within windowed time intervals.
-        \item The resulting time-frequency representation is used to generate spectrograms.
-    \end{itemize}
+\note{
+\begin{itemize}
+    \item Sound can be discretized by sampling at a specific time rate, known as the sampling rate.
+    \item Sampling rate impacts the accuracy of the signal, with the standard value being 44,100 Hz.
+    \item Sound can be represented digitally as an array, enabling reconstruction by a computer.
+\end{itemize}
+
+\textbf{Short-Time Fourier Transform (STFT):}
+\begin{itemize}
+    \item The STFT allows the analysis of the frequency content of a signal over time.
+    \item It computes the Fourier Transform of the input signal within windowed time intervals.
+    \item The resulting time-frequency representation is used to generate spectrograms.
+\end{itemize}
+
+\textbf{Spectrograms and Machine Learning:}
+\begin{itemize}
+    \item Spectrograms represent sound as a time-frequency image, enabling analysis and processing.
+    \item Convolutional Neural Networks (CNNs) can be used for sound analysis, but filter shapes and convolution axes require careful consideration.
+\end{itemize}
+
+\textbf{Soundscapes:}
+\begin{itemize}
+    \item Soundscapes are complex mixes of sounds heard in everyday life.
+    \item They encompass natural, human-made, and cultural sounds, creating immersive auditory environments.
+    \item Generating soundscapes with machine learning is challenging due to their lack of specific structure.
+\end{itemize}
+}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Digital Audio Processing (contd.)}
+\frametitle{Foundations for Enhancing Generative Models for Audio}
 
-    \textbf{Spectrograms and Machine Learning:}
-    \begin{itemize}
-        \item Spectrograms represent sound as a time-frequency image, enabling analysis and processing.
-        \item Convolutional Neural Networks (CNNs) can be used for sound analysis, but filter shapes and convolution axes require careful consideration.
-    \end{itemize}
+\includegraphics[width=\textwidth]{images/1-introduction/Problem-Definition.pdf}
 
-    \textbf{Soundscapes:}
-    \begin{itemize}
-        \item Soundscapes are complex mixes of sounds heard in everyday life.
-        \item They encompass natural, human-made, and cultural sounds, creating immersive auditory environments.
-        \item Generating soundscapes with machine learning is challenging due to their lack of specific structure.
-    \end{itemize}
-\end{frame}
+\note{
 
-
-
-\begin{frame}
-    \frametitle{Foundations for Enhancing Generative Models for Audio}
-
-    \begin{itemize}
-        \item \textbf{Data Augmentation:} Applying transformations to the original data to increase its size and diversity.
-        \item \textbf{Evaluation Metrics:} Methods used to measure the quality and diversity of the generated sounds. They provide a way to compare different generative models and assess their strengths and weaknesses.
-        \item \textbf{Data Embedding:} Converting data into numerical representations that capture its essential features and characteristics. This facilitates the learning process of generative models and enhances their expressiveness and efficiency.
-    \end{itemize}
+\begin{itemize}
+    \item \textbf{Data Augmentation:} Applying transformations to the original data to increase its size and diversity.
+    \item \textbf{Evaluation Metrics:} Methods used to measure the quality and diversity of the generated sounds. They provide a way to compare different generative models and assess their strengths and weaknesses.
+    \item \textbf{Data Embedding:} Converting data into numerical representations that capture its essential features and characteristics. This facilitates the learning process of generative models and enhances their expressiveness and efficiency.
+\end{itemize}
+}
 
 \end{frame}
 
@@ -127,17 +132,25 @@
 \begin{frame}
     \frametitle{Deep Learning Frameworks}
 
-    \begin{itemize}
-        \item TensorFlow: offers a comprehensive ecosystem for building and deploying machine learning models, including support for audio-related tasks. TensorFlow provides a static computation graph and is known for its scalability and performance.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.2\textwidth]{images/1-introduction/tensorflow.png}\hspace{1cm}
+    \includegraphics[width=0.2\textwidth]{images/1-introduction/pytorch.png}\hspace{1cm}
+    \includegraphics[width=0.2\textwidth]{images/1-introduction/keras.png}
+\end{figure}
 
-        \item PyTorch: has gained popularity due to its ease of use and dynamic computation graph, which allows for more flexibility and intuitive programming. PyTorch offers a user-friendly API and is known for its flexibility and support for various applications.
+\note{
+\begin{itemize}
+\item TensorFlow: offers a comprehensive ecosystem for building and deploying machine learning models, including support for audio-related tasks. TensorFlow provides a static computation graph and is known for its scalability and performance.
 
-        \item Keras: Keras is a high-level deep learning library that runs on top of TensorFlow. It provides a user-friendly interface for building and training neural network models. Keras simplifies the creation of neural networks by abstracting away many low-level details, making it a popular choice for beginners.
+\item PyTorch: has gained popularity due to its ease of use and dynamic computation graph, which allows for more flexibility and intuitive programming. PyTorch offers a user-friendly API and is known for its flexibility and support for various applications.
 
-    \end{itemize}
+\item Keras: Keras is a high-level deep learning library that runs on top of TensorFlow. It provides a user-friendly interface for building and training neural network models. Keras simplifies the creation of neural networks by abstracting away many low-level details, making it a popular choice for beginners.
 
-    In this thesis, we have selected PyTorch as the deep learning framework of choice due to its flexibility, ease of use, and optimal performance for our specific tasks.
+\end{itemize}
 
+In this thesis, we have selected PyTorch as the deep learning framework of choice due to its flexibility, ease of use, and optimal performance for our specific tasks.
+}
 \end{frame}
 
 
