@@ -8,7 +8,7 @@
 
     \includegraphics[width=\textwidth]{../images/1-introduction/timeline.pdf}
 
-    \note{
+    \note<1>{
         \begin{itemize}
             \item ``Computer Science is the study of computation and information.''~\cite{university_of_york_what_nodate}
             \item Evolution of Computer Science: From traditional programming to advanced Machine Learning (ML) and Deep Learning (DL) techniques.
@@ -16,7 +16,9 @@
             \item Role of Deep Learning: Automated feature extraction, particularly effective in tasks like image and audio processing.
             \item Significance of Generative Models: Creating synthetic data for various applications.
         \end{itemize}
+    }
 
+    \note<2>{
         \begin{enumerate}
             \item \textbf{1646 - Birth of Leibniz:}
                   \begin{itemize}
@@ -38,7 +40,11 @@
                       \item Minksy and Papert demonstrate the limitations of perceptrons, leading to a slowdown in AI research.
                       \item This led to the first AI winter.
                   \end{itemize}
+        \end{enumerate}
+    }
 
+    \note<3>{
+        \begin{enumerate}
             \item \textbf{1980s - Emergence of Multilayer Neural Networks:}
                   \begin{itemize}
                       \item Studies on learning under multilayer neural networks.
@@ -58,7 +64,11 @@
                   \begin{itemize}
                       \item Emergence of three trends: Big Data, reduced cost of parallel computing, and interest in Deep Neural Networks (DNN).
                   \end{itemize}
+        \end{enumerate}
+    }
 
+    \note<4>{
+        \begin{enumerate}
             \item \textbf{2010s - DL in Everyday Applications:}
                   \begin{itemize}
                       \item DL becomes integral for various computer-made tasks, including text translation, recommender systems, and more.
@@ -83,7 +93,7 @@
         \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/1-introduction/sound_sample.png}
     \end{center}
 
-    \note{
+    \note<1>{
         \begin{itemize}
             \item Sound can be discretized by sampling at a specific time rate, known as the sampling rate.
             \item Sampling rate impacts the accuracy of the signal, with the standard value being 44,100 Hz.
@@ -96,7 +106,9 @@
             \item It computes the Fourier Transform of the input signal within windowed time intervals.
             \item The resulting time-frequency representation is used to generate spectrograms.
         \end{itemize}
+    }
 
+    \note<2>{
         \textbf{Spectrograms and Machine Learning:}
         \begin{itemize}
             \item Spectrograms represent sound as a time-frequency image, enabling analysis and processing.
@@ -120,9 +132,11 @@
     \note{
 
         \begin{itemize}
-            \item \textbf{Data Augmentation:} Applying transformations to the original data to increase its size and diversity.
+            \item \textbf{Data Augmentation:} Applying transformations to the original data to increase its size and diversity. This can improve the generalization and robustness of the generative models and reduce the risk of overfitting.
+            \item \textbf{Data Embedding:} Converting data into numerical representations that capture its essential features and characteristics.
+            \item \textbf{Optimization:} Finding the optimal parameters of the generative model that minimize a predefined loss function. This can be done using various optimization algorithms such as Gradient Descent, Adam, or RMSProp.
             \item \textbf{Evaluation Metrics:} Methods used to measure the quality and diversity of the generated sounds. They provide a way to compare different generative models and assess their strengths and weaknesses.
-            \item \textbf{Data Embedding:} Converting data into numerical representations that capture its essential features and characteristics. This facilitates the learning process of generative models and enhances their expressiveness and efficiency.
+            \item \textbf{Objective Function:} A function that defines the goal of the generative model and quantifies its performance.
         \end{itemize}
     }
 
@@ -167,11 +181,16 @@
         \item Multi-scale vector quantized variational autoencoders (MS-VQ-VAEs)
     \end{itemize}
 
-    \note{
+    \note<1>{
         \begin{itemize}
             \item Generative deep learning architectures are designed to generate new and diverse data samples from a learned distribution.
             \item They learn to estimate the underlying probability distribution of the data by minimizing some distance or loss function between the model and the actual distribution.
             \item They have been applied to various tasks, such as image synthesis, text generation, and audio synthesis.
+        \end{itemize}
+    }
+    
+    \note<2>{
+        \begin{itemize}
             \item In this thesis, we focus on some of the most popular and influential generative deep learning architectures, such as:
                   \begin{itemize}
                       \item Deep autoregressive networks (DARNs)
