@@ -1,17 +1,5 @@
 \section{Results}
 
-\begin{frame}
-    \frametitle{Results}
-
-    \begin{itemize}
-        \item Setup: Overview of experimental conditions and configurations.
-        \item Presentation of Results: Showcase of outcomes from GANmix experiments.
-        \item Discussion: Analyzing and interpreting the obtained results.
-        \item Constraints and Challenges: Addressing limitations and difficulties encountered.
-    \end{itemize}
-\end{frame}
-
-
 \subsection{Setup}
 
 \begin{frame}
@@ -31,101 +19,152 @@
 \subsection{Presentation of Results}
 
 \begin{frame}
-    \frametitle{Presentation of Results}
+\frametitle{Experiment 1: Initial Model Evaluation}
 
     \begin{itemize}
-        \item Objectives: Explore generative AI models for audio production, assess performance.
-        \item Context: Each experiment designed with specific research questions and hypotheses.
-        \item Methodology: Hardware, software, and architecture details provided for transparency.
-        \item Evaluation: Performance assessed through evolving loss plots and spectrograms.
-        \item Systematic Organization: Ensures a comprehensive understanding of procedures and results.
-        \item Basis for Analysis: Provides foundation for discussing effectiveness of generative AI models.
-    \end{itemize}
-\end{frame}
-
-\subsection{Experiment X: Title} \label{sec:expX}
-
-\begin{frame}
-    \frametitle{Experiment X: Title}
-
-    \begin{itemize}
-        \item Objectives: [Objectives of the experiment]
-        \item Model Details: [Describe key details of the model used, e.g., parameters, loss function]
-        \item Dataset: [Mention the dataset used for training and evaluation]
-        \item Optimizer and Learning Rate: [Specify the optimizer and learning rate used]
-        \item Training Process: [Provide essential details about the training process, e.g., convergence status]
+\item 4 million parameters (2 per model)
+\item BCE loss function
+\item Audio MNIST dataset
+\item Adam optimizer with learning rate of $1 \times 10^{-4}$
+\item Losses:
+\begin{itemize}
+    \item Generator: $0.487$
+    \item Discriminator: $1.440$
+    \item Total: $1.927$
+\end{itemize}
     \end{itemize}
 
-    [Optional: Any unique aspects or considerations for this experiment]
-
-    [Optional: Any additional insights or observations from this experiment]
-
-\end{frame}
-
-\begin{frame}
-    \frametitle{Experiment 1: Initial Model Evaluation}
-
-    \begin{itemize}
-        \item Objectives: To assess the initial model's performance and to establish a baseline for future development in generative model research.
-        \item Model Details: The model comprised about 4 million parameters, evenly distributed between the generator and the discriminator. The model was trained using the binary cross-entropy loss function, and no regularization techniques were applied in this experiment.
-        \item Dataset: The Audio MNIST dataset was used for both training and evaluation.
-        \item Optimizer and Learning Rate: The Adam optimizer with a learning rate of $1 \times 10^{-4}$ was used for the generator and discriminator.
-        \item Training Process: The training process quickly stabilized. The generator loss was calculated as $0.487$, while the discriminator loss was measured to be $1.440$. The total loss, which is the sum of the generator and discriminator losses, was calculated to be $1.927$.
-    \end{itemize}
+\note{
+\begin{itemize}
+    \item Objectives: To assess the initial model's performance and to establish a baseline for future development in generative model research.
+    \item Model Details: The model comprised about 4 million parameters, evenly distributed between the generator and the discriminator. The model was trained using the binary cross-entropy loss function, and no regularization techniques were applied in this experiment.
+    \item Dataset: The Audio MNIST dataset was used for both training and evaluation.
+    \item Optimizer and Learning Rate: The Adam optimizer with a learning rate of $1 \times 10^{-4}$ was used for the generator and discriminator.
+    \item Training Process: The training process quickly stabilized. The generator loss was calculated as $0.487$, while the discriminator loss was measured to be $1.440$. The total loss, which is the sum of the generator and discriminator losses, was calculated to be $1.927$.
+\end{itemize}
+}
 
 \end{frame}
 
 \begin{frame}
     \frametitle{Experiment 2: Accelerating Convergence through Elevated Learning Rates}
 
-    \begin{itemize}
-        \item Objectives: To hasten the convergence rate by raising the learning rates for both the generator and the discriminator.
-        \item Model Details: The model shared the same number of parameters (about 4 million), loss function (binary cross-entropy), dataset, optimizer, and hardware setup as the former one.
-        \item Learning Rate: The learning rate, for both the generator and the discriminator, was elevated to $1 \times 10^{-2}$.
-        \item Training Process: The point at which the models began learning at a slower rate was reached more quickly, but the outcomes remained unsatisfactory. The generator’s loss was calculated at $0.545$, and the discriminator’s loss was measured at $1.412$. The total loss, represented as the cumulative sum of the generator and discriminator losses, was calculated at $1.957$.
-    \end{itemize}
+\begin{itemize}
+    \item To hasten the convergence rate by raising the learning rates for both the generator and the discriminator.
+    \item The learning rate, for both the generator and the discriminator, was elevated to $1 \times 10^{-2}$.
+    \item Quicker but still unsatisfactory.
+    \item Losses:
+          \begin{itemize}
+              \item Generator: $0.545$
+              \item Discriminator: $1.412$
+              \item Total: $1.957$
+          \end{itemize}
+\end{itemize}
 
-    The spectrogram of the initial model was determined to be similar to the first one. No figures are mentioned in this frame.
+\note{
+\begin{itemize}
+    \item Objectives: To hasten the convergence rate by raising the learning rates for both the generator and the discriminator.
+    \item Model Details: The model shared the same number of parameters (about 4 million), loss function (binary cross-entropy), dataset, optimizer, and hardware setup as the former one.
+    \item Learning Rate: The learning rate, for both the generator and the discriminator, was elevated to $1 \times 10^{-2}$.
+    \item Training Process: The point at which the models began learning at a slower rate was reached more quickly, but the outcomes remained unsatisfactory. The generator’s loss was calculated at $0.545$, and the discriminator’s loss was measured at $1.412$. The total loss, represented as the cumulative sum of the generator and discriminator losses, was calculated at $1.957$.
+\end{itemize}
+
+The spectrogram of the initial model was determined to be similar to the first one. No figures are mentioned in this frame.
+}
 
 \end{frame}
 
 \begin{frame}
     \frametitle{Experiment 3: Enhancing Performance through Learning Rate and Model Complexity}
 
-    \begin{itemize}
-        \item Objectives: To test two hypotheses aimed at improving the generative model's performance: (1) setting a higher learning rate for the generator than for the discriminator at the outset could enhance performance; (2) improving the generator model's complexity could lead to better results.
-        \item Model Details: The discriminator model remained unchanged while the generator model had significantly more trainable parameters, totaling about 25 million. This was done by increasing the number of filters and the number of convolutional layers per deconvolutional block. The experiment utilized the same loss function (binary cross-entropy), dataset, optimizer, and hardware configuration as the previous iterations.
-        \item Learning Rate: The generator learning rate was increased to $1 \times 10^{-3}$, while the discriminator learning rate remained at $1 \times 10^{-4}$.
-        \item Training Process: Training for this model stopped after 14 epochs because the results were comparable to those of the first iteration. The total loss was $2.037$, calculated by adding the generator loss of $0.351$ and the discriminator loss of $1.686$.
-    \end{itemize}
+\begin{itemize}
+    \item To test two hypotheses aimed at improving the generative model's performance:
+          \begin{itemize}
+              \item Setting a higher learning rate for the generator than for the discriminator at the outset.
+              \item Improving the generator model's complexity.
+          \end{itemize}
+    \item The generator model had significantly more trainable parameters, totaling about 25 million.
+    \item The generator learning rate was increased to $1 \times 10^{-3}$, while the discriminator learning rate remained at $1 \times 10^{-4}$.
+    \item Training stopped after 14 epochs because the results were comparable to those of the first iteration.
+    \item Losses:
+          \begin{itemize}
+              \item Generator: $0.351$
+              \item Discriminator: $1.686$
+              \item Total: $2.037$
+          \end{itemize}
+\end{itemize}
 
-    The spectrogram of the initial model was determined to be similar to the first two experiments.
+\note{
+\begin{itemize}
+    \item Objectives: To test two hypotheses aimed at improving the generative model's performance: (1) setting a higher learning rate for the generator than for the discriminator at the outset could enhance performance; (2) improving the generator model's complexity could lead to better results.
+    \item Model Details: The discriminator model remained unchanged while the generator model had significantly more trainable parameters, totaling about 25 million. This was done by increasing the number of filters and the number of convolutional layers per deconvolutional block. The experiment utilized the same loss function (binary cross-entropy), dataset, optimizer, and hardware configuration as the previous iterations.
+    \item Learning Rate: The generator learning rate was increased to $1 \times 10^{-3}$, while the discriminator learning rate remained at $1 \times 10^{-4}$.
+    \item Training Process: Training for this model stopped after 14 epochs because the results were comparable to those of the first iteration. The total loss was $2.037$, calculated by adding the generator loss of $0.351$ and the discriminator loss of $1.686$.
+\end{itemize}
+
+The spectrogram of the initial model was determined to be similar to the first two experiments.
+}
 \end{frame}
 
 \begin{frame}
     \frametitle{Experiment 4: Comparing Optimization Algorithms: RMSProp and SGD}
 
-    \begin{itemize}
-        \item Objectives: To test the performance of the RMSProp and SGD optimizers, in contrast to the previous experiments that relied on the Adam optimizer.
-        \item Model Details: This experiment utilized identical model architecture, loss function (binary cross-entropy), and dataset as Experiment 3. The code was transferred to LIACC 1 hardware configuration, with minimal alterations.
-        \item Optimizer: The experiment examined the performance of the RMSProp and SGD optimizers. The initial experiment in this set utilized the RMSProp optimizer's default settings. The next experiment in the sequence employed the standard configuration of the SGD optimizer.
-        \item Training Process: The comprehensive loss was $1.966$ for RMSProp, comprising a generator loss of $0.558$ and a discriminator loss of $1.407$. The total loss was calculated to be $1.945$ for SGD, with a generator loss of $0.516$ and a discriminator loss of $1.429$. The obtained results were comparable to those obtained with the Adam optimizer in previous iterations.
-    \end{itemize}
+\begin{itemize}
+    \item Test the performance of the RMSProp and SGD optimizers, in contrast to Adam.
+    \item The code was transferred to LIACC 1 hardware configuration, with minimal alterations.
+    \item RMSProp Losses:
+          \begin{itemize}
+              \item Generator: $0.558$
+              \item Discriminator: $1.407$
+              \item Total: $1.966$
+          \end{itemize}
+    \item SGD Losses:
+          \begin{itemize}
+              \item Generator: $0.516$
+              \item Discriminator: $1.429$
+              \item Total: $1.945$
+          \end{itemize}
+    \item Results were comparable to those obtained with the Adam optimizer in previous iterations.
+\end{itemize}
 
-    The spectrogram of the initial model was determined to be similar to the previous experiments.
+\note{
+\begin{itemize}
+    \item Objectives: To test the performance of the RMSProp and SGD optimizers, in contrast to the previous experiments that relied on the Adam optimizer.
+    \item Model Details: This experiment utilized identical model architecture, loss function (binary cross-entropy), and dataset as Experiment 3. The code was transferred to LIACC 1 hardware configuration, with minimal alterations.
+    \item Optimizer: The experiment examined the performance of the RMSProp and SGD optimizers. The initial experiment in this set utilized the RMSProp optimizer's default settings. The next experiment in the sequence employed the standard configuration of the SGD optimizer.
+    \item Training Process: The comprehensive loss was $1.966$ for RMSProp, comprising a generator loss of $0.558$ and a discriminator loss of $1.407$. The total loss was calculated to be $1.945$ for SGD, with a generator loss of $0.516$ and a discriminator loss of $1.429$. The obtained results were comparable to those obtained with the Adam optimizer in previous iterations.
+\end{itemize}
+
+The spectrogram of the initial model was determined to be similar to the previous experiments.
+}
 
 \end{frame}
 
 \begin{frame}
     \frametitle{Experiment 5: Enhancing Performance with Regularization Techniques}
 
-    \begin{itemize}
-        \item Objectives: To test the hypothesis that incorporating regularization techniques can enhance model performance. Several regularization techniques were utilized in the model, such as dropout layers, batch normalization, noise injection, and elastic network regularization.
-        \item Model Details: The experimental setup was identical to Experiment 4, except for the use of the Adam optimizer. The model architecture, loss function (binary cross-entropy), dataset, and hardware configuration were the same as the previous experiments.
-        \item Training Process: The total loss for this experiment was $4.791$, calculated by summing the generator loss of $3.362$ and the discriminator loss of $1.428$. However, comparing the current generator loss to previous results is not appropriate due to the incorporation of the elastic net regularization. This regularization method substantially elevates the generator loss but is crucial for training goals. A flaw in the elastic net implementation was detected in the code, but not until after a few subsequent experiments.
-    \end{itemize}
+\begin{itemize}
+    \item Test regularization techniques.
+    \item Dropout layers, batch normalization, noise injection, and elastic network regularization were all used.
+    \item Usage of the Adam optimizer.
+    \item Losses:
+          \begin{itemize}
+              \item Generator: $3.362$
+              \item Discriminator: $1.428$
+              \item Total: $4.791$
+          \end{itemize}
+    \item The spectrogram of the initial model was determined to be similar to the previous experiments.
+\end{itemize}
 
-    The spectrogram of the initial model was determined to be similar to the previous experiments.
+\note{
+\begin{itemize}
+    \item Objectives: To test the hypothesis that incorporating regularization techniques can enhance model performance. Several regularization techniques were utilized in the model, such as dropout layers, batch normalization, noise injection, and elastic network regularization.
+    \item Model Details: The experimental setup was identical to Experiment 4, except for the use of the Adam optimizer. The model architecture, loss function (binary cross-entropy), dataset, and hardware configuration were the same as the previous experiments.
+    \item Training Process: The total loss for this experiment was $4.791$, calculated by summing the generator loss of $3.362$ and the discriminator loss of $1.428$. However, comparing the current generator loss to previous results is not appropriate due to the incorporation of the elastic net regularization. This regularization method substantially elevates the generator loss but is crucial for training goals. A flaw in the elastic net implementation was detected in the code, but not until after a few subsequent experiments.
+\end{itemize}
+
+The spectrogram of the initial model was determined to be similar to the previous experiments.
+}
 
 \end{frame}
 
@@ -162,7 +201,7 @@
         \item Training Process: In epoch 37, the experiment incurred a total loss of $1.832$, consisting of the generator loss of $0.693$ and the discriminator loss of $1.139$. Training of the model resulted in a sudden collapse at epoch 37, with inexplicable loss values plummeting to as low as 0 thereafter.
     \end{itemize}
 
-    The spectrogram of the initial model was determined to be similar to the previous experiments. 
+The spectrogram of the initial model was determined to be similar to the previous experiments.
 \end{frame}
 
 
@@ -197,14 +236,14 @@
 
 \begin{frame}
     \frametitle{Analysis and Interpretation}
-    
+
     \begin{itemize}
         \item Identifying Trends
         \item Results for Future Investigation
         \item Interpretation of Results
         \item Conclusion
     \end{itemize}
-    
+
 \end{frame}
 
 \begin{frame}
@@ -218,7 +257,7 @@
         \item Benefits of regularization methods (e.g., dropout, batch normalization, Gaussian noise)
         \item Importance of dataset size
     \end{itemize}
-    
+
 \end{frame}
 
 \begin{frame}
@@ -229,7 +268,7 @@
         \item Further exploration of elastic network regularization
         \item Investigation of continuously increasing generator loss
     \end{itemize}
-    
+
 \end{frame}
 
 \begin{frame}
@@ -242,7 +281,7 @@
         \item Need for access to comprehensive datasets
         \item Computational resource challenges
     \end{itemize}
-    
+
 \end{frame}
 
 \begin{frame}
@@ -254,20 +293,20 @@
         \item Lack of satisfactory practical results due to dataset limitations
         \item Importance of comprehensive datasets and computational resources
     \end{itemize}
-    
+
 \end{frame}
 
 \subsection{Constraints and Challenges}
 
 \begin{frame}
     \frametitle{Constraints and Challenges}
-    
+
     \begin{itemize}
         \item Hardware Resources
         \item Data Quality and Quantity
         \item Hyperparameter Tuning
     \end{itemize}
-    
+
 \end{frame}
 
 \begin{frame}
@@ -279,7 +318,7 @@
         \item Strategies adopted to optimize hardware usage
         \item Impacts, trade-offs, and opportunities resulting from resource limitations
     \end{itemize}
-    
+
 \end{frame}
 
 \begin{frame}
@@ -291,7 +330,7 @@
         \item Strategies employed to mitigate data limitations
         \item Considerations regarding data augmentation techniques
     \end{itemize}
-    
+
 \end{frame}
 
 \begin{frame}
@@ -303,7 +342,7 @@
         \item Impact of default or arbitrary values on model potential
         \item Recommendations for future work in hyperparameter optimization
     \end{itemize}
-    
+
 \end{frame}
 
 \begin{frame}
@@ -314,5 +353,5 @@
         \item Possible implications, trade-offs, and opportunities arising from constraints
         \item Affirmation of the proposed solution's strengths and advancements in generative AI models for audio synthesis
     \end{itemize}
-    
+
 \end{frame}

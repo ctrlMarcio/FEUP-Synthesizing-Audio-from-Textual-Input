@@ -3,17 +3,6 @@
 \subsection{Datasets}
 
 \begin{frame}
-    \frametitle{Dataset Introduction}
-
-    \begin{itemize}
-        \item Datasets form the foundation for generative models
-        \item Learning material for DL algorithms and evaluation of audio outputs
-        \item Two types of datasets: categorical and descriptive
-    \end{itemize}
-
-\end{frame}
-
-\begin{frame}
     \frametitle{Table of Datasets}
 
     \begin{table}[ht]
@@ -22,49 +11,66 @@
         \label{tab:datasets}
         \begin{tabularx}{\textwidth}{|X|X|X|X|X|}
             \hline
+            \textbf{Name}                                     &
+            \textbf{Type}                                     &
+            \textbf{\# Samples}                               &
+            \textbf{Duration}                                 &
+            \textbf{Labels}                                     \\ \hline
+
+            Acoustic Event Dataset \cite{takahashi_deep_2016} &
+            Categorical labeled                               &
+            5223                                              &
+            Average 8.8s                                      &
+            One of 28 labels                                    \\ \hline
+
+            AudioCaps \cite{kim_audiocaps_2019}               &
+            Descriptive labeled                               &
+            39597                                             &
+            10s each                                          &
+            9 words per caption                                 \\ \hline
+
+            AudioSet \cite{gemmeke_audio_2017}                &
+            Categorical labeled                               &
+            2084320                                           &
+            Average 10s                                       &
+            One or more of 527 labels                           \\ \hline
+
+            Audio MNIST~\cite{becker_interpreting_2018}       &
+            Categorical labeled                               &
+            30000                                             &
+            Average 0.6s                                      &
+            One of 10 labels                                    \\ \hline
+        \end{tabularx}
+    \end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Table of Datasets (contd.)}
+
+    \begin{table}[ht]
+        \centering
+        \caption{Comparison of datasets for soundscapes (contd.)}
+        \begin{tabularx}{\textwidth}{|X|X|X|X|X|}
+            \hline
             \textbf{Name}                                           &
             \textbf{Type}                                           &
             \textbf{\# Samples}                                     &
             \textbf{Duration}                                       &
             \textbf{Labels}                                           \\ \hline
 
-            Acoustic Event Dataset \cite{takahashi_deep_2016}       &
-            Categorical labeled                                     &
-            5223                                                    &
-            Average 8.8s                                            &
-            One of 28 labels                                          \\ \hline
-
-            AudioCaps \cite{kim_audiocaps_2019}                     &
-            Descriptive labeled                                     &
-            39597                                                   &
-            10s each                                                &
-            9 words per caption                                       \\ \hline
-
-            AudioSet \cite{gemmeke_audio_2017}                      &
-            Categorical labeled                                     &
-            2084320                                                 &
-            Average 10s                                             &
-            One or more of 527 labels                                 \\ \hline
-
-            Audio MNIST~\cite{becker_interpreting_2018}             &
-            Categorical labeled                                     &
-            30000                                                   &
-            Average 0.6s                                            &
-            One of 10 labels                                          \\ \hline
-
             Clotho \cite{drossos_clotho_2019}                       &
             Descriptive labeled                                     &
             4981                                                    &
             15 to 30s                                               &
-            24 905 captions (5 per audio). 8 to 20 words long each    \\ \hline
+            24 905 captions (5 per audio).                            \\ \hline
 
-            FSDKaggle2018 \cite{fonseca_general-purpose_2018}       &
+            FSDKaggle 2018 \cite{fonseca_general-purpose_2018}      &
             Categorical labeled                                     &
             11073                                                   &
             From 300ms to 30s                                       &
             One or more of 41 labels                                  \\ \hline
 
-            UrbanSound8K \cite{salamon_dataset_2014}                &
+            Urban Sound 8K \cite{salamon_dataset_2014}              &
             Categorical labeled                                     &
             8732                                                    &
             Less or equal to 4s                                     &
@@ -84,7 +90,7 @@
 
 \begin{frame}
     \frametitle{Exploratory Experiments}
-    
+
     \begin{itemize}
         \item Objective: Gain insights for GANmix development
         \item Experiments: Classification, GAN, AE, VAE
@@ -96,46 +102,46 @@
 
 \subsection{GANmix}
 
-\begin{frame}
-    \frametitle{GANmix: Introduction}
+\begin{frame}{GANmix}
 
-    \begin{itemize}
-        \item GANmix: Fusion of GAN and VAE for audio generation under constraints.
-        \item Addresses computational limitations for high-quality audio.
-        \item Combines GAN's generative power with VAE's latent space manipulation.
-    \end{itemize}
-\end{frame}
+    \begin{figure}
+        \centering
+        \includegraphics[height=0.8\textheight]{images/3-development/ganmix.pdf}
+        \caption{GANmix architecture}
+        \label{fig:ganmix}
+    \end{figure}
 
-\begin{frame}
-    \frametitle{GANmix: Model Architecture}
+    \note{
+        \textbf{Introduction}
+        \begin{itemize}
+            \item GANmix: Fusion of GAN and VAE for audio generation under constraints.
+            \item Addresses computational limitations for high-quality audio.
+            \item Combines GAN's generative power with VAE's latent space manipulation.
+        \end{itemize}
 
-    \begin{itemize}
-        \item Generator and discriminator operate in latent space.
-        \item VAE Training: Computational challenge, requires extensive datasets.
-        \item AudioLDM's High-Performance: Top model for audio generation.
-        \item Accessibility of AudioLDM: Open source, accessible via Hugging Face's model hub.
-    \end{itemize}
-\end{frame}
+        \textbf{Model Architecture}
+        \begin{itemize}
+            \item Generator and discriminator operate in latent space.
+            \item VAE Training: Computational challenge, requires extensive datasets.
+            \item AudioLDM's High-Performance: Top model for audio generation.
+            \item Accessibility of AudioLDM: Open source, accessible via Hugging Face's model hub.
+        \end{itemize}
 
-\begin{frame}
-    \frametitle{GANmix: Experimental Results}
+        \textbf{Early Results}
+        \begin{itemize}
+            \item Preliminary experiments with Audio MNIST: Promising but suboptimal.
+            \item Refinements: Different optimizers, model sizes, loss functions.
+            \item Clotho dataset: Significant improvement in generated audio quality.
+            \item Challenges in achieving equilibrium between generator and discriminator.
+        \end{itemize}
 
-    \begin{itemize}
-        \item Preliminary experiments with Audio MNIST: Promising but suboptimal.
-        \item Refinements: Different optimizers, model sizes, loss functions.
-        \item Clotho dataset: Significant improvement in generated audio quality.
-        \item Challenges in achieving equilibrium between generator and discriminator.
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-    \frametitle{GANmix: Final Model}
-
-    \begin{itemize}
-        \item GANmix architecture with Clotho dataset: Significant improvements.
-        \item Unlike typical models using CNN, GANmix uses fully connected neural networks.
-        \item Generator input: Random Gaussian noise, passes through hidden layers.
-        \item Discriminator: Takes embedding as input, applies tanh activation.
-        \item Loss function: BCE. Optimized with Adam. Learning rate updates every 10 epochs.
-    \end{itemize}
+        \textbf{Final Model}
+        \begin{itemize}
+            \item GANmix architecture with Clotho dataset: Significant improvements.
+            \item Unlike typical models using CNN, GANmix uses fully connected neural networks.
+            \item Generator input: Random Gaussian noise, passes through hidden layers.
+            \item Discriminator: Takes embedding as input, applies tanh activation.
+            \item Loss function: BCE. Optimized with Adam. Learning rate updates every 10 epochs.
+        \end{itemize}
+    }
 \end{frame}
