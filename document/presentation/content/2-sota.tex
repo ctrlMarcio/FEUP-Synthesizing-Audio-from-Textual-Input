@@ -1,20 +1,5 @@
 \section{State of the Art}
 
-\subsection{Introduction}
-\begin{frame}
-    \frametitle{State of the Art}
-    \begin{itemize}
-        \item There are different types of sound generation methods, depending on the level of abstraction and supervision involved
-        \item Four types of sound generation methods are considered in this thesis:
-              \begin{itemize}
-                  \item Traditional
-                  \item Unsupervised
-                  \item Vocoders
-                  \item End-to-end models
-              \end{itemize}
-    \end{itemize}
-\end{frame}
-
 \subsection{Traditional Soundscape Generation}
 
 \begin{frame}
@@ -69,7 +54,7 @@
 \subsection{End-to-End Models}
 
 
-\begin{frame}[allowframebreaks]
+\begin{frame}
     \frametitle{End-to-End Audio Models Comparison}
 
     \begin{table}[ht]
@@ -77,18 +62,31 @@
         \caption{A comparison of different end-to-end generative models for audio.}
         \begin{tabularx}{\textwidth}{|X|l|X|X|}
             \hline
-            \textbf{Model}                           & \textbf{Type} & \textbf{Input}            & \textbf{Output}                        \\ \hline
-            Char2wav~\cite{sotelo_char2wav_2017}     & Speech        & Text prompt               & Raw audio waveform                     \\ \hline
-            VALL-E~\cite{wang_neural_2023}           & Speech        & Text and acoustic prompt  & Raw audio waveform                     \\ \hline
-            Jukebox~\cite{dhariwal_jukebox_2020}     & Music         & Genre, artist, and lyrics & Raw audio waveform                     \\ \hline
-            Riffusion~\cite{forsgren_riffusion_2022} & Music         & Text prompt               & Raw audio waveform                     \\ \hline
-            MusicLM~\cite{agostinelli_musiclm_2023}  & Music         & Text prompt               & Raw audio waveform                     \\ \hline
-            SampleRNN~\cite{mehri_samplernn_2017}    & General       & None                      & Raw audio waveform                     \\ \hline
-            AudioLM~\cite{borsos_audiolm_2022}       & General       & Text prompt               & Raw audio waveform                     \\ \hline
-            DiffSound~\cite{yang_diffsound_2022}     & General       & Text prompt               & Mel-spectrogram and raw audio waveform \\ \hline
-            AudioGen~\cite{kreuk_audiogen_2023}      & General       & Text prompt               & Mel-spectrogram and raw audio waveform \\ \hline
+            \textbf{Model}                           & \textbf{Type} & \textbf{Input}            & \textbf{Output}    \\ \hline
+            Char2wav~\cite{sotelo_char2wav_2017}     & Speech        & Text prompt               & Raw audio waveform \\ \hline
+            VALL-E~\cite{wang_neural_2023}           & Speech        & Text and acoustic prompt  & Raw audio waveform \\ \hline
+            Jukebox~\cite{dhariwal_jukebox_2020}     & Music         & Genre, artist, and lyrics & Raw audio waveform \\ \hline
+            Riffusion~\cite{forsgren_riffusion_2022} & Music         & Text prompt               & Raw audio waveform \\ \hline
+            MusicLM~\cite{agostinelli_musiclm_2023}  & Music         & Text prompt               & Raw audio waveform \\ \hline
+            SampleRNN~\cite{mehri_samplernn_2017}    & General       & None                      & Raw audio waveform \\ \hline
         \end{tabularx}
         \label{tab:end-to-end-audio-models}
+    \end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{End-to-End Audio Models Comparison (Cont.))}
+
+    \begin{table}[ht]
+        \centering
+        \caption{A comparison of different end-to-end generative models for audio.}
+        \begin{tabularx}{\textwidth}{|X|l|X|X|}
+            \hline
+            \textbf{Model}                       & \textbf{Type} & \textbf{Input} & \textbf{Output}                        \\ \hline
+            AudioLM~\cite{borsos_audiolm_2022}   & General       & Text prompt    & Raw audio waveform                     \\ \hline
+            DiffSound~\cite{yang_diffsound_2022} & General       & Text prompt    & Mel-spectrogram and raw audio waveform \\ \hline
+            AudioGen~\cite{kreuk_audiogen_2023}  & General       & Text prompt    & Mel-spectrogram and raw audio waveform \\ \hline
+        \end{tabularx}
     \end{table}
 \end{frame}
 
@@ -145,34 +143,61 @@
 
 \subsection{AudioLM}
 \begin{frame}{AudioLM}
-    \begin{itemize}
-        \item A framework for high-quality audio generation with long-term consistency~\cite{borsos_audiolm_2022}.
-        \item Maps input audio to a sequence of discrete tokens and treats audio generation as a language modeling task.
-        \item Achieves high-quality synthesis and long-term structure through a hybrid tokenization scheme of semantic and acoustic tokens.
-        \item Consists of three main components: tokenizer, language model, and detokenizer.
-        \item Generates syntactically and semantically plausible speech and music continuations without any transcript or annotation.
-    \end{itemize}
+
+    \begin{figure}
+        \includegraphics[width=\textwidth]{images/2-sota/audiolm.png}
+        \caption{Illustration of the AudioLM model architecture \cite{borsos_audiolm_2022}.}
+        \label{fig:audiolm}
+    \end{figure}
+
+    \note{
+        \begin{itemize}
+            \item A framework for high-quality audio generation with long-term consistency~\cite{borsos_audiolm_2022}.
+            \item Maps input audio to a sequence of discrete tokens and treats audio generation as a language modeling task.
+            \item Achieves high-quality synthesis and long-term structure through a hybrid tokenization scheme of semantic and acoustic tokens.
+            \item Consists of three main components: tokenizer, language model, and detokenizer.
+            \item Generates syntactically and semantically plausible speech and music continuations without any transcript or annotation.
+        \end{itemize}
+    }
 \end{frame}
 
 \subsection{DiffSound}
 
 \begin{frame}{DiffSound}
-    \begin{itemize}
-        \item A novel text-to-sound generation framework that uses a text encoder, a VQ-VAE, a decoder, and a vocoder~\cite{yang_diffsound_2022}.
-        \item Takes text as input and outputs synthesized audio corresponding to the input text.
-        \item Uses a diffusion decoder (DiffSound) that predicts and refines all Mel-Spectrogram tokens in one step, resulting in better and faster generation than an AR decoder.
-        \item Produces high-quality sound synthesis for various domains such as speech, music, and environmental sounds.
-    \end{itemize}
+
+    \begin{figure}
+        \includegraphics[width=\textwidth, height=0.7\textheight, keepaspectratio]{images/2-sota/diffsound.png}
+        \caption{Illustration of the DiffSound model architecture \cite{yang_diffsound_2022}.}
+        \label{fig:diffsound}
+    \end{figure}
+
+    \note{
+        \begin{itemize}
+            \item A novel text-to-sound generation framework that uses a text encoder, a VQ-VAE, a decoder, and a vocoder~\cite{yang_diffsound_2022}.
+            \item Takes text as input and outputs synthesized audio corresponding to the input text.
+            \item Uses a diffusion decoder (DiffSound) that predicts and refines all Mel-Spectrogram tokens in one step, resulting in better and faster generation than an AR decoder.
+            \item Produces high-quality sound synthesis for various domains such as speech, music, and environmental sounds.
+        \end{itemize}
+    }
 \end{frame}
 
 
 \subsection{AudioGen}
 \begin{frame}{AudioGen}
-    \begin{itemize}
-        \item An auto-regressive generative model that generates audio samples conditioned on text inputs~\cite{kreuk_audiogen_2023}.
-        \item Learns a discrete representation of the raw audio using an AE method and trains a Transformer language model over the learned codes, conditioned on textual features.
-        \item Uses an augmentation technique that mixes different audio samples to train the model to separate multiple sources internally.
-        \item Explores the use of multi-stream modeling for faster inference, allowing the use of shorter sequences while maintaining a similar bitrate and perceptual quality.
-        \item Outperforms evaluated baselines over both objective and subjective metrics and extends to conditional and unconditional audio continuation.
-    \end{itemize}
+
+    \begin{figure}
+        \includegraphics[width=\textwidth, height=0.7\textheight, keepaspectratio]{images/2-sota/audiogen.png}
+        \caption{Illustration of the AudioGen model architecture \cite{kreuk_audiogen_2023}.}
+        \label{fig:audiogen}
+    \end{figure}
+
+    \note{
+        \begin{itemize}
+            \item An auto-regressive generative model that generates audio samples conditioned on text inputs~\cite{kreuk_audiogen_2023}.
+            \item Learns a discrete representation of the raw audio using an AE method and trains a Transformer language model over the learned codes, conditioned on textual features.
+            \item Uses an augmentation technique that mixes different audio samples to train the model to separate multiple sources internally.
+            \item Explores the use of multi-stream modeling for faster inference, allowing the use of shorter sequences while maintaining a similar bitrate and perceptual quality.
+            \item Outperforms evaluated baselines over both objective and subjective metrics and extends to conditional and unconditional audio continuation.
+        \end{itemize}
+    }
 \end{frame}
