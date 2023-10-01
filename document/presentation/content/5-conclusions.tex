@@ -26,21 +26,150 @@
 
 
 \begin{frame}
-    \frametitle{Novel Architectures}
+    \frametitle{Fine-Tuning Stable Diffusion}
+
     \begin{itemize}
-        \item Briefly introduce the proposed theoretical architectures
-        \item Mention their objectives, design principles, and potential applications
-        \item Highlight the need for future research and development in this area
+        \item Explore fine-tuning stable diffusion model for audio synthesis
+        \item It is open source and accessible
+        \item Adapt model to characteristics of audio signals in frequency-time domains
+        \item Treat spectrograms as images
+        \item Draw inspiration from successful Riffusion techniques for similar tasks
     \end{itemize}
+
+    \note{
+        \begin{itemize}
+            \item Explore fine-tuning stable diffusion model for audio synthesis.
+            \item Leverage its ability to capture complex dependencies and generate realistic output.
+            \item Accessible open source code facilitates adaptation to specific tasks like audio synthesis.
+            \item Adapt model to characteristics of audio signals in frequency-time domains.
+            \item Potential to significantly enhance audio quality through high-fidelity, diverse output.
+            \item Treat spectrograms as images, tapping into visual representation for innovative audio synthesis.
+            \item Draw inspiration from successful Riffusion techniques for similar tasks.
+            \item Note: Success hinges on availability of sufficiently large fine-tuning dataset.
+        \end{itemize}
+    }
 \end{frame}
+
+\begin{frame}
+    \frametitle{Theoretical General Audio Transformer}
+
+    \begin{itemize}
+        \item Proposed audio transformer for generative audio synthesis.
+        \item Optimized transformer architecture for audio data.
+        \item Encoder-decoder framework with custom attention mechanisms.
+        \item Incorporates textual prompts for context-appropriate audio synthesis.
+        \item Decoder generates audio waveform sample-by-sample.
+        \item Utilizes multi-head attention for natural-sounding outputs.
+        \item Hyperparameters adjustable for performance and constraints.
+    \end{itemize}
+
+    \note{
+        \begin{itemize}
+            \item AT designed for high-quality, flexible audio generation.
+            \item Encoder-decoder structure tailored for audio data.
+            \item Encoder maps input to semantic representations.
+            \item Decoder aligns audio with input text's meaning.
+            \item Multi-head attention enables natural audio synthesis.
+            \item Hyperparameters tunable for performance.
+            \item Use of spectrograms discussed for input flexibility.
+            \item Challenges and benefits of raw audio vs. spectrograms explained.
+            \item Innovative Latent Feature Translator introduced.
+            \item Training process outlined for unsupervised and supervised stages.
+            \item Choice of transformers justified for audio modeling.
+            \item AT limitations and avenues for future work discussed.
+            \item Proposed AT distinguished from previous models.
+        \end{itemize}
+    }
+\end{frame}
+
+\begin{frame}
+    \frametitle{VAMOS - Variable Audio Model for Sound Synthesis}
+
+    \begin{itemize}
+        \item VAMOS (Variable Audio Model for Sound Synthesis) extends DALL-E 2 to generate audio from text.
+        \item Four interconnected models - CLAP, Text Encoder, Audio Encoder, VamGen.
+        \item CLAP aligns text and audio in a common space.
+        \item Text Encoder (BERT-based) provides semantic context.
+        \item Audio Encoder (ResNet-based) extracts informative audio embeddings.
+        \item VamGen utilizes diffusion process for audio synthesis.
+        \item U-net architecture for faithful reconstruction during diffusion.
+        \item VAMOS serves as a foundation for future advancements.
+    \end{itemize}
+
+    \note{
+        \begin{itemize}
+            \item VAMOS extends DALL-E 2 to audio synthesis from text.
+            \item Four models: CLAP, Text Encoder, Audio Encoder, VamGen.
+            \item CLAP aligns text and audio in a common space.
+            \item Text Encoder (BERT-based) provides semantic context.
+            \item Audio Encoder (ResNet-based) extracts audio embeddings.
+            \item VamGen uses diffusion process for audio synthesis.
+            \item U-net preserves audio fidelity during diffusion.
+            \item VAMOS is a prototype, sets foundation for future work.
+        \end{itemize}
+    }
+\end{frame}
+
+
 
 \subsection{Conclusion}
 
 \begin{frame}
-    \frametitle{Conclusion}
-    \begin{itemize}
-        \item Summarize the main achievements and contributions of the research
-        \item Emphasize the progress made in understanding and developing generative AI models for audio synthesis
-        \item Acknowledge the challenges and ongoing work required for further advancements
-    \end{itemize}
+    \frametitle{Overview of Research Goals}
+
 \end{frame}
+
+\begin{frame}
+    \frametitle{Developing End-to-End Systems}
+
+    \begin{itemize}
+        \item Partial achievement in creating end-to-end systems for sound synthesis.
+        \item Challenges due to limited datasets and model fine-tuning.
+        \item Ongoing challenge in evaluating generated sound from text input.
+    \end{itemize}
+
+    \note{
+        \begin{itemize}
+            \item Partial achievement in creating end-to-end systems.
+            \item Challenges: Limited datasets, model fine-tuning.
+            \item Ongoing challenge in evaluating generated sound.
+        \end{itemize}
+    }
+\end{frame}
+
+\begin{frame}
+    \frametitle{Reflection on the Research Process}
+
+    \begin{itemize}
+        \item Comprehensive methodology with literature review and iterative writing.
+        \item Structured framework for research process.
+        \item Challenges in developing AI models, lessons in patience and problem-solving.
+    \end{itemize}
+
+    \note{
+        \begin{itemize}
+            \item Comprehensive methodology with iterative writing.
+            \item Structured framework for research.
+            \item Challenges in developing AI models, lessons learned.
+        \end{itemize}
+    }
+\end{frame}
+
+\begin{frame}
+    \frametitle{Conclusion}
+
+    \begin{itemize}
+        \item Primary objectives largely achieved with identified obstacles.
+        \item Significant contribution to generative DL knowledge.
+        \item Progress in creating end-to-end systems for sound synthesis.
+    \end{itemize}
+
+    \note{
+        \begin{itemize}
+            \item Objectives achieved with identified obstacles.
+            \item Significant contribution to generative DL knowledge.
+            \item Progress in creating end-to-end systems.
+        \end{itemize}
+    }
+\end{frame}
+
